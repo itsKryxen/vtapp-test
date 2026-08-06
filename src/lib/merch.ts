@@ -45,7 +45,7 @@ export const MERCH_STORE_URL: string | null = null;
 export const MERCH_INFO = {
   /** Left as null until the team fixes a date. */
   opensOn: null as string | null,
-  collectAt: 'Control room, CB 702',
+  collectAt: 'To be announced',
   note: 'Merchandise is collected on campus during the fest. Nothing is shipped.',
 };
 

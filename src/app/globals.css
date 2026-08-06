@@ -1,0 +1,657 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   THEME
+   Every surface, foreground and grey is a raw "R G B" triplet so Tailwind's
+   alpha modifiers keep working. Flipping .light on <html> inverts the whole
+   site without a single dark: variant in the markup.
+   ========================================================================== */
+
+:root {
+  /* ---- dark (default) ---- */
+  --ink-950: 8 8 10;
+  --ink-900: 11 11 13;
+  --ink-800: 17 17 20;
+  --ink-700: 23 23 27;
+  --ink-600: 31 31 36;
+
+  --fg: 255 255 255;
+  --inv: 0 0 0;
+  --bone: 242 240 233;
+
+  --slate-100: 241 245 249;
+  --slate-200: 226 232 240;
+  --slate-300: 203 213 225;
+  --slate-400: 148 163 184;
+  --slate-500: 100 116 139;
+  --slate-600: 71 85 105;
+  --slate-700: 51 65 85;
+
+  --em-200: 167 243 208;
+  --em-300: 110 231 183;
+  --em-400: 52 211 153;
+  --em-500: 16 185 129;
+  --ro-200: 254 205 211;
+  --ro-300: 253 164 175;
+  --ro-400: 251 113 133;
+  --ro-500: 244 63 94;
+  --am-300: 252 211 77;
+  --am-400: 251 191 36;
+  --am-500: 245 158 11;
+
+  /* drafting grid and the crimson wash behind the page */
+  --grid-strong: rgba(255, 255, 255, 0.055);
+  --grid-faint: rgba(255, 255, 255, 0.022);
+  --wash: rgba(179, 40, 33, 0.14);
+  --scanline: rgba(255, 255, 255, 0.028);
+
+  /* brand, fixed across themes */
+  --brand: #b32821;
+  --brand-bright: #e0685e;
+
+  color-scheme: dark;
+}
+
+.light {
+  /* ---- light ----
+   * A straight inversion, not a softened one. Dark mode is black ground with
+   * white ink and a crimson accent; light mode is white ground with black ink
+   * and the same crimson. Every token below mirrors the block above, so
+   * `text-white` becomes pure black, `bg-ink-950` becomes pure white, and a
+   * `border-white/8` hairline becomes a black hairline at the same weight.
+   */
+  --ink-950: 255 255 255;
+  --ink-900: 250 250 250;
+  --ink-800: 244 244 244;
+  --ink-700: 238 238 238;
+  --ink-600: 230 230 230;
+
+  --fg: 0 0 0;
+  --inv: 255 255 255;
+  /* the ticker flips with everything else: black bar, white type */
+  --bone: 0 0 0;
+
+  /* grey ramp walks away from black, mirroring the dark ramp's walk from white */
+  --slate-100: 0 0 0;
+  --slate-200: 20 20 20;
+  --slate-300: 38 38 38;
+  --slate-400: 74 74 74;
+  --slate-500: 110 110 110;
+  --slate-600: 140 140 140;
+  --slate-700: 172 172 172;
+
+  --em-200: 6 78 59;
+  --em-300: 4 120 87;
+  --em-400: 5 150 105;
+  --em-500: 16 185 129;
+  --ro-200: 136 19 55;
+  --ro-300: 159 18 57;
+  --ro-400: 190 18 60;
+  --ro-500: 225 29 72;
+  --am-300: 146 64 14;
+  --am-400: 180 83 9;
+  --am-500: 217 119 6;
+
+  --grid-strong: rgba(0, 0, 0, 0.07);
+  --grid-faint: rgba(0, 0, 0, 0.028);
+  --wash: rgba(179, 40, 33, 0.08);
+  --scanline: rgba(0, 0, 0, 0.022);
+
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink-950 font-body text-slate-300 antialiased;
+    background-image: radial-gradient(70rem 45rem at 78% -10%, var(--wash), transparent 65%);
+    background-attachment: fixed;
+    transition: background-color 220ms ease, color 220ms ease;
+  }
+
+  ::selection {
+    @apply bg-brand-600 text-white;
+  }
+  .light ::selection {
+    color: #fff;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-white;
+  }
+
+  /* Technical drawing grid: a 160px rule over a 32px mesh. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--grid-strong) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-strong) 1px, transparent 1px),
+      linear-gradient(var(--grid-faint) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-faint) 1px, transparent 1px);
+    background-size: 160px 160px, 160px 160px, 32px 32px, 32px 32px;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1500px] px-5 sm:px-8;
+  }
+
+  /* ---------------- surfaces ---------------- */
+  .panel {
+    @apply border border-white/[0.08] bg-white/[0.015];
+  }
+
+  .panel-hover {
+    @apply transition-colors duration-200 hover:border-white/25 hover:bg-white/[0.035];
+  }
+
+  /* Bracket corners: four L-ticks pinned to a panel's corners. */
+  .brackets {
+    position: relative;
+  }
+
+  .brackets::before,
+  .brackets::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+    border-color: var(--brand-bright);
+    opacity: 0.65;
+    transition: opacity 200ms ease;
+  }
+
+  .brackets::before {
+    top: -1px;
+    left: -1px;
+    border-top: 1px solid;
+    border-left: 1px solid;
+  }
+
+  .brackets::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+  }
+
+  .brackets:hover::before,
+  .brackets:hover::after {
+    opacity: 1;
+  }
+
+  /* ---------------- type ---------------- */
+  .mono-label {
+    @apply font-mono text-[10px] uppercase leading-none tracking-label text-slate-500;
+  }
+
+  .mono-tag {
+    @apply font-mono text-[10px] uppercase tracking-label;
+  }
+
+  /* Weight goes down as size goes up. That is what reads as engineered. */
+  .display-xl {
+    @apply font-display text-5xl font-extralight leading-[0.92] tracking-tightest sm:text-7xl lg:text-8xl;
+  }
+
+  .display-lg {
+    @apply font-display text-4xl font-light leading-[0.95] tracking-tightest sm:text-6xl;
+  }
+
+  .display-md {
+    @apply font-display text-2xl font-light leading-tight tracking-tight sm:text-4xl;
+  }
+
+  /* Light mode needs a touch more weight to hold up on a pale ground. */
+  .light .display-xl {
+    @apply font-light;
+  }
+  .light .display-lg,
+  .light .display-md {
+    @apply font-normal;
+  }
+
+  /* ---------------- buttons ---------------- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 border px-6 py-3
+           font-mono text-[11px] uppercase leading-none tracking-label
+           transition-all duration-200
+           focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2
+           focus-visible:outline-brand-400 disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .btn-primary {
+    @apply btn border-bone bg-bone text-ink-950 hover:border-brand-600 hover:bg-brand-600;
+  }
+  .btn-primary:hover:not(:disabled) {
+    color: #fff;
+  }
+
+  .btn-ghost {
+    @apply btn border-white/20 bg-transparent text-slate-200 hover:border-white/60 hover:text-white;
+  }
+
+  /* ---------------- forms ---------------- */
+  .field {
+    @apply w-full border border-white/15 bg-ink-900 px-4 py-3 font-mono text-sm text-slate-100
+           transition placeholder:text-slate-600
+           focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600/40;
+  }
+
+  .label {
+    @apply mb-2 block font-mono text-[10px] uppercase leading-none tracking-label text-slate-500;
+  }
+
+  .hint {
+    @apply mt-2 font-mono text-[10px] leading-relaxed text-slate-600;
+  }
+
+  .error-text {
+    @apply mt-2 font-mono text-[10px] uppercase tracking-label text-brand-500;
+  }
+
+  /* ---------------- chips and tags ---------------- */
+  .chip {
+    @apply inline-flex items-center gap-1.5 border border-white/15 px-2.5 py-1.5
+           font-mono text-[10px] uppercase leading-none tracking-label text-slate-400;
+  }
+
+  .tag-index {
+    @apply font-mono text-[10px] uppercase tracking-label text-brand-500;
+  }
+
+  /* Text sitting on a crimson fill. `text-white` is themed and would flip to
+     near-black in light mode, so anything on the brand colour uses this. */
+  .on-brand {
+    color: #fff;
+  }
+
+  /* ---------------- rules ---------------- */
+  .rule {
+    @apply h-px w-full border-0 bg-white/10;
+  }
+
+  .rule-brand {
+    @apply h-px w-full border-0 bg-gradient-to-r from-brand-600 via-brand-600/30 to-transparent;
+  }
+
+  /* ---------------- crosshair tick ---------------- */
+  .tick {
+    position: relative;
+    width: 11px;
+    height: 11px;
+  }
+
+  .tick::before,
+  .tick::after {
+    content: '';
+    position: absolute;
+    background: currentColor;
+    opacity: 0.5;
+  }
+
+  .tick::before {
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+
+  .tick::after {
+    top: 50%;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    transform: translateY(-50%);
+  }
+
+  /* ---------------- halftone and scanlines ---------------- */
+  .halftone {
+    background-image: radial-gradient(circle at center, currentColor 1px, transparent 1.4px);
+    background-size: 7px 7px;
+  }
+
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--scanline) 0px,
+      var(--scanline) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  }
+
+  /* ---------------- marquee ---------------- */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 42s linear infinite;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  .sponsor-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: sponsorMarquee 35s linear infinite;
+  }
+
+  .sponsor-marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes sponsorMarquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .sponsor-card-float-1 {
+    animation: sponsorFloat 6s ease-in-out infinite;
+  }
+
+  .sponsor-card-float-2 {
+    animation: sponsorFloat 6s ease-in-out infinite -3s;
+  }
+
+  @keyframes sponsorFloat {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+}
+
+/* ==========================================================================
+   BLUEPRINT MARK
+   The hero vector animates like a plotter drawing itself: construction
+   circles counter-rotate, the outlines draw on once, a bright segment traces
+   the geometry forever, vertex marks pulse and a scan bar sweeps down.
+   ========================================================================== */
+
+@keyframes bpDraw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes bpTrace {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes bpSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bpSpinRev {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes bpPulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.18); }
+}
+
+@keyframes bpSweep {
+  0% { transform: translateY(-40px); opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { transform: translateY(520px); opacity: 0; }
+}
+
+@keyframes bpDrift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes bpFlicker {
+  0%, 96%, 100% { opacity: 0.5; }
+  97% { opacity: 0.15; }
+  98% { opacity: 0.75; }
+}
+
+.bp-float {
+  animation: bpDrift 11s ease-in-out infinite;
+}
+
+/* SVG needs an explicit origin; the mark's centre is 260,260 in its viewBox. */
+.bp-spin,
+.bp-spin-rev {
+  transform-origin: 260px 260px;
+}
+
+.bp-spin {
+  animation: bpSpin 90s linear infinite;
+}
+
+.bp-spin-rev {
+  animation: bpSpinRev 140s linear infinite;
+}
+
+/* paths carry pathLength="1", so one unit is the whole path */
+.bp-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: bpDraw 2.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.bp-trace {
+  stroke-dasharray: 0.1 0.9;
+  animation: bpTrace 6s linear infinite;
+}
+
+.bp-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bpPulse 3.2s ease-in-out infinite;
+}
+
+.bp-sweep {
+  animation: bpSweep 6.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.bp-flicker {
+  animation: bpFlicker 7s linear infinite;
+}
+
+/* Reduced motion: settle everything into its finished state. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .marquee-track {
+    animation: none;
+    transform: none;
+  }
+
+  .bp-draw {
+    stroke-dashoffset: 0;
+  }
+
+  .bp-trace,
+  .bp-sweep {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   LIGHT MODE OVERRIDES
+   The variable swap handles most of the site, but three situations need
+   explicit CSS: content sitting on dark imagery, surfaces that need more
+   separation on a pale ground, and SVG art whose shading assumed black.
+   ========================================================================== */
+
+/*
+ * .on-media pins the DARK ramp locally, whatever the page theme is.
+ *
+ * Posters, headshots and sponsor art are dark images. Inverting the scrim and
+ * caption over them in light mode would put near-black text on a near-black
+ * photograph. Anything overlaying an image gets this class and keeps the dark
+ * token set, so a caption is always light-on-dark no matter the theme.
+ */
+.on-media {
+  --ink-950: 8 8 10;
+  --ink-900: 11 11 13;
+  --ink-800: 17 17 20;
+  --ink-700: 23 23 27;
+  --ink-600: 31 31 36;
+  --fg: 255 255 255;
+  --inv: 0 0 0;
+  --slate-100: 241 245 249;
+  --slate-200: 226 232 240;
+  --slate-300: 203 213 225;
+  --slate-400: 148 163 184;
+  --slate-500: 100 116 139;
+  --slate-600: 71 85 105;
+  --slate-700: 51 65 85;
+}
+
+.light {
+  /* Icon3D shading: the dark extrude and white specular are tuned for black.
+     On a pale ground the highlight vanishes and the extrude reads as a smudge,
+     so light mode uses a lighter extrude and a dark "shadow" highlight. */
+  --icon-extrude: #f3c9c5;
+  --icon-highlight: #7a1a15;
+}
+
+:root {
+  --icon-extrude: #5c1310;
+  --icon-highlight: #ffffff;
+}
+
+/* ---- surfaces on a white ground ----
+   The fill is the page colour now, so the black hairline is the whole edge. It
+   carries a little more weight than the 8% used on black, because a thin black
+   line on white reads finer than a thin white line on black. */
+.light .panel {
+  background-color: transparent;
+  border-color: rgb(var(--fg) / 0.14);
+}
+
+.light .panel-hover:hover {
+  border-color: rgb(var(--fg) / 0.3);
+  background-color: rgb(var(--fg) / 0.02);
+}
+
+/* Grid cells are built from gap-px over a background, so that background is
+   what draws every divider. It needs to be darker than a 8% hairline here. */
+.light .grid[class*='gap-px'],
+.light .divide-y {
+  border-color: rgb(var(--fg) / 0.12);
+}
+
+/* ---- inputs need a visible edge, not a fill ---- */
+.light .field {
+  background-color: rgb(var(--inv));
+  border-color: rgb(var(--fg) / 0.25);
+}
+
+.light .field:focus {
+  background-color: rgb(var(--inv));
+}
+
+/* ---- buttons ---- */
+/* btn-primary is bone-on-black in dark, so in light it becomes black-on-white.
+   Keep the hover crimson legible. */
+.light .btn-ghost {
+  border-color: rgb(var(--fg) / 0.25);
+}
+
+.light .btn-ghost:hover {
+  border-color: rgb(var(--fg) / 0.7);
+}
+
+/* ---- chips ---- */
+.light .chip {
+  border-color: rgb(var(--fg) / 0.2);
+}
+
+/* ---- the drafting grid is heavier than it needs to be on white ---- */
+.light body::before {
+  opacity: 0.75;
+}
+
+/* ---- dim numerals need a floor, 700 goes too pale otherwise ---- */
+.light .mono-label {
+  color: rgb(var(--slate-500));
+}
+
+/* ---- crimson on white wants a touch more weight to hold ---- */
+.light .tag-index,
+.light .text-brand-400 {
+  color: #a8241d;
+}
+
+/* but inside .on-media the ground is still dark, so keep the bright tone */
+.light .on-media .tag-index,
+.light .on-media .text-brand-400 {
+  color: #e0685e;
+}
+
+/*
+ * Sponsor artwork is the one thing we do not control: most logos supplied for
+ * a dark site are white or pale on transparent, which would vanish on white.
+ * The logo cell keeps a dark tile in both themes so any art that worked on the
+ * dark site still works here. It reads as a deliberate logo wall rather than a
+ * bug, and needs no per-sponsor handling.
+ */
+.light .sponsor-cell {
+  background-color: rgb(8 8 10);
+  border-color: rgb(255 255 255 / 0.1);
+}
+
+/* ---- scrollbar ---- */
+.light::-webkit-scrollbar-track {
+  background: rgb(var(--ink-900));
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--ink-950));
+  border-left: 1px solid rgb(var(--fg) / 0.06);
+}
+::-webkit-scrollbar-thumb {
+  background: #b32821;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #cf3f34;
+}

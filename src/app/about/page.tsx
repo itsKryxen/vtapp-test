@@ -92,6 +92,22 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <section className="panel mt-16 p-8">
+        <h2 className="text-xl font-bold">A Glimpse of Previous V-TAPP</h2>
+        <div className="mt-6 aspect-video w-full overflow-hidden rounded-lg border border-white/10 bg-black/50">
+          <iframe
+            width="100%"
+            height="100%"
+            src="https://www.youtube.com/embed/luVIty6bBIA"
+            title="Glimpse of V-TAPP"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
+        </div>
+      </section>
     </div>
   );
 }

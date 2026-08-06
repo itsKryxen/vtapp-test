@@ -2104,10 +2104,22 @@ html[data-vtapp-splash] .marquee-track {
   will-change: transform;
 }
 
+.light .orbit-icon-chip {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(179, 40, 33, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
 .orbit-icon-chip--hovered {
   transform: scale(1.12);
   border-color: rgba(224, 104, 94, 0.55);
   background: rgba(12, 8, 10, 0.88);
+}
+
+.light .orbit-icon-chip--hovered {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(224, 104, 94, 0.6);
+  box-shadow: 0 6px 16px rgba(179, 40, 33, 0.1);
 }
 
 /* icon SVG glow breathing */
@@ -2136,8 +2148,16 @@ html[data-vtapp-splash] .marquee-track {
   transition: color 250ms ease;
 }
 
+.light .orbit-icon-label {
+  color: rgba(15, 23, 42, 0.75); /* slate-900 with some opacity */
+}
+
 .orbit-icon-chip--hovered .orbit-icon-label {
   color: rgba(224, 104, 94, 0.9);
+}
+
+.light .orbit-icon-chip--hovered .orbit-icon-label {
+  color: rgba(179, 40, 33, 0.95);
 }
 
 
@@ -2263,89 +2283,6 @@ html[data-vtapp-splash] .marquee-track {
   33%  { transform: translate3d(3px,2px,0); }
   66%  { transform: translate3d(-2px,3px,0); }
   100% { transform: translate3d(0,0,0); }
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  pointer-events: auto;
-  cursor: pointer;
-  /* duration and delay come from inline CSS variables */
-  animation-duration:        var(--d, 22s);
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-delay:           var(--delay, 0s);
-  will-change: transform;
-}
-
-.orbit-icon--cw  { animation-name: orbitCW;  }
-.orbit-icon--ccw { animation-name: orbitCCW; }
-.orbit-icon--paused { animation-play-state: paused; }
-
-/* the visible chip (child of orbit arm — independent transform) */
-.orbit-icon-chip {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  padding: 5px 6px 4px;
-  border-radius: 7px;
-  background: rgba(8, 8, 10, 0.72);
-  border: 1px solid rgba(179, 40, 33, 0.22);
-  backdrop-filter: blur(4px);
-  transition:
-    transform     250ms cubic-bezier(.22,.61,.36,1),
-    border-color  250ms ease,
-    background    250ms ease;
-  animation: orbitIconFloat var(--float-d, 5.5s) ease-in-out infinite var(--float-delay, 0s);
-  will-change: transform;
-}
-
-.orbit-icon-chip--hovered {
-  transform: scale(1.12);
-  border-color: rgba(224, 104, 94, 0.55);
-  background: rgba(12, 8, 10, 0.88);
-}
-
-/* icon SVG glow breathing */
-.orbit-icon-svg {
-  color: rgba(224, 104, 94, 0.75);
-  transition: color 250ms ease, filter 250ms ease;
-  animation: orbitIconGlow var(--glow-dur, 4s) ease-in-out infinite var(--glow-delay, 0s);
-  will-change: filter, opacity;
-}
-
-.orbit-icon-chip--hovered .orbit-icon-svg {
-  color: rgba(238, 156, 149, 1);
-  filter: drop-shadow(0 0 10px rgba(224,104,94,0.8));
-  animation-play-state: running;
-}
-
-/* text label under the icon */
-.orbit-icon-label {
-  font-size: 7px;
-  font-family: var(--font-mono, monospace);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: rgba(100, 116, 139, 0.7);
-  white-space: nowrap;
-  line-height: 1;
-  transition: color 250ms ease;
-}
-
-.orbit-icon-chip--hovered .orbit-icon-label {
-  color: rgba(224, 104, 94, 0.9);
-}
-
-
-/* ==========================================================================
-   SCAN-FLASH SYSTEM  (.hero--scanning is toggled by JS in HeroIdentity)
-   When the scan fires, rings and key elements briefly intensify.
-   ========================================================================== */
-
-@keyframes scanFlash {
-  0%   { opacity: var(--scan-base, 0.12); filter: brightness(1); }
-  15%  { opacity: var(--scan-peak, 0.32); filter: brightness(1.6); }
-  50%  { opacity: var(--scan-peak, 0.32); filter: brightness(1.4); }
-  100% { opacity: var(--scan-base, 0.12); filter: brightness(1); }
 }
 
 /* hero-wide horizontal scan sweep */

@@ -29,7 +29,7 @@ export default function Footer() {
         </span>
       </div>
 
-      <div className="container-x grid gap-12 py-16 lg:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="container-x grid gap-12 py-16 lg:grid-cols-[1.5fr_1fr]">
         {/* brand */}
         <div>
           <LogoLockup width={340} className="h-auto w-[240px] sm:w-[300px]" />
@@ -43,34 +43,6 @@ export default function Footer() {
             <HudDots count={10} />
           </div>
         </div>
-
-        {/* explore */}
-        <nav aria-label="Footer navigation">
-          <div className="mb-5 flex items-center gap-3">
-            <span className="tag-index">[01]</span>
-            <span className="mono-label text-slate-400">INDEX</span>
-            <span className="h-px flex-1 bg-white/10" />
-          </div>
-
-          <ul>
-            {EXPLORE.map((l, i) => (
-              <li key={l.href}>
-                <Link
-                  href={l.href}
-                  className="group flex items-center gap-3 border-b border-white/[0.06] py-2.5 text-sm text-slate-400 transition hover:text-white"
-                >
-                  <span className="font-mono text-[10px] tracking-label text-slate-700 transition group-hover:text-brand-500">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  {l.label}
-                  <span className="ml-auto font-mono text-[10px] text-slate-700 transition group-hover:text-brand-500">
-                    →
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
 
         {/* contact */}
         <div>

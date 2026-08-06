@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -38,12 +39,24 @@ export default function Navbar() {
       }`}
     >
       <nav className="container-x flex h-20 items-center justify-between gap-6 sm:h-[88px]">
-        <Link href="/" className="group relative flex h-full items-center" aria-label="V-TAPP 2026 home">
-          <LogoMark size={42} />
-          {pathname === '/' && (
-            <span className="absolute inset-x-0 bottom-0 h-[3px] bg-brand-600 shadow-[0_0_12px_rgb(179_40_33/.7)]" />
-          )}
-        </Link>
+        <div className="flex h-full shrink-0 items-center gap-3 sm:gap-5">
+          <Link href="/" className="group relative flex h-full items-center" aria-label="V-TAPP 2026 home">
+            <LogoMark size={42} />
+            {pathname === '/' && (
+              <span className="absolute inset-x-0 bottom-0 h-[3px] bg-brand-600 shadow-[0_0_12px_rgb(179_40_33/.7)]" />
+            )}
+          </Link>
+
+          <span className="h-8 w-px bg-white/10" aria-hidden="true" />
+          <Image
+            src="/vit-ap-university-logo.png"
+            alt="VIT-AP University"
+            width={740}
+            height={197}
+            priority
+            className="h-auto w-24 sm:w-36"
+          />
+        </div>
 
         <div className="hidden h-full items-center gap-6 xl:flex">
           {LINKS.map((l) => {

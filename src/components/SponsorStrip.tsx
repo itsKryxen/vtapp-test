@@ -242,10 +242,6 @@ export default function SponsorStrip({ initialSponsors }: SponsorStripProps) {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 font-mono text-[10px] text-slate-500">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span>INTERACTIVE CONTINUOUS TICKER (HOVER TO PAUSE)</span>
-        </div>
       </div>
 
       {/* Dual Moving Marquee Container */}

@@ -178,6 +178,15 @@ export default function AndhraPradeshBinaryMap() {
       <div className="vtapp-map-stage container-x">
         <div className="grid w-full gap-6 xl:grid-cols-[minmax(0,1fr)_18rem]">
           <div className="vtapp-map-panel panel brackets scanlines">
+            <svg
+              className="vtapp-map-border-highlight"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <rect className="vtapp-map-border-glow" x="0.5" y="0.5" width="99" height="99" pathLength="1" />
+              <rect className="vtapp-map-border-spark" x="0.5" y="0.5" width="99" height="99" pathLength="1" />
+            </svg>
             <div className="vtapp-map-transform" style={{ transform: `scale(${mapScale})` }}>
               <svg
                 ref={svgRef}

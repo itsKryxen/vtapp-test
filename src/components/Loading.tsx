@@ -132,15 +132,16 @@ export function LoadPanel({ label = 'Resolving' }: { label?: string }) {
 
 /* ---------------------------------------------------------------- cards --- */
 
-/** Matches EventCard: 4:5 poster, title, meta row. */
+/** Matches EventCard: dossier header, 4:5 poster, title and metadata grid. */
 export function SkelEventCard({ delay = 0 }: { delay?: 0 | 1 | 2 | 3 }) {
   return (
     <div className="panel flex flex-col">
+      <Skel delay={delay} className="h-11 w-full !border-0" />
       <Skel delay={delay} className="aspect-poster w-full !border-0" />
       <div className="flex flex-col gap-3 p-5">
-        <Skel delay={delay} className="h-3 w-20" />
-        <Skel delay={delay} className="h-5 w-4/5" />
+        <Skel delay={delay} className="h-6 w-4/5" />
         <Skel delay={delay} className="h-3 w-3/5" />
+        <Skel delay={delay} className="mt-3 h-14 w-full" />
       </div>
     </div>
   );
@@ -148,7 +149,7 @@ export function SkelEventCard({ delay = 0 }: { delay?: 0 | 1 | 2 | 3 }) {
 
 export function SkelEventGrid({ count = 8 }: { count?: number }) {
   return (
-    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
       {Array.from({ length: count }).map((_, i) => (
         <SkelEventCard key={i} delay={(i % 4) as 0 | 1 | 2 | 3} />
       ))}

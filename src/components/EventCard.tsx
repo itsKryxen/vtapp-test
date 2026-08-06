@@ -17,49 +17,55 @@ interface Props {
     | 'poster_url'
     | 'registration_fee'
     | 'prize_pool'
-    | 'event_code'
   >;
   clubName?: string | null;
   priority?: boolean;
-  /** Position in the grid, printed as the card's index tag. */
+  /** Position in the event index. */
   index?: number;
 }
 
 /**
- * Event card, technical variant.
- *
- * No tilt, no glass, no rounding. The card is a hairline cell in a grid, the
- * poster sits behind a scrim, and every piece of metadata is monospaced and
- * tracked. Bracket corners appear on hover.
+ * Event card styled as a compact event dossier: poster first, then a clear
+ * typographic hierarchy and a small grid of useful registration details.
  */
 export default function EventCard({ event, clubName, priority = false, index = 0 }: Props) {
   const accent = schoolAccent(event.school);
-  const category = CATEGORIES.find((c) => c.value === event.category);
+  const category = CATEGORIES.find((item) => item.value === event.category);
   const date = new Date(event.start_at);
+  const displayIndex = String(index + 1).padStart(2, '0');
+  const fee = Number(event.registration_fee);
+  const prizePool = Number(event.prize_pool);
+
+  const dateLabel = date.toLocaleDateString('en-IN', {
+    day: '2-digit',
+    month: 'short',
+  });
+  const timeLabel = date.toLocaleTimeString('en-IN', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
 
   return (
     <Link
       href={`/events/${event.slug}`}
-      className="brackets group relative block bg-ink-950 transition-colors duration-200 hover:bg-ink-900 focus-visible:outline focus-visible:outline-1 focus-visible:outline-brand-500"
+      aria-label={`View ${event.title} event details`}
+      className="event-card brackets group relative flex h-full flex-col focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-brand-500"
     >
-      {/* ---- header strip ---- */}
-      <div className="flex items-center gap-3 border-b border-white/[0.08] px-4 py-3">
-        <span className="font-mono text-[10px] tracking-label text-slate-600">
-          {String(index + 1).padStart(2, '0')}
+      <div className="flex h-11 items-center border-b border-white/[0.08]">
+        <span className="grid h-full w-12 place-items-center border-r border-white/[0.08] font-mono text-[10px] tracking-label text-brand-400">
+          {displayIndex}
         </span>
-        <span
-          className="font-mono text-[10px] uppercase tracking-label"
-          style={{ color: accent }}
-        >
-          {event.school}
+        <span className="px-3 font-mono text-[9px] uppercase tracking-label text-slate-500">
+          Event dossier
         </span>
-        <span className="ml-auto font-mono text-[9px] uppercase tracking-label text-slate-600">
-          {event.event_code}
+        <span className="ml-auto h-1.5 w-1.5 bg-brand-500" aria-hidden="true" />
+        <span className="mx-3 font-mono text-[8px] uppercase tracking-label text-slate-600">
+          Indexed
         </span>
       </div>
 
-      {/* ---- poster, locked to the 4:5 spec ---- */}
-      <div className="on-media relative aspect-[4/5] w-full overflow-hidden bg-ink-900">
+      <div className="on-media relative aspect-[4/5] overflow-hidden bg-ink-900">
         {event.thumbnail_url || event.poster_url ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -69,70 +75,91 @@ export default function EventCard({ event, clubName, priority = false, index = 0
             height={675}
             loading={priority ? 'eager' : 'lazy'}
             decoding="async"
-            className="h-full w-full object-cover opacity-85 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-100"
+            className="h-full w-full object-cover opacity-90 saturate-[0.88] transition duration-700 ease-out group-hover:scale-[1.025] group-hover:opacity-100 group-hover:saturate-100"
           />
         ) : (
-          <div className="grid h-full w-full place-items-center">
-            <span className="mono-label">NO POSTER</span>
+          <div className="grid h-full w-full place-items-center bg-[linear-gradient(135deg,rgb(var(--ink-900)),rgb(var(--ink-950)))]">
+            <div className="text-center">
+              <p className="font-display text-5xl font-extralight text-white/10">{displayIndex}</p>
+              <p className="mono-label mt-3">Poster pending</p>
+            </div>
           </div>
         )}
 
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/20 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgb(var(--ink-950)/.92)_100%)]" />
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-px opacity-80"
+          style={{ backgroundColor: accent }}
+        />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-px bg-white/15" />
 
-        {/* crosshair reticle that appears on hover */}
-        <span className="pointer-events-none absolute left-3 top-3 h-3 w-3 border-l border-t border-white/0 transition-colors duration-300 group-hover:border-white/70" />
-        <span className="pointer-events-none absolute bottom-3 right-3 h-3 w-3 border-b border-r border-white/0 transition-colors duration-300 group-hover:border-white/70" />
+        {prizePool > 0 && (
+          <div className="absolute bottom-0 right-0 border-l border-t border-white/15 bg-ink-950/90 px-3 py-2 backdrop-blur-md">
+            <p className="font-mono text-[8px] uppercase tracking-label text-slate-500">Prize pool</p>
+            <p className="mt-1 font-mono text-[11px] text-white">
+              ₹{prizePool.toLocaleString('en-IN')}
+            </p>
+          </div>
+        )}
 
-        {event.prize_pool ? (
-          <span className="absolute right-3 top-3 border border-white/20 bg-ink-950/85 px-2 py-1 font-mono text-[10px] tracking-label text-white">
-            ₹{Number(event.prize_pool).toLocaleString('en-IN')}
+        <div className="absolute bottom-0 left-0 px-4 py-3">
+          <span className="font-mono text-[9px] uppercase tracking-label text-white/70">
+            {category?.label ?? event.category}
           </span>
-        ) : null}
+        </div>
+      </div>
 
-        <div className="absolute inset-x-0 bottom-0 p-4">
-          {category && <p className="mono-label mb-2 text-slate-400">{category.label}</p>}
-          <h3 className="font-display text-xl font-light leading-tight text-white">
+      <div className="flex flex-1 flex-col border-t border-white/[0.08]">
+        <div className="flex-1 px-5 py-5">
+          <h3 className="font-display text-[1.65rem] font-light leading-[1.05] tracking-tight text-white transition-colors duration-200 group-hover:text-brand-300">
             {event.title}
           </h3>
           {event.tagline && (
-            <p className="mt-1.5 line-clamp-2 text-xs leading-snug text-slate-400">
+            <p className="mt-2 line-clamp-2 min-h-10 text-sm leading-5 text-slate-400">
               {event.tagline}
             </p>
           )}
         </div>
+
+        <dl className="grid grid-cols-2 border-t border-white/[0.08]">
+          <div className="border-r border-white/[0.08] px-4 py-3.5">
+            <dt className="mono-label">Date / time</dt>
+            <dd className="mt-2 font-mono text-[11px] uppercase tracking-wide text-slate-200">
+              <time dateTime={event.start_at}>{dateLabel} · {timeLabel}</time>
+            </dd>
+          </div>
+          <div className="min-w-0 px-4 py-3.5">
+            <dt className="mono-label">Venue</dt>
+            <dd className="mt-2 truncate font-mono text-[11px] text-slate-200" title={event.venue}>
+              {event.venue}
+            </dd>
+          </div>
+        </dl>
+
+        <div className="flex min-h-14 items-center border-t border-white/[0.08] px-4">
+          <div className="min-w-0">
+            <p className="mono-label">Hosted by</p>
+            <p className="mt-1 truncate font-mono text-[9px] uppercase tracking-[0.12em] text-slate-300">
+              {clubName ?? 'V-TAPP'}
+            </p>
+          </div>
+
+          <div className="ml-auto flex shrink-0 items-center gap-4 pl-4">
+            <span className="font-mono text-[11px] uppercase tracking-label" style={{ color: accent }}>
+              {fee === 0 ? 'Free' : `₹${fee.toLocaleString('en-IN')}`}
+            </span>
+            <span
+              aria-hidden="true"
+              className="grid h-8 w-8 place-items-center border border-white/15 text-sm text-white transition-all duration-200 group-hover:border-brand-500 group-hover:bg-brand-600 group-hover:text-white"
+            >
+              ↗
+            </span>
+          </div>
+        </div>
       </div>
 
-      {/* ---- meta table ---- */}
-      <dl className="divide-y divide-white/[0.06] border-t border-white/[0.08]">
-        <div className="flex items-center justify-between px-4 py-2.5">
-          <dt className="mono-label">DATE</dt>
-          <dd className="font-mono text-[11px] uppercase tracking-wide text-slate-300">
-            {date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })}{' '}
-            {date.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: false })}
-          </dd>
-        </div>
-
-        <div className="flex items-center justify-between gap-4 px-4 py-2.5">
-          <dt className="mono-label">VENUE</dt>
-          <dd className="truncate font-mono text-[11px] text-slate-300">{event.venue}</dd>
-        </div>
-
-        <div className="flex items-center justify-between gap-4 px-4 py-2.5">
-          <dt className="mono-label truncate">{clubName ? clubName.toUpperCase() : 'HOST'}</dt>
-          <dd
-            className="shrink-0 font-mono text-[11px] uppercase tracking-label"
-            style={{ color: accent }}
-          >
-            {Number(event.registration_fee) === 0
-              ? 'FREE'
-              : `₹${Number(event.registration_fee).toLocaleString('en-IN')}`}
-          </dd>
-        </div>
-      </dl>
-
-      {/* accent bar that wipes in on hover */}
       <span
-        className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100"
         style={{ backgroundColor: accent }}
       />
     </Link>

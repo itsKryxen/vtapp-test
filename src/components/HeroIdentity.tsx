@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect, type PointerEvent as ReactPointerEvent } from 'react';
+import Image from 'next/image';
 import BlueprintMark from '@/components/BlueprintMark';
 import Countdown from '@/components/Countdown';
 import { LogoMark } from '@/components/Logo';
@@ -114,13 +115,21 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
       <div className="flex w-full flex-col border-b border-white/10 pb-12 lg:min-h-[calc(100svh-12rem)] lg:justify-center lg:border-b-0 lg:border-r lg:pb-0 lg:pr-12">
 
         {/* Logo + wordmark lockup */}
-        <div className="hero-identity-lockup hero-enter-lockup flex items-center justify-center gap-4 sm:gap-8 lg:justify-start">
+        <div className="hero-identity-lockup hero-enter-lockup flex items-center justify-center gap-2 sm:gap-4 lg:gap-5 lg:justify-start">
           <div className="hero-identity-logo shrink-0">
-            <LogoMark size={144} className="h-20 w-20 sm:h-32 sm:w-32 lg:h-36 lg:w-36" />
+            <LogoMark size={144} className="h-16 w-16 sm:h-24 sm:w-24 lg:h-32 lg:w-32" />
           </div>
-          <div className="min-w-0 text-left">
-            <p className="hero-text-breathe font-mono text-[clamp(2.15rem,12vw,3rem)] font-black uppercase leading-[0.82] tracking-[-0.075em] text-white lg:text-[clamp(3rem,5.6vw,7rem)]">
-              V-TAPP<span className="text-brand-500">26</span>
+          <div className="min-w-0 text-left flex items-center gap-1 sm:gap-2">
+            <Image 
+              src="/vtapp-wordmark-dark.png" 
+              alt="VTAPP" 
+              width={400} 
+              height={133}
+              priority
+              className="h-12 w-auto sm:h-20 lg:h-28"
+            />
+            <p className="hero-text-breathe font-mono text-[clamp(2.15rem,12vw,3rem)] font-black uppercase leading-[0.82] tracking-[-0.075em] text-white lg:text-[clamp(3rem,5.6vw,7rem)] mt-2 sm:mt-3 lg:mt-4">
+              <span className="text-brand-500">26</span>
             </p>
           </div>
         </div>

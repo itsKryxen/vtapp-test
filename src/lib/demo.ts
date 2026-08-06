@@ -160,7 +160,7 @@ export const DEMO_TEAM: TeamMember[] = [
   member('demo-t-6', 'Dr. P. Arulmozhivarman', 'Vice Chancellor', 'Leadership', 60),
   member('demo-t-7', 'Dr. Jagadish Chandra Mudiganti', 'Registrar', 'Leadership', 70),
 
-  member('demo-t-8', 'Dr. Somya Ranjan Sahoo', 'Convenor, VTAPP 2026', 'Core', 10),
-  member('demo-t-9', 'Dr. Sambhu Dutta', 'Co-Convenor', 'Core', 20),
-  member('demo-t-10', 'Dr. Gokul Yenduri', 'Co-Convenor', 'Core', 30),
+  member('demo-t-8', 'Dr. Somya Ranjan Sahoo', 'Convenor, VTAPP 2026', 'Leadership', 80),
+  member('demo-t-9', 'Dr. Sambhu Dutta', 'Co-Convenor', 'Leadership', 90),
+  member('demo-t-10', 'Dr. Gokul Yenduri', 'Co-Convenor', 'Leadership', 100),
 ];

@@ -36,30 +36,28 @@ export default function Navbar() {
         scrolled ? 'border-white/10 bg-ink-950/92 backdrop-blur-sm' : 'border-transparent'
       }`}
     >
-      <nav className="container-x flex h-16 items-center justify-between gap-6 sm:h-[72px]">
-        {/* wordmark: mark + widely tracked lettering, as in the reference */}
-        <Link href="/" className="group flex items-center gap-3" aria-label="V-TAPP 2026 home">
-          <LogoMark size={26} />
-          <span className="font-mono text-sm uppercase tracking-wide2 text-white">V-TAPP</span>
-          <span className="hidden font-mono text-sm uppercase tracking-wide2 text-brand-500 sm:inline">
-            26
-          </span>
+      <nav className="container-x flex h-20 items-center justify-between gap-6 sm:h-[88px]">
+        <Link href="/" className="group relative flex h-full items-center" aria-label="V-TAPP 2026 home">
+          <LogoMark size={42} />
+          {pathname === '/' && (
+            <span className="absolute inset-x-0 bottom-0 h-[3px] bg-brand-600 shadow-[0_0_12px_rgb(179_40_33/.7)]" />
+          )}
         </Link>
 
-        <div className="hidden items-center gap-7 lg:flex">
+        <div className="hidden h-full items-center gap-6 xl:flex">
           {LINKS.map((l) => {
             const active = pathname.startsWith(l.href);
             return (
               <Link
                 key={l.href}
                 href={l.href}
-                className={`relative font-mono text-[11px] uppercase tracking-label transition-colors ${
+                className={`relative flex h-full items-center font-mono text-xs uppercase tracking-label transition-colors ${
                   active ? 'text-white' : 'text-slate-500 hover:text-white'
                 }`}
               >
                 {l.label}
                 {active && (
-                  <span className="absolute -bottom-2 left-0 h-px w-full bg-brand-600" />
+                  <span className="absolute inset-x-0 bottom-0 h-[3px] bg-brand-600 shadow-[0_0_12px_rgb(179_40_33/.7)]" />
                 )}
               </Link>
             );
@@ -78,7 +76,7 @@ export default function Navbar() {
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
             aria-expanded={open}
-            className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] border border-white/15 transition hover:border-white/40 lg:hidden"
+            className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] border border-white/15 transition hover:border-white/40 xl:hidden"
           >
             <span
               className={`h-px w-4 bg-white transition-transform ${open ? 'translate-y-[6px] rotate-45' : ''}`}
@@ -92,14 +90,17 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <div className="border-t border-white/10 bg-ink-950 lg:hidden">
+        <div className="border-t border-white/10 bg-ink-950 xl:hidden">
           <div className="container-x flex flex-col py-2">
             {LINKS.map((l, i) => (
               <Link
                 key={l.href}
                 href={l.href}
-                className="flex items-center gap-4 border-b border-white/[0.06] py-3.5 font-mono text-[11px] uppercase tracking-label text-slate-400 transition hover:text-white"
+                className={`relative flex items-center gap-4 border-b border-white/[0.06] py-4 font-mono text-xs uppercase tracking-label transition hover:text-white ${
+                  pathname.startsWith(l.href) ? 'bg-brand-600/10 text-white' : 'text-slate-400'
+                }`}
               >
+                {pathname.startsWith(l.href) && <span className="absolute inset-y-0 left-0 w-[3px] bg-brand-600" />}
                 <span className="text-brand-500">[{String(i + 1).padStart(2, '0')}]</span>
                 {l.label}
               </Link>

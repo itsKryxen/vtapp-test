@@ -5,6 +5,8 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Ticker from '@/components/Ticker';
 import Preloader from '@/components/Preloader';
+import ButtonEffects from '@/components/ButtonEffects';
+import NumericCursorTrail from '@/components/NumericCursorTrail';
 import { FEST } from '@/lib/fest';
 
 /**
@@ -85,6 +87,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>
       <body className="min-h-screen">
+        <ButtonEffects />
+        <NumericCursorTrail />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-bone focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-label focus:text-ink-950"

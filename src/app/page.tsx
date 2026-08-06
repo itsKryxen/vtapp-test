@@ -15,9 +15,8 @@ export default async function HomePage() {
         <HeroIdentity countdownTo={COUNTDOWN_TARGET} />
       </section>
 
-      <SponsorStrip initialSponsors={sponsors} />
-
       <AndhraPradeshBinaryMap />
+       <SponsorStrip initialSponsors={sponsors} />
     </>
   );
 }

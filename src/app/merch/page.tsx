@@ -159,11 +159,21 @@ function Card({ item, index }: { item: MerchItem; index: number }) {
 function Waiting() {
   return (
     <div className="panel brackets mt-14 flex flex-col items-center px-8 py-20 text-center">
-      <Icon3D name="merch" size={84} />
+      <video
+        className="aspect-video w-full max-w-5xl bg-black object-cover"
+        src="/videos/coming-soon.mp4"
+        poster="/posters/coming-soon-16x9-dark.png"
+        aria-label="V-TAPP merchandise coming soon"
+        autoPlay
+        controls
+        loop
+        muted
+        playsInline
+        preload="metadata"
+      >
+        Your browser does not support embedded videos.
+      </video>
 
-      <p className="mt-8 font-display text-2xl font-light tracking-tight text-white">
-        The drop is being printed
-      </p>
       <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-400">
         Tees, hoodies and the rest of the {FEST.name} kit go on sale before {FEST.dateLabel}. This
         page fills in the moment the run is confirmed.

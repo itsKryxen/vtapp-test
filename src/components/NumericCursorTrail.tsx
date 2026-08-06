@@ -3,10 +3,10 @@
 import { useEffect, useRef } from 'react';
 
 // Cursor-trail controls. Keep the trail capped at seven visible signals.
-export const CURSOR_TRAIL_LIMIT = 7;
-export const CURSOR_TRAIL_EMIT_MS = 115;
-export const CURSOR_TRAIL_STEP_MS = 170;
-export const CURSOR_TRAIL_DIGITS = ['5', '4', '2', '1', '0'] as const;
+export const CURSOR_TRAIL_LIMIT = 5;
+export const CURSOR_TRAIL_EMIT_MS = 80;
+export const CURSOR_TRAIL_STEP_MS = 90;
+export const CURSOR_TRAIL_DIGITS = ['2', '1', '0'] as const;
 export const CURSOR_TRAIL_HEAT_COLORS = {
   '5': '#fff2a8',
   '4': '#ffb347',
@@ -15,7 +15,7 @@ export const CURSOR_TRAIL_HEAT_COLORS = {
   '0': '#4f1512',
 } as const;
 export const CURSOR_TRAIL_LINE_WIDTH = 2.2;
-export const CURSOR_TRAIL_CLUSTER_PULL = 0.24;
+export const CURSOR_TRAIL_CLUSTER_PULL = 0.2;
 
 type TrailSignal = {
   bornAt: number;

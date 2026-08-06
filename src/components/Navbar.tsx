@@ -20,25 +20,13 @@ const LINKS = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   useEffect(() => setOpen(false), [pathname]);
 
   return (
-    <header
-      className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
-        scrolled ? 'border-white/10 bg-ink-950/92 backdrop-blur-sm' : 'border-transparent'
-      }`}
-    >
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-ink-950">
       <nav className="container-x flex h-20 items-center justify-between gap-6 sm:h-[88px]">
         <div className="flex h-full shrink-0 items-center gap-3 sm:gap-5">
           <Link href="/" className="group relative flex h-full items-center" aria-label="V-TAPP 2026 home">

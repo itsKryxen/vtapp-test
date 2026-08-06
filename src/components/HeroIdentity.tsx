@@ -126,7 +126,7 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
         </div>
 
         {/* Edition badge */}
-        <div className="hero-enter-badge mt-7 flex justify-center lg:justify-start">
+        <div className="hero-enter-badge mt-7 flex justify-center">
           <p
             className="hero-edition-badge inline-flex font-mono text-[clamp(1.05rem,2vw,1.7rem)] uppercase tracking-[0.2em] text-white sm:tracking-[0.27em]"
             aria-label="3rd Edition"

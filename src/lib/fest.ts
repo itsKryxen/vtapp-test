@@ -17,6 +17,7 @@ export const FEST = {
   venue: 'VIT-AP University, Amaravati',
   email: 'vtapp.convenor@vitap.ac.in',
   instagram: 'https://instagram.com/vtapp.vitap',
+  website: 'https://vitap.ac.in/',
   /** Deadline for clubs to submit events for review */
   submissionDeadline: '2026-08-25T23:59:00+05:30',
 } as const;

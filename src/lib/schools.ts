@@ -14,7 +14,8 @@ export type SchoolCode =
   | 'VSB'
   | 'VSL'
   | 'VISH'
-  | 'CENTRAL';
+  | 'CENTRAL'
+  | 'SBST';
 
 export interface School {
   code: SchoolCode;
@@ -37,6 +38,7 @@ export const SCHOOLS: School[] = [
   { code: 'VSB', name: 'VIT-AP School of Business', short: 'Business', accent: '#d8536b' },
   { code: 'VSL', name: 'VIT-AP School of Law', short: 'Law', accent: '#c9b8a8' },
   { code: 'VISH', name: 'VIT-AP School of Social Sciences and Humanities', short: 'Social Sciences', accent: '#b5666b' },
+  { code: 'SBST', name: 'School of Bio Sciences and Technology', short: 'Bio Sciences', accent: '#5eb57c' },
   { code: 'CENTRAL', name: 'Central / University-wide Clubs', short: 'Central', accent: '#f1f1f1' },
 ];
 

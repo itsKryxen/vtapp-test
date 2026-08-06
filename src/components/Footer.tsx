@@ -17,6 +17,7 @@ const EXPLORE = [
 const SOCIALS = [
   { href: FEST.instagram, label: 'Instagram' },
   { href: 'https://facebook.com/vtapp.vitap', label: 'Facebook' },
+  { href: FEST.website, label: 'Website' },
 ];
 
 export default function Footer() {

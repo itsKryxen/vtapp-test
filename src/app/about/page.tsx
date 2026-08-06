@@ -84,6 +84,12 @@ export default function AboutPage() {
               @vtapp.vitap
             </a>
           </div>
+          <div>
+            <p className="text-xs text-slate-500">Website</p>
+            <a href={FEST.website} target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">
+              vitap.ac.in
+            </a>
+          </div>
         </div>
       </section>
     </div>

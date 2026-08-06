@@ -10,7 +10,9 @@ export default function PageLogoIntroAnimation() {
   const pathname = usePathname();
   const [stage, setStage] = useState<AnimationStage>('done');
   const [currentPath, setCurrentPath] = useState<string>('');
-  const prevPathRef = useRef<string>('');
+  const initialPathRef = useRef(pathname);
+  const hasLeftInitialPathRef = useRef(false);
+  const hasCompletedInitialAnimationRef = useRef(false);
 
   // Check if current route should bypass animation (dashboard & admin)
   const isExcluded = pathname.startsWith('/dashboard') || pathname.startsWith('/admin');
@@ -23,15 +25,28 @@ export default function PageLogoIntroAnimation() {
       return;
     }
 
-    // Trigger animation when pathname changes or on initial mount
-    prevPathRef.current = pathname;
+    // Show the branded intro once per site entry, never between internal pages.
+    if (pathname !== initialPathRef.current) {
+      hasLeftInitialPathRef.current = true;
+      setStage('done');
+      return;
+    }
+
+    if (hasLeftInitialPathRef.current || hasCompletedInitialAnimationRef.current) {
+      setStage('done');
+      return;
+    }
+
     setCurrentPath(pathname);
     setStage('init');
 
     const t1 = setTimeout(() => setStage('rush'), 50);
     const t2 = setTimeout(() => setStage('settle'), 650);
     const t3 = setTimeout(() => setStage('expand'), 1200);
-    const t4 = setTimeout(() => setStage('done'), 1850);
+    const t4 = setTimeout(() => {
+      hasCompletedInitialAnimationRef.current = true;
+      setStage('done');
+    }, 1850);
 
     return () => {
       clearTimeout(t1);

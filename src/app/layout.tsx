@@ -10,6 +10,7 @@ import ButtonEffects from '@/components/ButtonEffects';
 import BlinkingDotCursor from '@/components/BlinkingDotCursor';
 import NumericCursorTrail from '@/components/NumericCursorTrail';
 import CuteRobotCompanion from '@/components/CuteRobotCompanion';
+import { SocialRail } from '@/components/SocialLinks';
 import { FEST } from '@/lib/fest';
 
 /**
@@ -106,6 +107,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <Ticker />
         <Navbar />
+        <SocialRail />
 
         <main id="main" className="relative z-10">
           {children}

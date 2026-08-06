@@ -19,6 +19,9 @@ const LINKS = [
   // { href: '/tickets', label: 'Tickets' },
 ];
 
+const TOP_LINKS = LINKS.slice(0, 2);
+const SIDE_LINKS = LINKS.slice(2);
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -26,91 +29,115 @@ export default function Navbar() {
   useEffect(() => setOpen(false), [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-ink-950">
-      <nav className="container-x flex h-20 items-center justify-between gap-6 sm:h-[88px]">
-        <div className="flex h-full shrink-0 items-center gap-3 sm:gap-5">
-          <Link href="/" className="group relative flex h-full items-center" aria-label="V-TAPP 2026 home">
-            <LogoMark size={42} />
-            {pathname === '/' && (
-              <span className="absolute inset-x-0 bottom-0 h-[3px] bg-brand-600 shadow-[0_0_12px_rgb(179_40_33/.7)]" />
-            )}
-          </Link>
+    <>
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-ink-950">
+        <nav className="container-x relative flex h-20 items-center gap-3 !px-5 sm:h-[88px] sm:!px-8">
+          <div className="flex h-full shrink-0 items-center gap-3 sm:gap-5">
+            <Link href="/" className="group relative flex h-full items-center" aria-label="V-TAPP 2026 home">
+              <LogoMark size={42} />
+              {pathname === '/' && (
+                <span className="absolute inset-x-0 bottom-0 h-[3px] bg-brand-600 shadow-[0_0_12px_rgb(179_40_33/.7)]" />
+              )}
+            </Link>
 
-          <span className="h-8 w-px bg-white/10" aria-hidden="true" />
-          <Image
-            src="/vit-ap-university-logo.png"
-            alt="VIT-AP University"
-            width={740}
-            height={197}
-            priority
-            className="h-auto w-24 sm:w-36"
-          />
-        </div>
+            <span className="h-8 w-px bg-white/10" aria-hidden="true" />
+            <Image
+              src="/vit-ap-university-logo.png"
+              alt="VIT-AP University"
+              width={740}
+              height={197}
+              priority
+              className="h-auto w-24 sm:w-36"
+            />
+          </div>
 
-        <div className="hidden h-full items-center gap-6 xl:flex">
-          {LINKS.map((l) => {
-            const active = pathname.startsWith(l.href);
+          <div className="absolute left-1/2 hidden h-full -translate-x-1/2 items-center gap-8 xl:flex">
+            {TOP_LINKS.map((link) => {
+              const active = pathname.startsWith(link.href);
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={active ? 'page' : undefined}
+                  className={`relative flex h-full items-center font-mono text-xs uppercase tracking-label transition-colors ${
+                    active ? 'text-white' : 'text-slate-500 hover:text-white'
+                  }`}
+                >
+                  {link.label}
+                  {active && (
+                    <span className="absolute inset-x-0 bottom-0 h-[3px] bg-brand-600 shadow-[0_0_12px_rgb(179_40_33/.7)]" />
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="ml-auto flex items-center gap-3">
+            <ThemeToggle />
+
+            <Link href="/tickets" className="btn-primary hidden !px-5 !py-2.5 sm:inline-flex">
+              Buy tickets
+            </Link>
+
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-label="Toggle menu"
+              aria-expanded={open}
+              className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] border border-white/15 transition hover:border-white/40 xl:hidden"
+            >
+              <span
+                className={`h-px w-4 bg-white transition-transform ${open ? 'translate-y-[6px] rotate-45' : ''}`}
+              />
+              <span className={`h-px w-4 bg-white transition-opacity ${open ? 'opacity-0' : ''}`} />
+              <span
+                className={`h-px w-4 bg-white transition-transform ${open ? '-translate-y-[6px] -rotate-45' : ''}`}
+              />
+            </button>
+          </div>
+        </nav>
+
+        {open && (
+          <div className="border-t border-white/10 bg-ink-950 xl:hidden">
+            <div className="container-x flex flex-col py-2">
+              {LINKS.map((l, i) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className={`relative flex items-center gap-4 border-b border-white/[0.06] py-4 font-mono text-xs uppercase tracking-label transition hover:text-white ${
+                    pathname.startsWith(l.href) ? 'bg-brand-600/10 text-white' : 'text-slate-400'
+                  }`}
+                >
+                  {pathname.startsWith(l.href) && <span className="absolute inset-y-0 left-0 w-[3px] bg-brand-600" />}
+                  <span className="text-brand-500">[{String(i + 1).padStart(2, '0')}]</span>
+                  {l.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </header>
+
+      <aside className="navigation-rail" aria-label="Primary navigation">
+        <nav className="navigation-rail-links">
+          {SIDE_LINKS.map((link, index) => {
+            const active = pathname.startsWith(link.href);
+
             return (
               <Link
-                key={l.href}
-                href={l.href}
-                className={`relative flex h-full items-center font-mono text-xs uppercase tracking-label transition-colors ${
-                  active ? 'text-white' : 'text-slate-500 hover:text-white'
-                }`}
+                key={link.href}
+                href={link.href}
+                aria-current={active ? 'page' : undefined}
+                className={`navigation-rail-link ${active ? 'is-active' : ''}`}
               >
-                {l.label}
-                {active && (
-                  <span className="absolute inset-x-0 bottom-0 h-[3px] bg-brand-600 shadow-[0_0_12px_rgb(179_40_33/.7)]" />
-                )}
+                <span aria-hidden="true">{String(index + 3).padStart(2, '0')}</span>
+                {link.label}
               </Link>
             );
           })}
-        </div>
-
-        <div className="flex items-center gap-3">
-          <ThemeToggle />
-
-          <Link href="/tickets" className="btn-primary hidden !px-5 !py-2.5 sm:inline-flex">
-            Buy tickets
-          </Link>
-
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-label="Toggle menu"
-            aria-expanded={open}
-            className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] border border-white/15 transition hover:border-white/40 xl:hidden"
-          >
-            <span
-              className={`h-px w-4 bg-white transition-transform ${open ? 'translate-y-[6px] rotate-45' : ''}`}
-            />
-            <span className={`h-px w-4 bg-white transition-opacity ${open ? 'opacity-0' : ''}`} />
-            <span
-              className={`h-px w-4 bg-white transition-transform ${open ? '-translate-y-[6px] -rotate-45' : ''}`}
-            />
-          </button>
-        </div>
-      </nav>
-
-      {open && (
-        <div className="border-t border-white/10 bg-ink-950 xl:hidden">
-          <div className="container-x flex flex-col py-2">
-            {LINKS.map((l, i) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className={`relative flex items-center gap-4 border-b border-white/[0.06] py-4 font-mono text-xs uppercase tracking-label transition hover:text-white ${
-                  pathname.startsWith(l.href) ? 'bg-brand-600/10 text-white' : 'text-slate-400'
-                }`}
-              >
-                {pathname.startsWith(l.href) && <span className="absolute inset-y-0 left-0 w-[3px] bg-brand-600" />}
-                <span className="text-brand-500">[{String(i + 1).padStart(2, '0')}]</span>
-                {l.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-    </header>
+        </nav>
+      </aside>
+    </>
   );
 }

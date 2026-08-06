@@ -186,6 +186,184 @@
   animation: dotCursorBlink 0.9s step-end infinite;
 }
 
+/* Fixed social dock inspired by the event artwork. Kept off narrow screens so
+ * it never masks page content or competes with the mobile navigation. */
+.social-rail {
+  position: fixed;
+  right: 14px;
+  top: 50%;
+  z-index: 60;
+  display: none;
+  width: 64px;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  border: 1px solid rgb(var(--fg) / 0.13);
+  background:
+    linear-gradient(180deg, rgb(var(--ink-900) / 0.98), rgba(179, 40, 33, 0.16)),
+    rgb(var(--ink-950) / 0.96);
+  box-shadow: -12px 18px 44px rgb(0 0 0 / 0.28), 0 0 32px rgba(179, 40, 33, 0.11);
+  clip-path: polygon(0 16px, 16px 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  transform: translateY(-50%);
+  backdrop-filter: blur(16px) saturate(1.1);
+}
+
+.social-rail-links {
+  display: grid;
+  width: 100%;
+  place-items: center;
+  padding: 12px 0;
+}
+
+.navigation-rail {
+  position: fixed;
+  left: 14px;
+  top: 50%;
+  z-index: 60;
+  display: none;
+  width: 112px;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  border: 1px solid rgb(var(--fg) / 0.13);
+  background:
+    linear-gradient(180deg, rgb(var(--ink-900) / 0.98), rgba(179, 40, 33, 0.16)),
+    rgb(var(--ink-950) / 0.96);
+  box-shadow: 12px 18px 44px rgb(0 0 0 / 0.28), 0 0 32px rgba(179, 40, 33, 0.11);
+  clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 16px);
+  transform: translateY(-50%);
+  backdrop-filter: blur(16px) saturate(1.1);
+}
+
+.navigation-rail-links {
+  display: grid;
+  width: 100%;
+  padding: 12px 0;
+}
+
+.navigation-rail-link {
+  display: flex;
+  min-height: 53px;
+  align-items: center;
+  gap: 9px;
+  border-top: 1px solid rgb(var(--fg) / 0.06);
+  padding: 0 12px;
+  color: rgb(var(--fg) / 0.7);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.13em;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: color 180ms ease, background-color 180ms ease, box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.navigation-rail-link:first-child {
+  border-top: 0;
+}
+
+.navigation-rail-link > span {
+  color: rgb(var(--slate-600));
+  font-size: 8px;
+  letter-spacing: 0;
+  transition: color 180ms ease;
+}
+
+.navigation-rail-link:hover,
+.navigation-rail-link:focus-visible,
+.navigation-rail-link.is-active {
+  color: rgb(var(--fg));
+  background: rgba(179, 40, 33, 0.14);
+  box-shadow: inset -3px 0 var(--brand-bright);
+  outline: none;
+  transform: translateX(3px);
+}
+
+.navigation-rail-link:hover > span,
+.navigation-rail-link:focus-visible > span,
+.navigation-rail-link.is-active > span {
+  color: var(--brand-bright);
+}
+
+.social-link {
+  display: grid;
+  place-items: center;
+  color: rgb(var(--fg) / 0.82);
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease,
+    box-shadow 180ms ease, transform 180ms ease;
+}
+
+.social-rail .social-link {
+  width: 100%;
+  min-height: 53px;
+  border-top: 1px solid rgb(var(--fg) / 0.06);
+}
+
+.social-rail .social-link:first-child {
+  border-top: 0;
+}
+
+.social-link:hover,
+.social-link:focus-visible {
+  color: var(--brand-bright);
+  outline: none;
+}
+
+.social-rail .social-link:hover,
+.social-rail .social-link:focus-visible {
+  background: rgba(179, 40, 33, 0.14);
+  box-shadow: inset 3px 0 var(--brand-bright);
+  transform: translateX(-3px);
+}
+
+.footer-social-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.footer-social-links .social-link {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgb(var(--fg) / 0.12);
+  background: rgb(var(--ink-900) / 0.7);
+}
+
+.footer-social-links .social-link:hover,
+.footer-social-links .social-link:focus-visible {
+  border-color: var(--brand-bright);
+  background: rgba(179, 40, 33, 0.12);
+  transform: translateY(-2px);
+}
+
+.footer-social-links .social-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (min-width: 768px) {
+  .social-rail {
+    display: flex;
+  }
+}
+
+@media (min-width: 1280px) {
+  .navigation-rail {
+    display: flex;
+  }
+}
+
+@media (max-height: 500px) {
+  .navigation-rail-link,
+  .social-rail .social-link {
+    min-height: 42px;
+  }
+
+  .navigation-rail-links,
+  .social-rail-links {
+    padding: 8px 0;
+  }
+}
+
 @keyframes dotCursorBlink {
   0%, 54% { opacity: 1; }
   55%, 100% { opacity: 0.2; }
@@ -204,6 +382,20 @@
 @layer components {
   .container-x {
     @apply mx-auto w-full max-w-[1500px] px-5 sm:px-8;
+  }
+
+  /* Keep shared page content clear of the fixed social rail. Once the viewport
+   * is wide enough, the container's natural outer margin provides the space. */
+  @media (min-width: 768px) and (max-width: 1679px) {
+    .container-x {
+      padding-right: 7rem;
+    }
+  }
+
+  @media (min-width: 1280px) and (max-width: 1799px) {
+    .container-x {
+      padding-left: 9rem;
+    }
   }
 
   /* ---------------- surfaces ---------------- */
@@ -873,6 +1065,22 @@
     rgb(var(--ink-900) / 0.94);
 }
 
+.vtapp-timeline-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.vtapp-timeline-card {
+  position: relative;
+  min-height: 104px;
+}
+
+.vtapp-timeline-card:focus-visible {
+  outline: 1px solid rgb(var(--em-300));
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgb(var(--em-500) / 0.12);
+}
+
 .vtapp-map-border-highlight {
   position: absolute;
   inset: 0;
@@ -915,6 +1123,10 @@
   inset: 0;
   transform-origin: 50% 50%;
   will-change: transform;
+}
+
+.vtapp-map-transform > svg {
+  touch-action: pan-y;
 }
 
 .vtapp-map-cell {
@@ -991,14 +1203,36 @@
     overflow: hidden;
   }
 
-  .vtapp-map-panel {
+  .vtapp-map-panel,
+  .vtapp-timeline {
     min-height: min(680px, calc(100svh - 128px));
+  }
+}
+
+@media (max-width: 1279px) {
+  .vtapp-map-panel {
+    min-height: 520px;
+  }
+
+  .vtapp-timeline-list {
+    gap: 0.85rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .vtapp-map-panel {
+    min-height: 460px;
+  }
+
+  .vtapp-timeline-card {
+    min-height: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .vtapp-map-transform {
     transform: none !important;
+    will-change: auto;
   }
 
   .vtapp-map-marker circle {

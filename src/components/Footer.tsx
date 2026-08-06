@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { LogoLockup } from './Logo';
 import { HudClock, HudDots } from './Hud';
 import { FEST } from '@/lib/fest';
+import { SocialLinks } from './SocialLinks';
 
 const EXPLORE = [
   { href: '/events', label: 'All events' },
@@ -13,12 +14,6 @@ const EXPLORE = [
   { href: '/about', label: 'About the fest' },
   { href: '/tickets', label: 'Tickets' },
   { href: '/tickets/status', label: 'My orders' },
-];
-
-const SOCIALS = [
-  { href: FEST.instagram, label: 'Instagram' },
-  { href: 'https://facebook.com/vtapp.vitap', label: 'Facebook' },
-  { href: FEST.website, label: 'Website' },
 ];
 
 export default function Footer() {
@@ -43,20 +38,6 @@ export default function Footer() {
             The international techfest of {FEST.university}. Two days, every school, one campus in
             Amaravati, Andhra Pradesh.
           </p>
-
-          <div className="mt-7 flex flex-wrap gap-2">
-            {SOCIALS.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-ghost !px-4 !py-2.5"
-              >
-                {s.label}
-              </a>
-            ))}
-          </div>
 
           <div className="mt-8">
             <HudDots count={10} />
@@ -130,11 +111,14 @@ export default function Footer() {
 
       {/* bottom bar */}
       <div className="border-t border-white/10">
-        <div className="container-x flex flex-col gap-2 py-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="container-x grid gap-4 py-5 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
           <p className="mono-label">
             © {new Date().getFullYear()} {FEST.university.toUpperCase()}
           </p>
-          <p className="mono-label text-slate-400">{FEST.tagline.toUpperCase()}</p>
+          <p className="mono-label text-slate-400 sm:text-center">{FEST.tagline.toUpperCase()}</p>
+          <div className="justify-self-end">
+            <SocialLinks placement="footer" />
+          </div>
         </div>
       </div>
     </footer>

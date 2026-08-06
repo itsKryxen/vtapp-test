@@ -4,7 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { LogoMark } from './Logo';
+import { motion } from 'framer-motion';
+import { LogoLockup } from './Logo';
 import ThemeToggle from './ThemeToggle';
 
 const LINKS = [
@@ -34,20 +35,27 @@ export default function Navbar() {
         <nav className="container-x relative flex h-20 items-center gap-3 !px-5 sm:h-[88px] sm:!px-8">
           <div className="flex h-full shrink-0 items-center gap-3 sm:gap-5">
             <Link href="/" className="group relative flex h-full items-center" aria-label="V-TAPP 2026 home">
-              <LogoMark size={42} />
+              <motion.span
+                layoutId="vtapp-navigation-wordmark"
+                data-navbar-logo-target
+                className="block w-[112px] sm:w-[142px]"
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <LogoLockup width={142} priority className="h-auto w-full" />
+              </motion.span>
               {pathname === '/' && (
                 <span className="absolute inset-x-0 bottom-0 h-[3px] bg-brand-600 shadow-[0_0_12px_rgb(179_40_33/.7)]" />
               )}
             </Link>
 
-            <span className="h-8 w-px bg-white/10" aria-hidden="true" />
+            <span className="hidden h-8 w-px bg-white/10 min-[430px]:block" aria-hidden="true" />
             <Image
               src="/vit-ap-university-logo.png"
               alt="VIT-AP University"
               width={740}
               height={197}
               priority
-              className="h-auto w-24 sm:w-36"
+              className="hidden h-auto w-24 min-[430px]:block sm:w-36"
             />
           </div>
 
@@ -73,11 +81,12 @@ export default function Navbar() {
             })}
           </div>
 
-          <div className="ml-auto flex items-center gap-3">
+          <div className="ml-auto flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
 
-            <Link href="/tickets" className="btn-primary hidden !px-5 !py-2.5 sm:inline-flex">
-              Buy tickets
+            <Link href="/tickets" className="btn-primary !px-3 !py-2.5 sm:!px-5">
+              <span className="sm:hidden">Buy</span>
+              <span className="hidden sm:inline">Buy tickets</span>
             </Link>
 
             <button
@@ -131,7 +140,7 @@ export default function Navbar() {
                 aria-current={active ? 'page' : undefined}
                 className={`navigation-rail-link ${active ? 'is-active' : ''}`}
               >
-                <span aria-hidden="true">{String(index + 3).padStart(2, '0')}</span>
+                <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
                 {link.label}
               </Link>
             );

@@ -12,6 +12,7 @@ import NumericCursorTrail from '@/components/NumericCursorTrail';
 import CuteRobotCompanion from '@/components/CuteRobotCompanion';
 import { SocialRail } from '@/components/SocialLinks';
 import { FEST } from '@/lib/fest';
+import SiteReveal from '@/components/SiteReveal';
 
 /**
  * Two families only.
@@ -105,15 +106,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Preloader />
         <PageLogoIntroAnimation />
 
-        <Ticker />
-        <Navbar />
-        <SocialRail />
+        <SiteReveal>
+          <Ticker />
+          <Navbar />
+          <SocialRail />
 
-        <main id="main" className="relative z-10">
-          {children}
-        </main>
+          <main id="main" className="relative z-10">
+            {children}
+          </main>
 
-        <Footer />
+          <Footer />
+        </SiteReveal>
       </body>
     </html>
   );

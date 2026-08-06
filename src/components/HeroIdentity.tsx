@@ -96,7 +96,7 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
   return (
     <div
       ref={sectionRef}
-      className="container-x hero-cursor-field relative grid min-h-[calc(100svh-88px)] items-center gap-8 py-14 md:py-20 lg:grid-cols-[1.08fr_.92fr] lg:gap-10"
+      className="container-x hero-cursor-field relative grid items-center gap-8 py-6 md:py-8 lg:min-h-[calc(100svh-88px)] lg:grid-cols-[1.08fr_.92fr] lg:gap-10 lg:py-20"
       onPointerMove={handlePointerMove}
       onPointerLeave={reset}
     >
@@ -112,25 +112,40 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
       {/* ════════════════════════════════════════
           LEFT COLUMN — identity + countdown
           ════════════════════════════════════════ */}
-      <div className="flex w-full flex-col border-b border-white/10 pb-12 lg:min-h-[calc(100svh-12rem)] lg:justify-center lg:border-b-0 lg:border-r lg:pb-0 lg:pr-12">
+      <div className="relative z-20 flex w-full flex-col lg:min-h-[calc(100svh-12rem)] lg:-translate-y-10 lg:justify-center lg:pr-12 xl:-translate-y-14 2xl:translate-y-0">
 
         {/* Logo + wordmark lockup */}
-        <div className="hero-identity-lockup hero-enter-lockup flex items-center justify-center gap-2 sm:gap-4 lg:gap-5 lg:justify-start">
+        <div className="hero-identity-lockup hero-enter-lockup flex items-center justify-center gap-2 sm:gap-4 lg:justify-start xl:gap-5">
           <div className="hero-identity-logo shrink-0">
-            <LogoMark size={144} className="h-16 w-16 sm:h-24 sm:w-24 lg:h-32 lg:w-32" />
+            <LogoMark size={144} className="h-12 w-12 sm:h-20 sm:w-20 lg:h-20 lg:w-20 xl:h-24 xl:w-24" />
           </div>
-          <div className="min-w-0 text-left flex items-center gap-1 sm:gap-2">
-            <Image 
-              src="/vtapp-wordmark-dark.png" 
-              alt="VTAPP" 
-              width={400} 
-              height={133}
+          <div className="flex min-w-0 items-center gap-1 text-left sm:gap-2">
+            <div className="shrink-0">
+              <Image
+                src="/vtapp-wordmark-on-dark.png"
+                alt="V-TAPP — Celebrate Technology!"
+                width={981}
+                height={262}
+                priority
+                className="theme-image-on-dark h-10 w-auto sm:h-16 lg:h-14 xl:h-[72px]"
+              />
+              <Image
+                src="/vtapp-wordmark-on-light.png"
+                alt="V-TAPP — Celebrate Technology!"
+                width={981}
+                height={263}
+                priority
+                className="theme-image-on-light h-10 w-auto sm:h-16 lg:h-14 xl:h-[72px]"
+              />
+            </div>
+            <Image
+              src="/vtapp-26.png"
+              alt="26"
+              width={421}
+              height={229}
               priority
-              className="h-12 w-auto sm:h-20 lg:h-28"
+              className="hero-text-breathe h-10 w-auto shrink-0 sm:h-16 lg:h-14 xl:h-[72px]"
             />
-            <p className="hero-text-breathe font-mono text-[clamp(2.15rem,12vw,3rem)] font-black uppercase leading-[0.82] tracking-[-0.075em] text-white lg:text-[clamp(3rem,5.6vw,7rem)] mt-2 sm:mt-3 lg:mt-4">
-              <span className="text-brand-500">26</span>
-            </p>
           </div>
         </div>
 
@@ -169,7 +184,7 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
       {/* ════════════════════════════════════════
           RIGHT COLUMN — blueprint + animation scene
           ════════════════════════════════════════ */}
-      <div className="flex items-center justify-center">
+      <div className="hero-blueprint-layer flex items-center justify-center">
         <div className="hero-blueprint-scene hero-enter-center hero-blueprint-wrap w-full max-w-[600px]">
 
           {/* LAYER 2 – ambient center glow */}

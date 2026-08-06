@@ -264,15 +264,21 @@ export default function AndhraPradeshBinaryMap() {
       <div className="vtapp-map-stage container-x">
         <div className="grid w-full gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
           <div className="vtapp-map-panel panel brackets scanlines">
-            <svg
-              className="vtapp-map-border-highlight"
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-            >
-              <rect className="vtapp-map-border-glow" x="0.5" y="0.5" width="99" height="99" pathLength="1" />
-              <rect className="vtapp-map-border-spark" x="0.5" y="0.5" width="99" height="99" pathLength="1" />
-            </svg>
+            {Array.from({ length: 4 }, (_, index) => (
+              <span
+                key={index}
+                className={`vtapp-map-border-signal vtapp-map-border-signal-${index + 1}`}
+                aria-hidden="true"
+              >
+                <span className="vtapp-map-border-signal-tail">
+                  <span className="vtapp-map-border-signal-tip" />
+                </span>
+                <span className="vtapp-map-border-signal-label">
+                  <span>V-TAPP</span>
+                  <span>// 2026</span>
+                </span>
+              </span>
+            ))}
             <div ref={mapTransformRef} className="vtapp-map-transform">
               <svg
                 ref={svgRef}
@@ -343,9 +349,9 @@ export default function AndhraPradeshBinaryMap() {
 
                 <g ref={markerRef} className="vtapp-map-marker">
                   <circle cx={amaravatiX} cy={amaravatiY - 5} r="22" fill="none" strokeWidth="1" strokeDasharray="3 5" />
-                  <path d={`M ${amaravatiX + 9} ${amaravatiY - 13} H ${amaravatiX + 70}`} fill="none" />
-                  <text x={amaravatiX + 77} y={amaravatiY - 15} className="font-mono text-[12px] font-bold tracking-[0.14em]">VIT-AP // {capitalCount}</text>
-                  <text x={amaravatiX + 77} y={amaravatiY + 3} className="font-mono text-[8px] tracking-[0.12em]">UNIVERSITY NODE</text>
+                  <path d={`M ${amaravatiX + 9} ${amaravatiY - 13} H ${amaravatiX + 115}`} fill="none" />
+                  <text x={amaravatiX + 117} y={amaravatiY - 15} className="font-mono text-[12px] font-bold tracking-[0.14em]">VIT-AP // {capitalCount}</text>
+                  <text x={amaravatiX + 117} y={amaravatiY + 3} className="font-mono text-[8px] tracking-[0.12em]">UNIVERSITY NODE</text>
                 </g>
               </svg>
             </div>

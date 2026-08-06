@@ -36,10 +36,10 @@ export function LogoLockup({
 }) {
   return (
     <Image
-      src="/vtapp-logo-transparent.png"
-      alt="V-TAPP 2026: The Pinnacle of Innovation and Creativity"
+      src="/vtapp-circuit-logo.svg"
+      alt="V-TAPP: Celebrate Technology!"
       width={width}
-      height={Math.round((width * 497) / 2170)}
+      height={Math.round((width * 256) / 974)}
       priority={priority}
       className={className}
     />

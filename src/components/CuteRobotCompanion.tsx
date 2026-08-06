@@ -68,7 +68,7 @@ export default function CuteRobotCompanion() {
 
       // If no mouse movement for > 2.5 seconds, wander randomly around screen
       if (timeSinceMouse > 2500) {
-        if (Math.random() < 0.02) {
+        if (Math.random() < 0.001) {
           const margin = 100;
           idleTargetRef.current = {
             x: margin + Math.random() * (window.innerWidth - margin * 2),

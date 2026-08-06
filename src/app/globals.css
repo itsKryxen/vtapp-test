@@ -3,6 +3,178 @@
 @tailwind utilities;
 
 /* ==========================================================================
+   V-TAPP CIRCUIT POWER-ON
+   The opaque white plane owns the first paint; GSAP only touches transforms,
+   opacity and SVG dash offsets so the sequence stays on the compositor/rAF.
+   ========================================================================== */
+
+.vtapp-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: transparent;
+  contain: layout paint style;
+}
+
+.vtapp-splash-backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 48%, rgb(177 18 38 / 0.045), transparent 38%),
+    rgb(var(--ink-950));
+  will-change: opacity;
+}
+
+.vtapp-splash-backdrop::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background-image:
+    linear-gradient(rgb(var(--fg) / 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--fg) / 0.022) 1px, transparent 1px),
+    linear-gradient(rgb(var(--fg) / 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--fg) / 0.012) 1px, transparent 1px);
+  background-position: center;
+  background-size: 72px 72px, 72px 72px, 18px 18px, 18px 18px;
+  mask-image: radial-gradient(ellipse 70% 62% at center, black, transparent 82%);
+}
+
+.vtapp-splash-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 72% 68% at center, transparent 42%, rgb(var(--ink-950) / 0.58) 100%);
+  pointer-events: none;
+}
+
+.vtapp-splash-ambient {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(88vw, 980px);
+  aspect-ratio: 1.8;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgb(177 18 38 / 0.16), rgb(177 18 38 / 0.055) 38%, transparent 72%);
+  filter: blur(12px);
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  will-change: opacity, transform;
+}
+
+.vtapp-splash-logo-anchor {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.vtapp-splash-logo-shell {
+  position: relative;
+  width: min(72vw, 760px);
+  transform-origin: center;
+  will-change: transform;
+}
+
+.vtapp-splash-logo-shell > svg {
+  display: block;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.vtapp-splash .vtapp-letter,
+.vtapp-splash .vtapp-tagline,
+.vtapp-splash .vtapp-energy-trace,
+.vtapp-splash .vtapp-energy-node,
+.vtapp-activation-pulse {
+  opacity: 0;
+}
+
+.vtapp-splash .vtapp-letter,
+.vtapp-splash .vtapp-tagline,
+.vtapp-splash .vtapp-energy-trace,
+.vtapp-splash .vtapp-energy-node {
+  will-change: transform, opacity;
+}
+
+.vtapp-activation-pulse {
+  position: absolute;
+  z-index: 2;
+  left: 1.05%;
+  top: 8.5%;
+  width: clamp(7px, 1.1vw, 12px);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: #b11226;
+  box-shadow:
+    0 0 8px rgb(177 18 38 / 0.62),
+    0 0 22px rgb(177 18 38 / 0.24),
+    0 0 42px rgb(177 18 38 / 0.12);
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+html[data-vtapp-splash] .blinking-dot-cursor,
+html[data-vtapp-splash] .numeric-cursor-trail {
+  opacity: 0 !important;
+}
+
+html[data-vtapp-splash='active'] [data-navbar-logo-target],
+html[data-vtapp-splash='exiting'] [data-navbar-logo-target] {
+  opacity: 0 !important;
+}
+
+[data-navbar-logo-target] {
+  transition: opacity 120ms ease-in-out;
+}
+
+/* Keep the site chrome stationary. Only the page itself rises into view. */
+.vtapp-site-reveal > main {
+  transform: translateY(18px);
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.vtapp-site-reveal[data-revealed='true'] > main {
+  transform: translateY(0);
+}
+
+/* The marquee should begin when it becomes visible, not behind the splash. */
+html[data-vtapp-splash] .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (max-width: 640px) {
+  .vtapp-splash-logo-shell {
+    width: min(88vw, 560px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vtapp-splash {
+    display: none;
+  }
+
+  .vtapp-site-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .vtapp-site-reveal > main {
+    transform: none !important;
+  }
+}
+
+@media print {
+  .vtapp-splash {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
    THEME
    Every surface, foreground and grey is a raw "R G B" triplet so Tailwind's
    alpha modifiers keep working. Flipping .light on <html> inverts the whole
@@ -100,6 +272,20 @@
   --scanline: rgba(0, 0, 0, 0.022);
 
   color-scheme: light;
+}
+
+/* Theme-aware identity artwork. Asset names describe the surface they sit on,
+   which keeps the white-on-dark / crimson-on-light pairing unambiguous. */
+.theme-image-on-light {
+  display: none;
+}
+
+.light .theme-image-on-dark {
+  display: none;
+}
+
+.light .theme-image-on-light {
+  display: block;
 }
 
 @layer base {
@@ -214,42 +400,43 @@
   padding: 12px 0;
 }
 
+/* The primary section links become a compact bottom bar on smaller screens
+   and return to the original left-side rail on desktop. */
 .navigation-rail {
   position: fixed;
-  left: 14px;
-  top: 50%;
+  inset: auto 0 0;
   z-index: 60;
-  display: none;
-  width: 112px;
-  max-height: calc(100dvh - 32px);
-  overflow-y: auto;
-  border: 1px solid rgb(var(--fg) / 0.13);
+  display: flex;
+  min-height: 60px;
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid rgb(var(--fg) / 0.16);
   background:
-    linear-gradient(180deg, rgb(var(--ink-900) / 0.98), rgba(179, 40, 33, 0.16)),
+    linear-gradient(90deg, rgb(var(--ink-900) / 0.98), rgba(179, 40, 33, 0.13)),
     rgb(var(--ink-950) / 0.96);
-  box-shadow: 12px 18px 44px rgb(0 0 0 / 0.28), 0 0 32px rgba(179, 40, 33, 0.11);
-  clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 16px);
-  transform: translateY(-50%);
+  box-shadow: 0 -12px 36px rgb(0 0 0 / 0.24), 0 0 28px rgba(179, 40, 33, 0.1);
   backdrop-filter: blur(16px) saturate(1.1);
 }
 
 .navigation-rail-links {
   display: grid;
   width: 100%;
-  padding: 12px 0;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .navigation-rail-link {
   display: flex;
-  min-height: 53px;
+  min-width: 0;
+  min-height: 59px;
+  flex-direction: column;
   align-items: center;
-  gap: 9px;
-  border-top: 1px solid rgb(var(--fg) / 0.06);
-  padding: 0 12px;
+  justify-content: center;
+  gap: 5px;
+  border-left: 1px solid rgb(var(--fg) / 0.07);
+  padding: 5px 2px;
   color: rgb(var(--fg) / 0.7);
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 9px;
-  letter-spacing: 0.13em;
+  font-size: 8px;
+  letter-spacing: 0.08em;
   line-height: 1;
   text-transform: uppercase;
   transition: color 180ms ease, background-color 180ms ease, box-shadow 180ms ease,
@@ -257,12 +444,12 @@
 }
 
 .navigation-rail-link:first-child {
-  border-top: 0;
+  border-left: 0;
 }
 
 .navigation-rail-link > span {
   color: rgb(var(--slate-600));
-  font-size: 8px;
+  font-size: 7px;
   letter-spacing: 0;
   transition: color 180ms ease;
 }
@@ -272,15 +459,71 @@
 .navigation-rail-link.is-active {
   color: rgb(var(--fg));
   background: rgba(179, 40, 33, 0.14);
-  box-shadow: inset -3px 0 var(--brand-bright);
+  box-shadow: inset 0 3px var(--brand-bright);
   outline: none;
-  transform: translateX(3px);
+  transform: translateY(-2px);
 }
 
 .navigation-rail-link:hover > span,
 .navigation-rail-link:focus-visible > span,
 .navigation-rail-link.is-active > span {
   color: var(--brand-bright);
+}
+
+@media (max-width: 1279px) {
+  body {
+    padding-bottom: calc(60px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (min-width: 1280px) {
+  .navigation-rail {
+    inset: 50% auto auto 14px;
+    width: 112px;
+    min-height: 0;
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+    padding-bottom: 0;
+    border: 1px solid rgb(var(--fg) / 0.13);
+    background:
+      linear-gradient(180deg, rgb(var(--ink-900) / 0.98), rgba(179, 40, 33, 0.16)),
+      rgb(var(--ink-950) / 0.96);
+    box-shadow: 12px 18px 44px rgb(0 0 0 / 0.28), 0 0 32px rgba(179, 40, 33, 0.11);
+    clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 16px);
+    transform: translateY(-50%);
+  }
+
+  .navigation-rail-links {
+    grid-template-columns: 1fr;
+    padding: 12px 0;
+  }
+
+  .navigation-rail-link {
+    min-height: 53px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 9px;
+    border-top: 1px solid rgb(var(--fg) / 0.06);
+    border-left: 0;
+    padding: 0 12px;
+    font-size: 9px;
+    letter-spacing: 0.13em;
+  }
+
+  .navigation-rail-link:first-child {
+    border-top: 0;
+  }
+
+  .navigation-rail-link > span {
+    font-size: 8px;
+  }
+
+  .navigation-rail-link:hover,
+  .navigation-rail-link:focus-visible,
+  .navigation-rail-link.is-active {
+    box-shadow: inset -3px 0 var(--brand-bright);
+    transform: translateX(3px);
+  }
 }
 
 .social-link {
@@ -342,12 +585,6 @@
 
 @media (min-width: 768px) {
   .social-rail {
-    display: flex;
-  }
-}
-
-@media (min-width: 1280px) {
-  .navigation-rail {
     display: flex;
   }
 }
@@ -1081,41 +1318,87 @@
   box-shadow: 0 0 0 4px rgb(var(--em-500) / 0.12);
 }
 
-.vtapp-map-border-highlight {
+.vtapp-map-border-signal {
   position: absolute;
-  inset: 0;
-  z-index: 3;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
+  left: 50%;
+  top: 0;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
   pointer-events: none;
 }
 
-.vtapp-map-border-highlight rect {
-  fill: none;
-  vector-effect: non-scaling-stroke;
-  stroke-linecap: round;
-  animation: vtappMapBorderTrace 5.5s linear infinite;
+.vtapp-map-border-signal-tail {
+  position: relative;
+  display: block;
+  width: 3.5rem;
+  height: 2px;
+  flex: none;
+  background: linear-gradient(90deg, rgb(var(--brand) / 0.45), var(--brand-bright));
+  box-shadow: 0 0 7px rgb(207 63 52 / 0.55);
 }
 
-.vtapp-map-border-glow {
-  stroke: rgb(207 63 52 / 0.8);
-  stroke-width: 2px;
-  stroke-dasharray: 0.14 0.86;
-  filter:
-    drop-shadow(0 0 4px rgb(207 63 52 / 0.9))
-    drop-shadow(0 0 12px rgb(179 40 33 / 0.65));
+.vtapp-map-border-signal-tip {
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 0.65rem;
+  height: 1px;
+  transform: translateY(-50%);
+  background: rgb(var(--fg));
+  box-shadow: 0 0 5px rgb(var(--fg) / 0.7);
 }
 
-.vtapp-map-border-spark {
-  stroke: rgb(255 255 255 / 0.95);
-  stroke-width: 1px;
-  stroke-dasharray: 0.025 0.975;
-  filter: drop-shadow(0 0 5px rgb(255 255 255 / 0.85));
+.vtapp-map-border-signal-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: rgb(var(--fg));
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1;
 }
 
-@keyframes vtappMapBorderTrace {
-  to { stroke-dashoffset: -1; }
+.vtapp-map-border-signal-label > span:first-child {
+  color: var(--brand-bright);
+}
+
+.light .vtapp-map-border-signal-tail {
+  background: linear-gradient(90deg, rgb(var(--brand) / 0.45), var(--brand));
+}
+
+.light .vtapp-map-border-signal-label > span:first-child {
+  color: var(--brand);
+}
+
+.vtapp-map-border-signal-1 { left: 20%; }
+.vtapp-map-border-signal-2 { left: 40%; }
+.vtapp-map-border-signal-3 { left: 60%; }
+.vtapp-map-border-signal-4 { left: 80%; }
+
+@supports (offset-path: inset(1px)) {
+  .vtapp-map-border-signal {
+    left: 0;
+    top: 0;
+    transform: none;
+    offset-path: inset(5px);
+    offset-rotate: auto;
+    animation: vtappMapBorderSignalOrbit 5.5s linear infinite;
+  }
+
+  .vtapp-map-border-signal-1 { animation-delay: 0s; }
+  .vtapp-map-border-signal-2 { animation-delay: -1.375s; }
+  .vtapp-map-border-signal-3 { animation-delay: -2.75s; }
+  .vtapp-map-border-signal-4 { animation-delay: -4.125s; }
+}
+
+@keyframes vtappMapBorderSignalOrbit {
+  to { offset-distance: 100%; }
 }
 
 .vtapp-map-transform {
@@ -1239,9 +1522,16 @@
     animation: none;
   }
 
-  .vtapp-map-border-highlight rect {
+  .vtapp-map-border-signal {
     animation: none;
+    offset-rotate: 0deg;
   }
+
+
+  .vtapp-map-border-signal-1 { offset-distance: 10%; }
+  .vtapp-map-border-signal-2 { offset-distance: 35%; }
+  .vtapp-map-border-signal-3 { offset-distance: 60%; }
+  .vtapp-map-border-signal-4 { offset-distance: 85%; }
 }
 
 /* ==========================================================================
@@ -1420,6 +1710,47 @@
 }
 
 /* ── blueprint scene wrapper ── */
+.hero-blueprint-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.18;
+}
+
+.hero-blueprint-layer .hero-blueprint-scene {
+  top: -8%;
+  width: min(150vw, 680px);
+  max-width: none;
+  flex: 0 0 auto;
+}
+
+.light .hero-blueprint-layer {
+  opacity: 0.1;
+}
+
+@media (min-width: 1024px) {
+  .hero-blueprint-layer {
+    position: relative;
+    inset: auto;
+    z-index: auto;
+    overflow: visible;
+    pointer-events: auto;
+    opacity: 1;
+  }
+
+  .light .hero-blueprint-layer {
+    opacity: 1;
+  }
+
+  .hero-blueprint-layer .hero-blueprint-scene {
+    top: auto;
+    width: 100%;
+    max-width: 600px;
+  }
+}
+
 .hero-blueprint-scene {
   position: relative;
   isolation: isolate;

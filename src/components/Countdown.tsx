@@ -40,17 +40,17 @@ export default function Countdown({
 
   if (variant === 'timeline') {
     return (
-      <div className="relative grid grid-cols-2 border border-white/10 bg-ink-950 sm:grid-cols-4">
-        <div className="pointer-events-none absolute left-[12.5%] right-[12.5%] top-1/2 hidden h-px bg-gradient-to-r from-transparent via-brand-600 to-transparent sm:block" />
+      <div className="relative grid grid-cols-4 border border-white/10 bg-ink-950">
+        <div className="pointer-events-none absolute left-[12.5%] right-[12.5%] top-1/2 h-px bg-gradient-to-r from-transparent via-brand-600 to-transparent" />
         {units.map((unit, index) => (
           <div
             key={unit.label}
-            className="relative flex min-h-28 flex-col items-center justify-center border-b border-r border-white/10 px-3 py-5 even:border-r-0 [&:nth-child(n+3)]:border-b-0 sm:min-h-36 sm:border-b-0 sm:even:border-r sm:last:border-r-0"
+            className="relative flex min-h-24 flex-col items-center justify-center border-r border-white/10 px-1 py-4 last:border-r-0 sm:min-h-36 sm:px-3 sm:py-5"
           >
-            <span className="relative z-10 bg-ink-950 px-3 font-display text-4xl tabular-nums text-white sm:text-5xl lg:text-6xl">
+            <span className="relative z-10 bg-ink-950 px-1 font-display text-[clamp(1.5rem,8vw,2.25rem)] tabular-nums text-white sm:px-3 sm:text-5xl lg:text-6xl">
               {mounted ? String(unit.value).padStart(2, '0') : '––'}
             </span>
-            <span className="relative z-10 mt-3 bg-ink-950 px-2 font-mono text-[9px] font-semibold uppercase tracking-label text-slate-500">
+            <span className="relative z-10 mt-2 bg-ink-950 px-0.5 font-mono text-[7px] font-semibold uppercase tracking-[0.08em] text-slate-500 min-[400px]:text-[8px] sm:mt-3 sm:px-2 sm:text-[9px] sm:tracking-label">
               {unit.label}
             </span>
             <span

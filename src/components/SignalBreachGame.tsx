@@ -9,6 +9,15 @@ const GRID_SIZE = 16;
 const MAX_ROUND = 6;
 const MAX_ERRORS = 3;
 const SESSION_SECONDS = 60;
+const ACHIEVEMENT_KEY = 'vtapp-signal-breach-achievement';
+
+type ClearanceDetails = {
+  name: string;
+  score: number;
+  accuracy: number;
+  completedAt: string;
+  clearanceId: string;
+};
 
 function createSequence(length: number) {
   const sequence: number[] = [];
@@ -19,6 +28,143 @@ function createSequence(length: number) {
   }
 
   return sequence;
+}
+
+function createClearanceId(name: string, score: number, completedAt: string) {
+  const source = `${name}|${score}|${completedAt}`;
+  let hash = 2166136261;
+
+  for (let index = 0; index < source.length; index += 1) {
+    hash ^= source.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+
+  return `SB-${Math.abs(hash >>> 0).toString(16).toUpperCase().padStart(8, '0')}`;
+}
+
+function fitCanvasText(context: CanvasRenderingContext2D, text: string, maxWidth: number, startSize: number) {
+  let size = startSize;
+  while (size > 42) {
+    context.font = `600 ${size}px Arial, sans-serif`;
+    if (context.measureText(text).width <= maxWidth) return;
+    size -= 4;
+  }
+}
+
+function buildClearanceCard(details: ClearanceDetails) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 1600;
+  canvas.height = 900;
+  const context = canvas.getContext('2d');
+  if (!context) throw new Error('Canvas is unavailable.');
+
+  context.fillStyle = '#08090c';
+  context.fillRect(0, 0, canvas.width, canvas.height);
+
+  context.strokeStyle = 'rgba(255,255,255,.055)';
+  context.lineWidth = 1;
+  for (let x = 80; x < canvas.width; x += 80) {
+    context.beginPath();
+    context.moveTo(x, 0);
+    context.lineTo(x, canvas.height);
+    context.stroke();
+  }
+  for (let y = 60; y < canvas.height; y += 60) {
+    context.beginPath();
+    context.moveTo(0, y);
+    context.lineTo(canvas.width, y);
+    context.stroke();
+  }
+
+  const glow = context.createRadialGradient(1320, 160, 10, 1320, 160, 520);
+  glow.addColorStop(0, 'rgba(179,40,33,.42)');
+  glow.addColorStop(1, 'rgba(179,40,33,0)');
+  context.fillStyle = glow;
+  context.fillRect(800, 0, 800, 700);
+
+  context.fillStyle = '#b32821';
+  context.fillRect(0, 0, 24, canvas.height);
+  context.fillRect(96, 92, 86, 8);
+
+  context.fillStyle = '#e0685e';
+  context.font = '700 25px ui-monospace, monospace';
+  context.letterSpacing = '5px';
+  context.fillText('V-TAPP 2026 // SIGNAL BREACH', 210, 108);
+
+  context.fillStyle = '#ffffff';
+  context.font = '300 70px Arial, sans-serif';
+  context.letterSpacing = '0px';
+  context.fillText('CLEARANCE VERIFIED', 96, 220);
+
+  context.fillStyle = '#8c929e';
+  context.font = '500 21px ui-monospace, monospace';
+  context.letterSpacing = '4px';
+  context.fillText('THIS DIGITAL ACHIEVEMENT IS PRESENTED TO', 100, 305);
+
+  const displayName = details.name.toUpperCase();
+  context.fillStyle = '#ffffff';
+  fitCanvasText(context, displayName, 1370, 92);
+  context.letterSpacing = '-2px';
+  context.fillText(displayName, 96, 410);
+
+  context.strokeStyle = 'rgba(255,255,255,.16)';
+  context.strokeRect(96, 478, 1408, 210);
+  context.beginPath();
+  context.moveTo(565, 478);
+  context.lineTo(565, 688);
+  context.moveTo(1034, 478);
+  context.lineTo(1034, 688);
+  context.stroke();
+
+  const stats = [
+    ['FINAL SCORE', String(details.score).padStart(5, '0')],
+    ['ACCURACY', `${details.accuracy}%`],
+    ['LAYERS CLEARED', '06 / 06'],
+  ];
+  stats.forEach(([label, value], index) => {
+    const x = 130 + index * 469;
+    context.fillStyle = '#8c929e';
+    context.font = '600 18px ui-monospace, monospace';
+    context.letterSpacing = '4px';
+    context.fillText(label, x, 544);
+    context.fillStyle = index === 1 ? '#ee9c95' : '#ffffff';
+    context.font = '500 55px ui-monospace, monospace';
+    context.letterSpacing = '1px';
+    context.fillText(value, x, 625);
+  });
+
+  const completed = new Intl.DateTimeFormat('en-IN', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'Asia/Kolkata',
+  }).format(new Date(details.completedAt));
+
+  context.fillStyle = '#e0685e';
+  context.font = '700 18px ui-monospace, monospace';
+  context.letterSpacing = '3px';
+  context.fillText(details.clearanceId, 96, 775);
+  context.fillStyle = '#8c929e';
+  context.font = '500 18px ui-monospace, monospace';
+  context.letterSpacing = '2px';
+  context.fillText(`COMPLETED ${completed.toUpperCase()} IST`, 96, 814);
+
+  context.textAlign = 'right';
+  context.fillStyle = '#ffffff';
+  context.font = '700 28px Arial, sans-serif';
+  context.letterSpacing = '1px';
+  context.fillText('ACCESS GRANTED', 1504, 775);
+  context.fillStyle = '#8c929e';
+  context.font = '500 16px ui-monospace, monospace';
+  context.letterSpacing = '2px';
+  context.fillText('DIGITAL MINI-GAME ACHIEVEMENT', 1504, 814);
+  context.textAlign = 'left';
+
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error('Could not create the card.'))), 'image/png');
+  });
 }
 
 export default function SignalBreachGame() {
@@ -36,6 +182,11 @@ export default function SignalBreachGame() {
   const [totalInputs, setTotalInputs] = useState(0);
   const [timeLeft, setTimeLeft] = useState(SESSION_SECONDS);
   const [status, setStatus] = useState('Ready for neural handshake.');
+  const [playerName, setPlayerName] = useState('');
+  const [completedAt, setCompletedAt] = useState<string | null>(null);
+  const [rewardStatus, setRewardStatus] = useState('');
+  const [canShare, setCanShare] = useState(false);
+  const [savedAchievement, setSavedAchievement] = useState<ClearanceDetails | null>(null);
   const pressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const gameActive = phase === 'showing' || phase === 'input' || phase === 'round-complete';
@@ -45,9 +196,23 @@ export default function SignalBreachGame() {
   useEffect(() => {
     try {
       setBestScore(Number(window.localStorage.getItem('vtapp-signal-breach-best')) || 0);
+      const saved = window.localStorage.getItem(ACHIEVEMENT_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved) as Partial<ClearanceDetails>;
+        if (
+          typeof parsed.name === 'string'
+          && typeof parsed.score === 'number'
+          && typeof parsed.accuracy === 'number'
+          && typeof parsed.completedAt === 'string'
+          && typeof parsed.clearanceId === 'string'
+        ) {
+          setSavedAchievement(parsed as ClearanceDetails);
+        }
+      }
     } catch {
       // Storage can be unavailable in private browsing; the game still works.
     }
+    setCanShare(typeof navigator.share === 'function');
   }, []);
 
   useEffect(() => {
@@ -145,6 +310,9 @@ export default function SignalBreachGame() {
     setCorrectInputs(0);
     setTotalInputs(0);
     setTimeLeft(SESSION_SECONDS);
+    setPlayerName('');
+    setCompletedAt(null);
+    setRewardStatus('');
     setStatus('Handshake accepted. Receiving first signal.');
     setPhase('showing');
   }
@@ -195,6 +363,7 @@ export default function SignalBreachGame() {
     setInputIndex(0);
 
     if (round === MAX_ROUND) {
+      setCompletedAt(new Date().toISOString());
       setStatus('All security layers synchronized. Access granted.');
       setPhase('won');
     } else {
@@ -209,6 +378,76 @@ export default function SignalBreachGame() {
     setInputIndex(0);
     setStatus('Replay requested. Signal trace costs 50 points.');
     setPhase('showing');
+  }
+
+  function getClearanceDetails() {
+    const name = playerName.trim().replace(/\s+/g, ' ').slice(0, 40);
+    if (!name || !completedAt) return null;
+
+    return {
+      name,
+      score,
+      accuracy,
+      completedAt,
+      clearanceId: createClearanceId(name, score, completedAt),
+    } satisfies ClearanceDetails;
+  }
+
+  function saveAchievement(details: ClearanceDetails) {
+    setSavedAchievement(details);
+    try {
+      window.localStorage.setItem(ACHIEVEMENT_KEY, JSON.stringify(details));
+    } catch {
+      // The image reward still works when browser storage is unavailable.
+    }
+  }
+
+  async function getReward() {
+    const details = getClearanceDetails();
+    if (!details) return;
+
+    setRewardStatus('Preparing your clearance card…');
+    try {
+      const blob = await buildClearanceCard(details);
+      saveAchievement(details);
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = `signal-breach-${details.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'clearance'}.png`;
+      anchor.click();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      setRewardStatus('Achievement saved. Clearance card downloaded.');
+    } catch {
+      setRewardStatus('The card could not be created on this device. Please try again.');
+    }
+  }
+
+  async function shareReward() {
+    const details = getClearanceDetails();
+    if (!details) return;
+
+    setRewardStatus('Preparing your clearance card…');
+    try {
+      const blob = await buildClearanceCard(details);
+      const file = new File([blob], 'signal-breach-clearance.png', { type: 'image/png' });
+      if (!navigator.canShare?.({ files: [file] })) {
+        setRewardStatus('Image sharing is unavailable here. You can download the card instead.');
+        return;
+      }
+      await navigator.share({
+        title: 'V-TAPP 2026 Signal Breach',
+        text: `I cleared all six Signal Breach layers with ${score} points and ${accuracy}% accuracy.`,
+        files: [file],
+      });
+      saveAchievement(details);
+      setRewardStatus('Achievement saved. Clearance card shared.');
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        setRewardStatus('Share cancelled. Your card is still ready to download.');
+      } else {
+        setRewardStatus('Sharing is unavailable right now. You can download the card instead.');
+      }
+    }
   }
 
   return (
@@ -278,8 +517,8 @@ export default function SignalBreachGame() {
         </div>
 
         {(phase === 'idle' || phase === 'won' || phase === 'lost') && (
-          <div className="absolute inset-0 z-20 flex items-start justify-center bg-ink-950/88 p-6 pt-10 text-center backdrop-blur-sm sm:pt-14 lg:pt-16">
-            <div className="max-w-md">
+          <div className="absolute inset-0 z-20 flex items-start justify-center overflow-y-auto bg-ink-950/88 p-6 pt-10 text-center backdrop-blur-sm sm:pt-14 lg:pt-16">
+            <div className="max-w-lg">
               <div className={`mx-auto mb-6 grid h-16 w-16 place-items-center border font-mono text-xl ${phase === 'won' ? 'border-emerald-400 bg-emerald-500/10 text-emerald-300' : phase === 'lost' ? 'border-rose-400 bg-rose-500/10 text-rose-300' : 'border-brand-400 bg-brand-600/10 text-brand-400'}`}>
                 {phase === 'won' ? '✓' : phase === 'lost' ? '×' : '◇'}
               </div>
@@ -294,10 +533,70 @@ export default function SignalBreachGame() {
                   ? 'Observe each glowing node, then reproduce the exact sequence. Decrypt six layers before the signal expires.'
                   : `${status} Final score: ${score}. Accuracy: ${accuracy}%.`}
               </p>
-              <button type="button" onClick={startGame} className="btn-primary mt-7">
-                {phase === 'idle' ? 'Initialize breach' : 'Run new breach'}
-                <span aria-hidden="true">→</span>
-              </button>
+              {phase === 'idle' && savedAchievement && (
+                <div className="mx-auto mt-5 max-w-sm border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-left">
+                  <div className="font-mono text-[9px] uppercase tracking-label text-emerald-300">
+                    ✓ Clearance badge unlocked
+                  </div>
+                  <div className="mt-2 flex items-center justify-between gap-4 text-xs text-slate-400">
+                    <span className="truncate text-white">{savedAchievement.name}</span>
+                    <span className="shrink-0 font-mono">{savedAchievement.score} pts</span>
+                  </div>
+                </div>
+              )}
+              {phase === 'won' ? (
+                <div className="mx-auto mt-6 max-w-sm">
+                  <div className="border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 font-mono text-[10px] uppercase tracking-label text-emerald-300">
+                    Achievement unlocked // Clearance card
+                  </div>
+                  <label htmlFor="clearance-name" className="mono-label mt-5 block text-left text-slate-400">
+                    Name on your card
+                  </label>
+                  <input
+                    id="clearance-name"
+                    type="text"
+                    value={playerName}
+                    onChange={(event) => setPlayerName(event.target.value.slice(0, 40))}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter') void getReward();
+                    }}
+                    maxLength={40}
+                    autoComplete="name"
+                    placeholder="Enter your name"
+                    className="mt-2 w-full border border-white/15 bg-ink-900 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-slate-600 focus:border-brand-400"
+                  />
+                  <p className="mt-2 text-left font-mono text-[9px] leading-relaxed text-slate-600">
+                    Your name stays on this device and is only used to create the image.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => void getReward()}
+                    disabled={!playerName.trim()}
+                    className="btn-primary mt-4 w-full justify-center disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    Download clearance card <span aria-hidden="true">↓</span>
+                  </button>
+                  {canShare && (
+                    <button
+                      type="button"
+                      onClick={() => void shareReward()}
+                      disabled={!playerName.trim()}
+                      className="btn-ghost mt-3 w-full disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      Share clearance card <span aria-hidden="true">↗</span>
+                    </button>
+                  )}
+                  {rewardStatus && <p className="mt-3 font-mono text-[10px] text-slate-400" aria-live="polite">{rewardStatus}</p>}
+                  <button type="button" onClick={startGame} className="btn-ghost mt-4 w-full">
+                    Run new breach
+                  </button>
+                </div>
+              ) : (
+                <button type="button" onClick={startGame} className="btn-primary mt-7">
+                  {phase === 'idle' ? 'Initialize breach' : 'Run new breach'}
+                  <span aria-hidden="true">→</span>
+                </button>
+              )}
             </div>
           </div>
         )}

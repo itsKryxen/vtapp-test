@@ -12,6 +12,7 @@ const LINKS = [
   { href: '/clubs', label: 'Clubs' },
   { href: '/sponsors', label: 'Sponsors' },
   { href: '/team', label: 'Team' },
+    { href: '/merch', label: 'Merch' },
   { href: '/about', label: 'About' },
   { href: '/tickets', label: 'Tickets' },
 ];

@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Ticker from '@/components/Ticker';
 import Preloader from '@/components/Preloader';
+import PageLogoIntroAnimation from '@/components/PageLogoIntroAnimation';
 import ButtonEffects from '@/components/ButtonEffects';
 import BlinkingDotCursor from '@/components/BlinkingDotCursor';
 import NumericCursorTrail from '@/components/NumericCursorTrail';
@@ -101,6 +102,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
 
         <Preloader />
+        <PageLogoIntroAnimation />
 
         <Ticker />
         <Navbar />

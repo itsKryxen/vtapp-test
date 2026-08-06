@@ -1,44 +1,48 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 const LINES = [
-  'INIT VT26 RUNTIME',
-  'LOADING MARK / REV.A',
-  'RESOLVING SCHOOLS [7]',
-  'INDEXING EVENTS',
-  'CALIBRATING GRID',
+  'INIT VT26 DASHBOARD',
+  'AUTHENTICATING SESSION',
+  'RESOLVING CLUB PROFILE',
+  'INDEXING EVENT SUBMISSIONS',
+  'CALIBRATING PORTAL',
   'READY',
 ];
 
-const SESSION_KEY = 'vtapp-booted';
+const SESSION_KEY = 'vtapp-dashboard-booted';
 
 /**
- * Boot sequence.
+ * Dashboard Boot sequence.
  *
- * A full-screen overlay in the same drafting language as the hero: the V mark
- * strokes itself on while a mono log prints and a progress rule fills. It runs
- * once per browser session, so navigating around the site does not replay it,
- * and it is skipped entirely for anyone on prefers-reduced-motion.
- *
- * The overlay sits above everything and is aria-hidden, so screen readers and
- * search crawlers see the real page underneath immediately.
+ * A full-screen overlay in the blueprint drafting language for Dashboard & Admin pages:
+ * the V mark strokes itself on while a mono log prints and a progress rule fills.
  */
 export default function Preloader() {
+  const pathname = usePathname();
   const [show, setShow] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const [step, setStep] = useState(0);
   const [pct, setPct] = useState(0);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
+  const isDashboard = pathname.startsWith('/dashboard') || pathname.startsWith('/admin');
+
   useEffect(() => {
+    if (!isDashboard) {
+      setShow(false);
+      return;
+    }
+
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let booted = false;
     try {
       booted = sessionStorage.getItem(SESSION_KEY) === '1';
     } catch {
-      // storage blocked: treat as a fresh boot, worst case it plays again
+      // storage blocked: treat as a fresh boot
     }
 
     if (reduced || booted) return;
@@ -52,10 +56,10 @@ export default function Preloader() {
       push(() => {
         setStep(i + 1);
         setPct(Math.round(((i + 1) / LINES.length) * 100));
-      }, 260 + i * 300);
+      }, 220 + i * 250);
     });
 
-    const total = 260 + LINES.length * 300 + 380;
+    const total = 220 + LINES.length * 250 + 300;
     push(() => setLeaving(true), total);
     push(() => {
       setShow(false);
@@ -65,15 +69,15 @@ export default function Preloader() {
       } catch {
         /* ignore */
       }
-    }, total + 620);
+    }, total + 500);
 
     return () => {
       timers.current.forEach(clearTimeout);
       document.body.style.overflow = '';
     };
-  }, []);
+  }, [pathname, isDashboard]);
 
-  if (!show) return null;
+  if (!isDashboard || !show) return null;
 
   return (
     <div
@@ -96,7 +100,7 @@ export default function Preloader() {
         VT26
       </span>
       <span className="absolute right-6 top-1/2 hidden -translate-y-1/2 font-mono text-[10px] uppercase tracking-label text-slate-700 sm:block">
-        REV.A
+        DASHBOARD
       </span>
 
       {/* the mark, drawing itself */}

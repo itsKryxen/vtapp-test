@@ -9,6 +9,7 @@ const EXPLORE = [
   { href: '/clubs', label: 'Clubs' },
   { href: '/sponsors', label: 'Sponsors' },
   { href: '/team', label: 'Team' },
+  { href: '/signal-breach', label: 'Signal Breach' },
   { href: '/about', label: 'About the fest' },
   { href: '/tickets', label: 'Tickets' },
   { href: '/tickets/status', label: 'My orders' },

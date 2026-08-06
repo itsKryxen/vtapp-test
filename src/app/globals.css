@@ -899,3 +899,877 @@
     animation: none;
   }
 }
+
+/* ==========================================================================
+   PREMIUM HERO ANIMATION SYSTEM
+   ─────────────────────────────────────────────────────────────────────────
+   All animations use easing: ease-in-out or cubic-bezier(.22,.61,.36,1).
+   Nothing snaps. Everything loops seamlessly. Timings are randomised so
+   nothing synchronises. Performance: only transform + opacity are animated.
+   ========================================================================== */
+
+/* ── background ambient breathing ── */
+@keyframes heroAmbientPulse {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1; }
+}
+
+@keyframes heroVignettePulse {
+  0%, 100% { opacity: 0.7; }
+  50%       { opacity: 1; }
+}
+
+/* ── center object multi-layer animation ── */
+@keyframes heroFloatY {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+
+@keyframes heroScaleBreathe {
+  0%, 100% { transform: scale(1.00); }
+  50%       { transform: scale(1.03); }
+}
+
+@keyframes heroRotateSway {
+  0%, 100% { transform: rotate(-2deg); }
+  50%       { transform: rotate(2deg); }
+}
+
+@keyframes heroGlowPulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 0.8; }
+}
+
+/* ── ring rotation ── */
+@keyframes heroSpinCW {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes heroSpinCCW {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg); }
+}
+
+/* ── vertical scan line ── */
+@keyframes heroScanV {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  6%   { opacity: 0.05; }
+  94%  { opacity: 0.05; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* ── HUD panel float ── */
+@keyframes heroHudFloat1 {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%       { transform: translate3d(1px, -2px, 0); }
+}
+
+@keyframes heroHudFloat2 {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%       { transform: translate3d(-2px, 1px, 0); }
+}
+
+@keyframes heroHudFloat3 {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%       { transform: translate3d(2px, 2px, 0); }
+}
+
+@keyframes heroHudFloat4 {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%       { transform: translate3d(-1px, -2px, 0); }
+}
+
+/* ── button glow border shimmer ── */
+@keyframes heroBtnShimmer {
+  0%, 80%, 100% {
+    box-shadow: 0 0 0 0 rgba(179,40,33,0);
+    border-color: rgba(255,255,255,0.2);
+  }
+  88% {
+    box-shadow: 0 0 14px 0 rgba(224,104,94,0.22), 0 0 0 1px rgba(224,104,94,0.28);
+    border-color: rgba(224,104,94,0.45);
+  }
+  94% {
+    box-shadow: 0 0 0 0 rgba(179,40,33,0);
+    border-color: rgba(255,255,255,0.2);
+  }
+}
+
+/* ── text subtle fade breathe ── */
+@keyframes heroTextBreathe {
+  0%, 100% { opacity: 0.97; }
+  50%       { opacity: 1; }
+}
+
+/* ── data line HUD pulse ── */
+@keyframes heroDataLinePulse {
+  0%, 100% { opacity: 0.06; }
+  50%       { opacity: 0.18; }
+}
+
+/* ── entrance sequence ── */
+@keyframes heroEnterFadeUp {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes heroEnterFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes heroEnterScale {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ─────────────────────────────────────────────────
+   APPLIED CLASSES
+───────────────────────────────────────────────── */
+
+/* ── canvas layer ── */
+.hero-canvas-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── rings SVG (sits behind BlueprintMark) ── */
+.hero-rings-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 1;
+  transform-origin: center;
+}
+
+.hero-ring-cw-35 {
+  transform-origin: 260px 260px;
+  animation: heroSpinCW 35s linear infinite;
+}
+
+.hero-ring-ccw-50 {
+  transform-origin: 260px 260px;
+  animation: heroSpinCCW 50s linear infinite;
+}
+
+.hero-ring-cw-70 {
+  transform-origin: 260px 260px;
+  animation: heroSpinCW 70s linear infinite;
+}
+
+.hero-ring-ccw-45 {
+  transform-origin: 260px 260px;
+  animation: heroSpinCCW 45s linear infinite;
+}
+
+.hero-ring-cw-120 {
+  transform-origin: 260px 260px;
+  animation: heroSpinCW 120s linear infinite;
+}
+
+/* ── blueprint scene wrapper ── */
+.hero-blueprint-scene {
+  position: relative;
+  isolation: isolate;
+}
+
+/* ── center object glow layer ── */
+.hero-center-glow {
+  position: absolute;
+  inset: -15%;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(179,40,33,0.15) 0%, transparent 70%);
+  animation: heroGlowPulse 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+  will-change: opacity;
+}
+
+/* ── center object float (applied to .bp-float wrapper) ── */
+.hero-center-animate {
+  animation:
+    heroFloatY 7s ease-in-out infinite,
+    heroScaleBreathe 8s ease-in-out 1.3s infinite,
+    heroRotateSway 13s ease-in-out 0.7s infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* ── vertical scan line ── */
+.hero-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(224,104,94,0.05) 20%,
+    rgba(224,104,94,0.07) 50%,
+    rgba(224,104,94,0.05) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 10;
+  animation: heroScanV 12s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* ── HUD panel floating ── */
+.hero-hud-float-1 { animation: heroHudFloat1 6.2s ease-in-out infinite; will-change: transform; }
+.hero-hud-float-2 { animation: heroHudFloat2 7.8s ease-in-out infinite 1.4s; will-change: transform; }
+.hero-hud-float-3 { animation: heroHudFloat3 5.5s ease-in-out infinite 2.8s; will-change: transform; }
+.hero-hud-float-4 { animation: heroHudFloat4 8.9s ease-in-out infinite 0.7s; will-change: transform; }
+
+/* ── ambient background glow breathing ── */
+.hero-ambient-glow {
+  animation: heroAmbientPulse 50s ease-in-out infinite;
+  will-change: opacity;
+}
+
+/* ── text breathe ── */
+.hero-text-breathe   { animation: heroTextBreathe 9s ease-in-out infinite; will-change: opacity; }
+.hero-text-breathe-2 { animation: heroTextBreathe 11s ease-in-out infinite 2.1s; will-change: opacity; }
+
+/* ── entrance sequence (staggered, animation-fill-mode: both) ── */
+.hero-enter-bg       { animation: heroEnterFade 0.5s cubic-bezier(.22,.61,.36,1) both; }
+.hero-enter-rings    { opacity: 0; animation: heroEnterFade 0.6s cubic-bezier(.22,.61,.36,1) 0.3s both; }
+.hero-enter-center   { opacity: 0; animation: heroEnterScale 0.7s cubic-bezier(.22,.61,.36,1) 0.55s both; }
+.hero-enter-particles { opacity: 0; animation: heroEnterFade 0.5s cubic-bezier(.22,.61,.36,1) 0.8s both; }
+.hero-enter-lockup   { opacity: 0; animation: heroEnterFadeUp 0.65s cubic-bezier(.22,.61,.36,1) 0.55s both; }
+.hero-enter-badge    { opacity: 0; animation: heroEnterFadeUp 0.55s cubic-bezier(.22,.61,.36,1) 0.85s both; }
+.hero-enter-countdown { opacity: 0; animation: heroEnterFadeUp 0.55s cubic-bezier(.22,.61,.36,1) 1.05s both; }
+
+/* ── countdown timeline panel float ── */
+.hero-countdown-panel { animation: heroHudFloat2 8.2s ease-in-out infinite 3.1s; will-change: transform; }
+
+/* ── edition badge keeps its glow + adds float ── */
+.hero-edition-badge {
+  animation:
+    editionGlow 4.8s ease-in-out infinite,
+    heroHudFloat1 6s ease-in-out infinite 1.5s;
+}
+
+/* ── data line pulse ── */
+.hero-data-line   { animation: heroDataLinePulse 6s ease-in-out infinite; }
+.hero-data-line-2 { animation: heroDataLinePulse 8s ease-in-out infinite 2.2s; }
+
+/* ── card hover ── */
+.hero-card {
+  transition: transform 300ms cubic-bezier(.22,.61,.36,1), box-shadow 300ms ease;
+}
+.hero-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(224,104,94,0.15);
+}
+
+/* ── button hover scale (overrides base .btn) ── */
+.btn:hover:not(:disabled) { --button-scale: 1.03; }
+
+/* ── ghost button shimmer every 5s ── */
+.btn-ghost { animation: heroBtnShimmer 5s ease-in-out infinite; }
+
+/* ── prefers-reduced-motion overrides for new animations ── */
+@media (prefers-reduced-motion: reduce) {
+  .hero-canvas-layer,
+  .hero-scan-line,
+  .hero-center-glow,
+  .hero-rings-svg { display: none; }
+
+  .hero-center-animate,
+  .hero-hud-float-1,
+  .hero-hud-float-2,
+  .hero-hud-float-3,
+  .hero-hud-float-4,
+  .hero-text-breathe,
+  .hero-text-breathe-2,
+  .hero-ambient-glow,
+  .hero-countdown-panel,
+  .hero-ring-cw-35,
+  .hero-ring-ccw-50,
+  .hero-ring-cw-70,
+  .hero-ring-ccw-45,
+  .hero-ring-cw-120,
+  .hero-data-line,
+  .hero-data-line-2,
+  .btn-ghost { animation: none; }
+
+  .hero-enter-bg,
+  .hero-enter-rings,
+  .hero-enter-center,
+  .hero-enter-particles,
+  .hero-enter-lockup,
+  .hero-enter-badge,
+  .hero-enter-countdown { opacity: 1; animation: none; }
+
+  .hero-edition-badge { animation: editionGlow 4.8s ease-in-out infinite; }
+
+  /* disable orbit icons in reduced-motion */
+  .orbit-icon { animation: none !important; }
+  .orbit-icon-svg { animation: none !important; }
+  .orbit-icon-chip { animation: none !important; }
+}
+
+
+/* ==========================================================================
+   ORBITAL EVENT ICONS
+   ─────────────────────────────────────────────────────────────────────────
+   CSS rotate→translateX→counter-rotate trick.
+   Each icon is at top:50%;left:50% then orbits at radius var(--r).
+   Counter-rotation keeps the chip upright as it travels the ring.
+   ========================================================================== */
+
+@keyframes orbitCW {
+  from { transform: translate(-50%,-50%) rotate(0deg)    translateX(var(--r)) rotate(0deg); }
+  to   { transform: translate(-50%,-50%) rotate(360deg)  translateX(var(--r)) rotate(-360deg); }
+}
+
+@keyframes orbitCCW {
+  from { transform: translate(-50%,-50%) rotate(0deg)    translateX(var(--r)) rotate(0deg); }
+  to   { transform: translate(-50%,-50%) rotate(-360deg) translateX(var(--r)) rotate(360deg); }
+}
+
+@keyframes orbitIconFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-2px); }
+}
+
+@keyframes orbitIconGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(224,104,94,0.25));
+    opacity: 0.65;
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(224,104,94,0.65));
+    opacity: 1;
+  }
+}
+
+/* container — fills the blueprint scene */
+.orbit-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  /* scale adapts on smaller containers */
+  transform-origin: center;
+}
+
+@media (max-width: 500px) {
+  .orbit-container { transform: scale(0.52); }
+}
+@media (min-width: 501px) and (max-width: 640px) {
+  .orbit-container { transform: scale(0.68); }
+}
+@media (min-width: 641px) and (max-width: 768px) {
+  .orbit-container { transform: scale(0.82); }
+}
+
+/* the animated orbit arm — one per icon */
+.orbit-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  pointer-events: auto;
+  cursor: pointer;
+  /* duration and delay come from inline CSS variables */
+  animation-duration:        var(--d, 22s);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-delay:           var(--delay, 0s);
+  will-change: transform;
+}
+
+.orbit-icon--cw  { animation-name: orbitCW;  }
+.orbit-icon--ccw { animation-name: orbitCCW; }
+.orbit-icon--paused { animation-play-state: paused; }
+
+/* the visible chip (child of orbit arm — independent transform) */
+.orbit-icon-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 5px 6px 4px;
+  border-radius: 7px;
+  background: rgba(8, 8, 10, 0.72);
+  border: 1px solid rgba(179, 40, 33, 0.22);
+  backdrop-filter: blur(4px);
+  transition:
+    transform     250ms cubic-bezier(.22,.61,.36,1),
+    border-color  250ms ease,
+    background    250ms ease;
+  animation: orbitIconFloat var(--float-d, 5.5s) ease-in-out infinite var(--float-delay, 0s);
+  will-change: transform;
+}
+
+.orbit-icon-chip--hovered {
+  transform: scale(1.12);
+  border-color: rgba(224, 104, 94, 0.55);
+  background: rgba(12, 8, 10, 0.88);
+}
+
+/* icon SVG glow breathing */
+.orbit-icon-svg {
+  color: rgba(224, 104, 94, 0.75);
+  transition: color 250ms ease, filter 250ms ease;
+  animation: orbitIconGlow var(--glow-dur, 4s) ease-in-out infinite var(--glow-delay, 0s);
+  will-change: filter, opacity;
+}
+
+.orbit-icon-chip--hovered .orbit-icon-svg {
+  color: rgba(238, 156, 149, 1);
+  filter: drop-shadow(0 0 10px rgba(224,104,94,0.8));
+  animation-play-state: running;
+}
+
+/* text label under the icon */
+.orbit-icon-label {
+  font-size: 7px;
+  font-family: var(--font-mono, monospace);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(100, 116, 139, 0.7);
+  white-space: nowrap;
+  line-height: 1;
+  transition: color 250ms ease;
+}
+
+.orbit-icon-chip--hovered .orbit-icon-label {
+  color: rgba(224, 104, 94, 0.9);
+}
+
+
+/* ==========================================================================
+   SCAN-FLASH SYSTEM  (.hero--scanning is toggled by JS in HeroIdentity)
+   When the scan fires, rings and key elements briefly intensify.
+   ========================================================================== */
+
+@keyframes scanFlash {
+  0%   { opacity: var(--scan-base, 0.12); filter: brightness(1); }
+  15%  { opacity: var(--scan-peak, 0.32); filter: brightness(1.6); }
+  50%  { opacity: var(--scan-peak, 0.32); filter: brightness(1.4); }
+  100% { opacity: var(--scan-base, 0.12); filter: brightness(1); }
+}
+
+/* hero-wide horizontal scan sweep */
+.hero-scan-h {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(224,104,94,0.04) 15%,
+    rgba(224,104,94,0.1)  50%,
+    rgba(224,104,94,0.04) 85%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 20;
+  animation: heroScanV 10s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* .hero--scanning transient state */
+.hero--scanning .hero-ring-cw-35,
+.hero--scanning .hero-ring-ccw-50,
+.hero--scanning .hero-ring-cw-70,
+.hero--scanning .hero-ring-ccw-45,
+.hero--scanning .hero-ring-cw-120 {
+  filter: brightness(2.2);
+  transition: filter 0.4s ease;
+}
+
+.hero--scanning .hero-center-glow {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease;
+}
+
+.hero--scanning .hero-identity-logo {
+  filter: drop-shadow(0 0 40px rgb(179 40 33 / 0.55));
+  transition: filter 0.3s ease;
+}
+
+.hero--scanning .orbit-icon-svg {
+  filter: drop-shadow(0 0 8px rgba(224,104,94,0.7));
+  transition: filter 0.4s ease;
+}
+
+.hero--scanning .hero-edition-badge {
+  box-shadow: 0 0 32px rgb(179 40 33 / 0.45), inset 0 0 24px rgb(239 68 68 / 0.18);
+  transition: box-shadow 0.4s ease;
+}
+
+
+/* ==========================================================================
+   ENHANCED LOGO GLOW  (energy-core effect – logo illuminates surroundings)
+   ========================================================================== */
+
+@keyframes logoCoreGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 28px rgba(179,40,33,0.22))
+            drop-shadow(0 0 8px rgba(179,40,33,0.12));
+  }
+  50% {
+    filter: drop-shadow(0 0 42px rgba(179,40,33,0.45))
+            drop-shadow(0 0 18px rgba(224,104,94,0.28));
+  }
+}
+
+/* Override the static drop-shadow on hero-identity-logo */
+.hero-identity-logo {
+  filter: drop-shadow(0 0 28px rgb(179 40 33 / 0.22));
+  animation: logoCoreGlow 4.5s ease-in-out infinite, heroHudFloat1 6.2s ease-in-out infinite;
+  will-change: filter, transform;
+}
+
+
+/* ==========================================================================
+   DEPTH LAYERS — subtle parallax background layers
+   ========================================================================== */
+
+/* Layer: animated ambient radial behind the whole section */
+.hero-bg-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 60% 55% at 72% 50%, rgba(179,40,33,0.07) 0%, transparent 70%);
+  animation: heroAmbientPulse 55s ease-in-out infinite;
+  z-index: 0;
+  will-change: opacity;
+}
+
+/* Layer: subtle hexagon-ish grid overlay (CSS gradient approximation) */
+.hero-hex-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.018;
+  background-image:
+    linear-gradient(30deg,  rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(-30deg, rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg,  rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 70px, 40px 70px, 40px 40px;
+  animation: heroGridShift 60s ease-in-out infinite;
+  z-index: 0;
+  will-change: transform;
+}
+
+@keyframes heroGridShift {
+  0%   { transform: translate3d(0,0,0); }
+  33%  { transform: translate3d(3px,2px,0); }
+  66%  { transform: translate3d(-2px,3px,0); }
+  100% { transform: translate3d(0,0,0); }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  pointer-events: auto;
+  cursor: pointer;
+  /* duration and delay come from inline CSS variables */
+  animation-duration:        var(--d, 22s);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-delay:           var(--delay, 0s);
+  will-change: transform;
+}
+
+.orbit-icon--cw  { animation-name: orbitCW;  }
+.orbit-icon--ccw { animation-name: orbitCCW; }
+.orbit-icon--paused { animation-play-state: paused; }
+
+/* the visible chip (child of orbit arm — independent transform) */
+.orbit-icon-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 5px 6px 4px;
+  border-radius: 7px;
+  background: rgba(8, 8, 10, 0.72);
+  border: 1px solid rgba(179, 40, 33, 0.22);
+  backdrop-filter: blur(4px);
+  transition:
+    transform     250ms cubic-bezier(.22,.61,.36,1),
+    border-color  250ms ease,
+    background    250ms ease;
+  animation: orbitIconFloat var(--float-d, 5.5s) ease-in-out infinite var(--float-delay, 0s);
+  will-change: transform;
+}
+
+.orbit-icon-chip--hovered {
+  transform: scale(1.12);
+  border-color: rgba(224, 104, 94, 0.55);
+  background: rgba(12, 8, 10, 0.88);
+}
+
+/* icon SVG glow breathing */
+.orbit-icon-svg {
+  color: rgba(224, 104, 94, 0.75);
+  transition: color 250ms ease, filter 250ms ease;
+  animation: orbitIconGlow var(--glow-dur, 4s) ease-in-out infinite var(--glow-delay, 0s);
+  will-change: filter, opacity;
+}
+
+.orbit-icon-chip--hovered .orbit-icon-svg {
+  color: rgba(238, 156, 149, 1);
+  filter: drop-shadow(0 0 10px rgba(224,104,94,0.8));
+  animation-play-state: running;
+}
+
+/* text label under the icon */
+.orbit-icon-label {
+  font-size: 7px;
+  font-family: var(--font-mono, monospace);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(100, 116, 139, 0.7);
+  white-space: nowrap;
+  line-height: 1;
+  transition: color 250ms ease;
+}
+
+.orbit-icon-chip--hovered .orbit-icon-label {
+  color: rgba(224, 104, 94, 0.9);
+}
+
+
+/* ==========================================================================
+   SCAN-FLASH SYSTEM  (.hero--scanning is toggled by JS in HeroIdentity)
+   When the scan fires, rings and key elements briefly intensify.
+   ========================================================================== */
+
+@keyframes scanFlash {
+  0%   { opacity: var(--scan-base, 0.12); filter: brightness(1); }
+  15%  { opacity: var(--scan-peak, 0.32); filter: brightness(1.6); }
+  50%  { opacity: var(--scan-peak, 0.32); filter: brightness(1.4); }
+  100% { opacity: var(--scan-base, 0.12); filter: brightness(1); }
+}
+
+/* hero-wide horizontal scan sweep */
+.hero-scan-h {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(224,104,94,0.04) 15%,
+    rgba(224,104,94,0.1)  50%,
+    rgba(224,104,94,0.04) 85%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 20;
+  animation: heroScanV 10s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* .hero--scanning transient state */
+.hero--scanning .hero-ring-cw-35,
+.hero--scanning .hero-ring-ccw-50,
+.hero--scanning .hero-ring-cw-70,
+.hero--scanning .hero-ring-ccw-45,
+.hero--scanning .hero-ring-cw-120 {
+  filter: brightness(2.2);
+  transition: filter 0.4s ease;
+}
+
+.hero--scanning .hero-center-glow {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease;
+}
+
+.hero--scanning .hero-identity-logo {
+  filter: drop-shadow(0 0 40px rgb(179 40 33 / 0.55));
+  transition: filter 0.3s ease;
+}
+
+.hero--scanning .orbit-icon-svg {
+  filter: drop-shadow(0 0 8px rgba(224,104,94,0.7));
+  transition: filter 0.4s ease;
+}
+
+.hero--scanning .hero-edition-badge {
+  box-shadow: 0 0 32px rgb(179 40 33 / 0.45), inset 0 0 24px rgb(239 68 68 / 0.18);
+  transition: box-shadow 0.4s ease;
+}
+
+
+/* ==========================================================================
+   ENHANCED LOGO GLOW  (energy-core effect – logo illuminates surroundings)
+   ========================================================================== */
+
+@keyframes logoCoreGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 28px rgba(179,40,33,0.22))
+            drop-shadow(0 0 8px rgba(179,40,33,0.12));
+  }
+  50% {
+    filter: drop-shadow(0 0 42px rgba(179,40,33,0.45))
+            drop-shadow(0 0 18px rgba(224,104,94,0.28));
+  }
+}
+
+/* Override the static drop-shadow on hero-identity-logo */
+.hero-identity-logo {
+  filter: drop-shadow(0 0 28px rgb(179 40 33 / 0.22));
+  animation: logoCoreGlow 4.5s ease-in-out infinite, heroHudFloat1 6.2s ease-in-out infinite;
+  will-change: filter, transform;
+}
+
+
+/* ==========================================================================
+   DEPTH LAYERS — subtle parallax background layers
+   ========================================================================== */
+
+/* Layer: animated ambient radial behind the whole section */
+.hero-bg-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 60% 55% at 72% 50%, rgba(179,40,33,0.07) 0%, transparent 70%);
+  animation: heroAmbientPulse 55s ease-in-out infinite;
+  z-index: 0;
+  will-change: opacity;
+}
+
+/* Layer: subtle hexagon-ish grid overlay (CSS gradient approximation) */
+.hero-hex-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.018;
+  background-image:
+    linear-gradient(30deg,  rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(-30deg, rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg,  rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 70px, 40px 70px, 40px 40px;
+  animation: heroGridShift 60s ease-in-out infinite;
+  z-index: 0;
+  will-change: transform;
+}
+
+@keyframes heroGridShift {
+  0%   { transform: translate3d(0,0,0); }
+  33%  { transform: translate3d(3px,2px,0); }
+  66%  { transform: translate3d(-2px,3px,0); }
+  100% { transform: translate3d(0,0,0); }
+}
+
+/* energy-ring glow pulse that syncs with logo (separate layer) */
+.hero-core-halo {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(179,40,33,0.12) 0%, transparent 55%);
+  animation: heroGlowPulse 4.5s ease-in-out 0.8s infinite;
+  pointer-events: none;
+  z-index: 0;
+  will-change: opacity;
+}
+
+
+/* ==========================================================================
+   ENHANCED ENTRANCE — deeper sequencing for new elements
+   ========================================================================== */
+
+.hero-enter-orbits {
+  opacity: 0;
+  animation: heroEnterFade 0.8s cubic-bezier(.22,.61,.36,1) 1.3s both;
+}
+
+.hero-enter-network {
+  opacity: 0;
+  animation: heroEnterFade 0.7s cubic-bezier(.22,.61,.36,1) 0.9s both;
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION — disable new animations
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-container      { display: none; }
+  .hero-scan-h          { display: none; }
+  .hero-hex-layer       { animation: none; }
+  .hero-bg-ambient      { animation: none; }
+  .hero-core-halo       { animation: none; }
+  .hero-identity-logo   { animation: none !important; opacity: 1 !important; }
+  .hero-enter-orbits,
+  .hero-enter-network   { opacity: 1; animation: none; }
+}
+
+
+/* ==========================================================================
+   LOGO SCANNER  — the V-TAPP logo gets hit by a scanner, flash-bright,
+   fades to near-invisible, then gradually fades back in. 7-second loop.
+   ========================================================================== */
+
+/* Main fade/flash cycle */
+@keyframes logoScannerFade {
+  /* ── 0% normal ── */
+  0%    { opacity: 1;    filter: drop-shadow(0 0 28px rgba(179,40,33,0.22)); }
+  /* ── scanner hit – brief brilliant flash ── */
+  10%   { opacity: 1;    filter: drop-shadow(0 0 70px rgba(224,104,94,0.95)) brightness(2.2); }
+  /* ── power-cut – fade to near nothing ── */
+  22%   { opacity: 0.04; filter: drop-shadow(0 0 5px rgba(179,40,33,0.05))  brightness(0.2); }
+  /* ── hold dark ── */
+  50%   { opacity: 0.04; filter: drop-shadow(0 0 5px rgba(179,40,33,0.05))  brightness(0.2); }
+  /* ── fade back in ── */
+  70%   { opacity: 1;    filter: drop-shadow(0 0 38px rgba(179,40,33,0.38)); }
+  /* ── pause at normal before next cycle ── */
+  100%  { opacity: 1;    filter: drop-shadow(0 0 28px rgba(179,40,33,0.22)); }
+}
+
+/* Scanner sweep line (::after) */
+@keyframes logoScanLine {
+  0%   { top: -10%; opacity: 0; }
+  4%   { opacity: 1; }
+  18%  { top: 110%; opacity: 0.9; }
+  22%  { top: 110%; opacity: 0; }
+  100% { top: -10%; opacity: 0; }
+}
+
+/* Class applied to the logo wrapper div */
+.hero-identity-logo {
+  position: relative;
+  animation:
+    logoScannerFade 7s cubic-bezier(.22,.61,.36,1) infinite,
+    heroHudFloat1   6.2s ease-in-out infinite;
+  will-change: filter, transform, opacity;
+}
+
+/* The glowing sweep line */
+.hero-identity-logo::after {
+  content: '';
+  position: absolute;
+  left: -12%;
+  right: -12%;
+  height: 3px;
+  background: linear-gradient(
+    to right,
+    transparent              0%,
+    rgba(224,104,94,0.8)    20%,
+    rgba(255,210,200,1)     50%,
+    rgba(224,104,94,0.8)    80%,
+    transparent             100%
+  );
+  border-radius: 2px;
+  box-shadow:
+    0 0 8px  rgba(224,104,94,0.75),
+    0 0 22px rgba(179,40,33,0.5);
+  animation: logoScanLine 7s cubic-bezier(.22,.61,.36,1) infinite;
+  pointer-events: none;
+  z-index: 10;
+}

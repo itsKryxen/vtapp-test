@@ -39,8 +39,9 @@ export default function CuteRobotCompanion() {
     }
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Offset target slightly so robot hovers next to the cursor
-      targetRef.current = { x: e.clientX + 28, y: e.clientY + 28 };
+      // Keep enough clearance that the robot's hover scale never reaches back
+      // under the pointer and intercepts clicks meant for the page.
+      targetRef.current = { x: e.clientX + 76, y: e.clientY + 56 };
       lastMouseTimeRef.current = Date.now();
     };
 
@@ -122,7 +123,7 @@ export default function CuteRobotCompanion() {
     >
       {/* Speech / Thought Bubble */}
       {showMessage && (
-        <div className="absolute -top-14 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-brand-500/60 bg-ink-950/95 px-3 py-1.5 font-mono text-[11px] font-semibold text-white shadow-[0_0_20px_rgba(179,40,33,0.5)] backdrop-blur-md animate-bounce pointer-events-auto">
+        <div className="pointer-events-none absolute -top-14 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-brand-500/60 bg-ink-950/95 px-3 py-1.5 font-mono text-[11px] font-semibold text-white shadow-[0_0_20px_rgba(179,40,33,0.5)] backdrop-blur-md animate-bounce">
           {message}
           <div className="absolute -bottom-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-b border-r border-brand-500/60 bg-ink-950" />
         </div>

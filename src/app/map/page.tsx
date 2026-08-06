@@ -4,7 +4,7 @@ import AndhraPradeshBinaryMap from '@/components/AndhraPradeshBinaryMap';
 
 export const metadata: Metadata = {
   title: 'Andhra Pradesh Map',
-  description: 'An interactive binary map of Andhra Pradesh highlighting Amaravati.',
+  description: 'An interactive binary map of Andhra Pradesh highlighting VIT-AP University.',
 };
 
 export default function MapPage() {

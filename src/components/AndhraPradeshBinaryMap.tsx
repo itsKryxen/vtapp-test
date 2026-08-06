@@ -18,6 +18,11 @@ const CELL_GAP = 10.5;
 const CELL_ORIGIN_X = 55;
 const CELL_ORIGIN_Y = 150;
 const AMARAVATI_CELL = { column: 29, row: 18 };
+const EDITION_TIMELINE = [
+  { year: '2022', edition: 1, threshold: 0 },
+  { year: '2023', edition: 2, threshold: 0.5 },
+  { year: '2026', edition: 3, threshold: 0.9 },
+] as const;
 
 // Sampled from the supplied Andhra Pradesh silhouette. A 1 marks a position
 // inside the state; the visible binary value is generated separately.
@@ -166,12 +171,12 @@ export default function AndhraPradeshBinaryMap() {
   const amaravatiX = CELL_ORIGIN_X + AMARAVATI_CELL.column * CELL_GAP;
   const amaravatiY = CELL_ORIGIN_Y + AMARAVATI_CELL.row * CELL_GAP;
   const mapScale = reducedMotion ? 1 : 1 + progress * 0.38;
-  const capitalCount = Math.min(7, Math.round(progress * 6) + 1);
+  const capitalCount = Math.min(3, Math.round(progress * 3));
 
   return (
     <section ref={sectionRef} className="vtapp-map-scroll border-y border-white/10" aria-label="Interactive Andhra Pradesh map">
       <div className="vtapp-map-stage container-x">
-        <div className="grid w-full">
+        <div className="grid w-full gap-6 xl:grid-cols-[minmax(0,1fr)_18rem]">
           <div className="vtapp-map-panel panel brackets scanlines">
             <div className="vtapp-map-transform" style={{ transform: `scale(${mapScale})` }}>
               <svg
@@ -184,7 +189,7 @@ export default function AndhraPradeshBinaryMap() {
                 aria-labelledby="ap-map-svg-title ap-map-svg-description"
               >
                 <title id="ap-map-svg-title">Interactive binary map of Andhra Pradesh</title>
-                <desc id="ap-map-svg-description">Scroll to zoom toward Amaravati while its highlighted count advances from one to seven. Move across the digits to mutate the binary field and draw a local trail.</desc>
+                <desc id="ap-map-svg-description">Scroll to zoom toward VIT-AP while its highlighted count advances from zero to three. Move across the digits to mutate the binary field and draw a local trail.</desc>
                 <defs>
                   <filter id="vtapp-map-glow" x="-80%" y="-80%" width="260%" height="260%">
                     <feGaussianBlur stdDeviation="4" result="blur" />
@@ -207,7 +212,7 @@ export default function AndhraPradeshBinaryMap() {
                         x={cell.x}
                         y={cell.y}
                         textAnchor="middle"
-                        className={`vtapp-map-cell ${cell.isAmaravati ? 'vtapp-map-cell-7' : `vtapp-map-cell-${value}`}`}
+                        className={`vtapp-map-cell ${cell.isAmaravati ? 'vtapp-map-cell-node' : `vtapp-map-cell-${value}`}`}
                       >
                         {value}
                       </text>
@@ -243,13 +248,55 @@ export default function AndhraPradeshBinaryMap() {
                 <g className="vtapp-map-marker" style={{ opacity: 0.5 + progress * 0.5 }}>
                   <circle cx={amaravatiX} cy={amaravatiY - 5} r="22" fill="none" strokeWidth="1" strokeDasharray="3 5" />
                   <path d={`M ${amaravatiX + 9} ${amaravatiY - 13} H ${amaravatiX + 70}`} fill="none" />
-                  <text x={amaravatiX + 77} y={amaravatiY - 15} className="font-mono text-[12px] font-bold tracking-[0.14em]">AMARAVATI // {capitalCount}</text>
-                  <text x={amaravatiX + 77} y={amaravatiY + 3} className="font-mono text-[8px] tracking-[0.12em]">CAPITAL NODE // VIT-AP</text>
+                  <text x={amaravatiX + 77} y={amaravatiY - 15} className="font-mono text-[12px] font-bold tracking-[0.14em]">VIT-AP // {capitalCount}</text>
+                  <text x={amaravatiX + 77} y={amaravatiY + 3} className="font-mono text-[8px] tracking-[0.12em]">UNIVERSITY NODE</text>
                 </g>
               </svg>
             </div>
-
           </div>
+
+          <aside className="panel brackets flex min-h-[360px] flex-col p-6 sm:p-8" aria-label="V-TAPP edition timeline">
+            <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-5">
+              <div>
+                <p className="mono-label text-brand-500">V-TAPP HISTORY</p>
+                <h2 className="mt-2 font-display text-2xl font-light text-white">Edition timeline</h2>
+              </div>
+              <span className="font-mono text-xs text-slate-500">00—03</span>
+            </div>
+
+            <div className="relative mt-8 flex-1">
+              <span
+                className="absolute -left-px top-0 w-px bg-brand-500 transition-[height] duration-300"
+                style={{ height: `${progress * 100}%` }}
+                aria-hidden="true"
+              />
+              <ol className="flex h-full flex-col justify-between border-l border-white/10 pl-7">
+                {EDITION_TIMELINE.map((item) => {
+                  const active = progress >= item.threshold;
+                  return (
+                    <li key={item.year} className="relative py-2">
+                      <span
+                        className={`absolute -left-[2.05rem] top-4 h-2.5 w-2.5 border transition-colors duration-300 ${
+                          active
+                            ? 'border-brand-400 bg-brand-600 shadow-[0_0_16px_rgb(179_40_33/.8)]'
+                            : 'border-white/20 bg-ink-950'
+                        }`}
+                        aria-hidden="true"
+                      />
+                      <div className="flex items-baseline justify-between gap-4">
+                        <span className={`font-display text-3xl font-light transition-colors ${active ? 'text-white' : 'text-slate-600'}`}>
+                          {item.year}
+                        </span>
+                        <span className={`font-mono text-sm transition-colors ${active ? 'text-brand-400' : 'text-slate-600'}`}>
+                          ({item.edition})
+                        </span>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+          </aside>
         </div>
       </div>
     </section>

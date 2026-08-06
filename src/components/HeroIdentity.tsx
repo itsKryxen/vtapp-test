@@ -129,10 +129,10 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
         <div className="hero-enter-badge mt-7 flex justify-center lg:justify-start">
           <p
             className="hero-edition-badge inline-flex font-mono text-[clamp(1.05rem,2vw,1.7rem)] uppercase tracking-[0.2em] text-white sm:tracking-[0.27em]"
-            aria-label="7th Edition"
+            aria-label="3rd Edition"
           >
             <span className="hero-edition-slot" aria-hidden="true">
-              <span className="hero-edition-typewriter">7th Edition</span>
+              <span className="hero-edition-typewriter">3rd Edition</span>
             </span>
           </p>
         </div>

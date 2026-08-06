@@ -506,7 +506,7 @@
 }
 
 .hero-edition-slot::before {
-  content: '7th Edition';
+  content: '3rd Edition';
   visibility: hidden;
 }
 
@@ -853,7 +853,7 @@
   filter: drop-shadow(0 0 5px rgb(var(--em-300) / 0.7));
 }
 
-.vtapp-map-cell-7 {
+.vtapp-map-cell-node {
   fill: rgb(var(--am-400));
   font-size: 17px;
   filter: drop-shadow(0 0 7px rgb(var(--am-400) / 0.95));

@@ -1711,65 +1711,11 @@
 }
 
 
-/* ==========================================================================
-   LOGO SCANNER  — the V-TAPP logo gets hit by a scanner, flash-bright,
-   fades to near-invisible, then gradually fades back in. 7-second loop.
-   ========================================================================== */
-
-/* Main fade/flash cycle */
-@keyframes logoScannerFade {
-  /* ── 0% normal ── */
-  0%    { opacity: 1;    filter: drop-shadow(0 0 28px rgba(179,40,33,0.22)); }
-  /* ── scanner hit – brief brilliant flash ── */
-  10%   { opacity: 1;    filter: drop-shadow(0 0 70px rgba(224,104,94,0.95)) brightness(2.2); }
-  /* ── power-cut – fade to near nothing ── */
-  22%   { opacity: 0.04; filter: drop-shadow(0 0 5px rgba(179,40,33,0.05))  brightness(0.2); }
-  /* ── hold dark ── */
-  50%   { opacity: 0.04; filter: drop-shadow(0 0 5px rgba(179,40,33,0.05))  brightness(0.2); }
-  /* ── fade back in ── */
-  70%   { opacity: 1;    filter: drop-shadow(0 0 38px rgba(179,40,33,0.38)); }
-  /* ── pause at normal before next cycle ── */
-  100%  { opacity: 1;    filter: drop-shadow(0 0 28px rgba(179,40,33,0.22)); }
-}
-
-/* Scanner sweep line (::after) */
-@keyframes logoScanLine {
-  0%   { top: -10%; opacity: 0; }
-  4%   { opacity: 1; }
-  18%  { top: 110%; opacity: 0.9; }
-  22%  { top: 110%; opacity: 0; }
-  100% { top: -10%; opacity: 0; }
-}
-
 /* Class applied to the logo wrapper div */
 .hero-identity-logo {
   position: relative;
   animation:
-    logoScannerFade 7s cubic-bezier(.22,.61,.36,1) infinite,
-    heroHudFloat1   6.2s ease-in-out infinite;
-  will-change: filter, transform, opacity;
-}
-
-/* The glowing sweep line */
-.hero-identity-logo::after {
-  content: '';
-  position: absolute;
-  left: -12%;
-  right: -12%;
-  height: 3px;
-  background: linear-gradient(
-    to right,
-    transparent              0%,
-    rgba(224,104,94,0.8)    20%,
-    rgba(255,210,200,1)     50%,
-    rgba(224,104,94,0.8)    80%,
-    transparent             100%
-  );
-  border-radius: 2px;
-  box-shadow:
-    0 0 8px  rgba(224,104,94,0.75),
-    0 0 22px rgba(179,40,33,0.5);
-  animation: logoScanLine 7s cubic-bezier(.22,.61,.36,1) infinite;
-  pointer-events: none;
-  z-index: 10;
+    logoCoreGlow 4.5s ease-in-out infinite,
+    heroHudFloat1 6.2s ease-in-out infinite;
+  will-change: filter, transform;
 }

@@ -23,6 +23,7 @@ export interface TeamMember {
 }
 
 export const DEFAULT_DEPARTMENTS = [
+  'Leadership',
   'Core',
   'Technical',
   'Events',

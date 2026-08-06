@@ -152,26 +152,15 @@ function member(
 }
 
 export const DEMO_TEAM: TeamMember[] = [
-  member('demo-t-1', 'Rahul Nayak', 'Convenor', 'Core', 10, { email: 'vtapp.convenor@vitap.ac.in' }),
-  member('demo-t-2', 'Ananya Iyer', 'Co-Convenor', 'Core', 20),
-  member('demo-t-3', 'Vikram Shetty', 'General Secretary', 'Core', 30),
+  member('demo-t-1', 'Dr. G. Viswanathan', 'Founder & Chancellor', 'Leadership', 10),
+  member('demo-t-2', 'Dr. Sankar Viswanathan', 'Vice President', 'Leadership', 20),
+  member('demo-t-3', 'Dr. Sekar Viswanathan', 'Vice President', 'Leadership', 30),
+  member('demo-t-4', 'Dr. G. V. Selvam', 'Vice President', 'Leadership', 40),
+  member('demo-t-5', 'Dr. Sandhya Pentareddy', 'Executive Director', 'Leadership', 50),
+  member('demo-t-6', 'Dr. P. Arulmozhivarman', 'Vice Chancellor', 'Leadership', 60),
+  member('demo-t-7', 'Dr. Jagadish Chandra Mudiganti', 'Registrar', 'Leadership', 70),
 
-  member('demo-t-4', 'Meera Krishnan', 'Technical Head', 'Technical', 10),
-  member('demo-t-5', 'Arjun Pillai', 'Web Lead', 'Technical', 20),
-  member('demo-t-6', 'Tanvi Deshmukh', 'Infrastructure Lead', 'Technical', 30),
-
-  member('demo-t-7', 'Sahil Chopra', 'Events Head', 'Events', 10),
-  member('demo-t-8', 'Divya Menon', 'Events Coordinator', 'Events', 20),
-
-  member('demo-t-9', 'Ishaan Bhatt', 'Sponsorship Head', 'Sponsorship', 10),
-  member('demo-t-10', 'Nandini Rao', 'Outreach Lead', 'Sponsorship', 20),
-
-  member('demo-t-11', 'Kabir Sen', 'Design Head', 'Design', 10),
-  member('demo-t-12', 'Riya Kulkarni', 'Creative Lead', 'Design', 20),
-
-  member('demo-t-13', 'Aarav Malhotra', 'Marketing Head', 'Marketing', 10),
-  member('demo-t-14', 'Sara Fernandes', 'Social Media Lead', 'Marketing', 20),
-
-  member('demo-t-15', 'Yash Agarwal', 'Operations Head', 'Operations', 10),
-  member('demo-t-16', 'Pooja Nair', 'Hospitality Head', 'Hospitality', 10),
+  member('demo-t-8', 'Dr. Somya Ranjan Sahoo', 'Convenor, VTAPP 2026', 'Core', 10),
+  member('demo-t-9', 'Dr. Sambhu Dutta', 'Co-Convenor', 'Core', 20),
+  member('demo-t-10', 'Dr. Gokul Yenduri', 'Co-Convenor', 'Core', 30),
 ];

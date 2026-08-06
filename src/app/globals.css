@@ -149,9 +149,55 @@
   overflow: hidden;
 }
 
+@media (pointer: fine) {
+  .has-dot-cursor,
+  .has-dot-cursor * {
+    cursor: none !important;
+  }
+}
+
+.blinking-dot-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10001;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 100ms ease;
+  will-change: transform;
+}
+
+.blinking-dot-cursor[data-visible='true'] {
+  opacity: 1;
+}
+
+.blinking-dot-cursor > span {
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgb(255 255 255 / 0.72);
+  border-radius: 9999px;
+  background: #cf3f34;
+  box-shadow: 0 0 7px #cf3f34, 0 0 16px rgb(179 40 33 / 0.75);
+  animation: dotCursorBlink 0.9s step-end infinite;
+}
+
+@keyframes dotCursorBlink {
+  0%, 54% { opacity: 1; }
+  55%, 100% { opacity: 0.2; }
+}
+
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
   .numeric-cursor-trail {
     display: none;
+  }
+
+  .blinking-dot-cursor > span {
+    animation: none;
   }
 }
 

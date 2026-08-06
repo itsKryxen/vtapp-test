@@ -14,9 +14,9 @@ const LINKS = [
   { href: '/sponsors', label: 'Sponsors' },
   { href: '/team', label: 'Team' },
   { href: '/merch', label: 'Merch' },
-  { href: '/signal-breach', label: 'Play' },
+  // { href: '/signal-breach', label: 'Play' },
   { href: '/about', label: 'About' },
-  { href: '/tickets', label: 'Tickets' },
+  // { href: '/tickets', label: 'Tickets' },
 ];
 
 export default function Navbar() {

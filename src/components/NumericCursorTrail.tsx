@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 export const CURSOR_TRAIL_LIMIT = 5;
 export const CURSOR_TRAIL_EMIT_MS = 80;
 export const CURSOR_TRAIL_STEP_MS = 90;
-export const CURSOR_TRAIL_DIGITS = ['2', '1', '0'] as const;
+export const CURSOR_TRAIL_DIGITS = ['1', '0'] as const;
 export const CURSOR_TRAIL_HEAT_COLORS = {
   '5': '#fff2a8',
   '4': '#ffb347',

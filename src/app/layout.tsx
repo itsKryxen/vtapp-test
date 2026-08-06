@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import Ticker from '@/components/Ticker';
 import Preloader from '@/components/Preloader';
 import ButtonEffects from '@/components/ButtonEffects';
+import BlinkingDotCursor from '@/components/BlinkingDotCursor';
 import NumericCursorTrail from '@/components/NumericCursorTrail';
 import CuteRobotCompanion from '@/components/CuteRobotCompanion';
 import { FEST } from '@/lib/fest';
@@ -89,6 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen">
         <ButtonEffects />
+        <BlinkingDotCursor />
         <NumericCursorTrail />
         <CuteRobotCompanion />
         <a

@@ -59,8 +59,10 @@ export default function Navbar() {
             />
           </div>
 
-          <div className="absolute left-1/2 hidden h-full -translate-x-1/2 items-center gap-8 xl:flex">
-            {TOP_LINKS.map((link) => {
+          {/* Events and Schedule are the two destinations the fest actually runs
+           * on, so they get a HUD chip instead of the plain rail treatment. */}
+          <div className="absolute left-1/2 hidden h-full -translate-x-1/2 items-center gap-3 xl:flex">
+            {TOP_LINKS.map((link, index) => {
               const active = pathname.startsWith(link.href);
 
               return (
@@ -68,14 +70,13 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   aria-current={active ? 'page' : undefined}
-                  className={`relative flex h-full items-center font-mono text-xs uppercase tracking-label transition-colors ${
-                    active ? 'text-white' : 'text-slate-500 hover:text-white'
-                  }`}
+                  className={`nav-feature-link${active ? ' is-active' : ''}`}
                 >
-                  {link.label}
-                  {active && (
-                    <span className="absolute inset-x-0 bottom-0 h-[3px] bg-[var(--brand)] shadow-[0_0_12px_var(--brand-glow)]" />
-                  )}
+                  <span className="nav-feature-link-index" aria-hidden="true">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className="nav-feature-link-label">{link.label}</span>
+                  <span className="nav-feature-link-bar" aria-hidden="true" />
                 </Link>
               );
             })}

@@ -43,7 +43,7 @@ export const TIERS: TierSpec[] = [
     grid: 'grid-cols-1',
     logoHeight: 'h-24 sm:h-32',
     padding: 'p-10 sm:p-14',
-    accent: '#e0685e',
+    accent: 'var(--brand-bright)',
   },
   {
     value: 'gold',

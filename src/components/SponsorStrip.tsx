@@ -37,7 +37,7 @@ const DEFAULT_DEMO_SPONSORS: Sponsor[] = [
 ];
 
 const TIER_COLORS: Record<string, string> = {
-  title: '#e0685e',
+  title: 'var(--brand-bright)',
   gold: '#e3b23c',
   silver: '#c9cdd4',
   bronze: '#c08457',
@@ -45,7 +45,7 @@ const TIER_COLORS: Record<string, string> = {
 };
 
 function SingleSponsorCard({ sponsor, idx }: { sponsor: Sponsor; idx: number }) {
-  const accentColor = TIER_COLORS[sponsor.tier] || '#e0685e';
+  const accentColor = TIER_COLORS[sponsor.tier] || 'var(--brand-bright)';
   const logo = sponsor.logo_url ? (
     // eslint-disable-next-line @next/next/no-img-element
     <img
@@ -105,12 +105,12 @@ function SingleSponsorCard({ sponsor, idx }: { sponsor: Sponsor; idx: number }) 
           href={sponsor.website}
           target="_blank"
           rel="noopener noreferrer sponsored"
-          className="sponsor-cell group relative flex h-28 w-52 shrink-0 flex-col items-center justify-center border border-white/[0.09] bg-ink-950/90 px-4 backdrop-blur-sm transition-all duration-300 hover:z-20 hover:border-brand-500/60 hover:bg-ink-900 hover:shadow-[0_0_20px_rgba(179,40,33,0.3)] hover:-translate-y-1"
+          className="sponsor-cell group relative flex h-28 w-52 shrink-0 flex-col items-center justify-center border border-white/[0.09] bg-ink-950/90 px-4 backdrop-blur-sm transition-all duration-300 hover:z-20 hover:border-brand-500/60 hover:bg-ink-900 hover:shadow-[0_0_20px_rgba(var(--brand-rgb),0.3)] hover:-translate-y-1"
         >
           {inner}
         </a>
       ) : (
-        <div className="sponsor-cell group relative flex h-28 w-52 shrink-0 flex-col items-center justify-center border border-white/[0.09] bg-ink-950/90 px-4 backdrop-blur-sm transition-all duration-300 hover:z-20 hover:border-brand-500/60 hover:bg-ink-900 hover:shadow-[0_0_20px_rgba(179,40,33,0.3)] hover:-translate-y-1">
+        <div className="sponsor-cell group relative flex h-28 w-52 shrink-0 flex-col items-center justify-center border border-white/[0.09] bg-ink-950/90 px-4 backdrop-blur-sm transition-all duration-300 hover:z-20 hover:border-brand-500/60 hover:bg-ink-900 hover:shadow-[0_0_20px_rgba(var(--brand-rgb),0.3)] hover:-translate-y-1">
           {inner}
         </div>
       )}
@@ -161,7 +161,7 @@ export default function SponsorStrip({ initialSponsors }: SponsorStripProps) {
           
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6 relative z-10">
             <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-              <div className="flex h-20 w-44 shrink-0 items-center justify-center border border-brand-500/40 bg-black/80 px-4 shadow-[0_0_25px_rgba(224,104,94,0.25)]">
+              <div className="flex h-20 w-44 shrink-0 items-center justify-center border border-brand-500/40 bg-black/80 px-4 shadow-[0_0_25px_rgba(var(--brand-bright-rgb),0.25)]">
                 {titleSponsor.logo_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -196,7 +196,7 @@ export default function SponsorStrip({ initialSponsors }: SponsorStripProps) {
                 href={titleSponsor.website || 'https://example.com'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary !py-3 !px-6 text-xs shadow-[0_0_15px_rgba(224,104,94,0.4)]"
+                className="btn-primary !py-3 !px-6 text-xs shadow-[0_0_15px_rgba(var(--brand-bright-rgb),0.4)]"
               >
                 Visit Partner Site ↗
               </a>
@@ -214,7 +214,7 @@ export default function SponsorStrip({ initialSponsors }: SponsorStripProps) {
               onClick={() => setSelectedTier('all')}
               className={`font-mono text-[11px] uppercase tracking-wider px-3 py-1 border transition-all duration-200 ${
                 selectedTier === 'all'
-                  ? 'border-brand-500 bg-brand-500/20 text-white shadow-[0_0_10px_rgba(224,104,94,0.3)]'
+                  ? 'border-brand-500 bg-brand-500/20 text-white shadow-[0_0_10px_rgba(var(--brand-bright-rgb),0.3)]'
                   : 'border-white/30 bg-black/40 text-slate-400 hover:border-white/30 hover:text-white'
               }`}
             >
@@ -230,7 +230,7 @@ export default function SponsorStrip({ initialSponsors }: SponsorStripProps) {
                   onClick={() => setSelectedTier(tier.value)}
                   className={`font-mono text-[11px] uppercase tracking-wider px-3 py-1 border transition-all duration-200 ${
                     isActive
-                      ? 'border-brand-500 bg-brand-500/20 text-white shadow-[0_0_10px_rgba(224,104,94,0.3)]'
+                      ? 'border-brand-500 bg-brand-500/20 text-white shadow-[0_0_10px_rgba(var(--brand-bright-rgb),0.3)]'
                       : 'border-white/30 bg-black/40 text-slate-400 hover:border-white/30 hover:text-white'
                   }`}
                   style={isActive ? { borderColor: tier.accent } : undefined}

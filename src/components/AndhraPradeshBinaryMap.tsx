@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { FEST } from '@/lib/fest';
 
@@ -37,13 +38,41 @@ const EDITION_TIMELINE = [
     meta: 'One year later',
   },
   {
-    year: '2026',
+    year: '2024',
     edition: 3,
-    threshold: 0.86,
+    threshold: 0.66,
+    label: 'Signal expanded',
+    description: 'Hands-on showcases connected robotics, immersive tech, gaming, and student-led experiences.',
+    meta: 'Third edition',
+  },
+  {
+    year: '2026',
+    edition: 4,
+    threshold: 0.88,
     label: 'Current signal',
     description: `The current edition lands at VIT-AP University on ${FEST.dateLabel}.`,
-    meta: 'Three-year interval',
+    meta: 'Fourth edition',
   },
+] as const;
+
+const TIMELINE_PHOTOS = [
+  { src: '/timeline/vtapp-history-01.jpeg', alt: 'Students demonstrating robots on a competition arena' },
+  { src: '/timeline/vtapp-history-02.jpeg', alt: 'A student trying a virtual reality experience' },
+  { src: '/timeline/vtapp-history-03.jpeg', alt: 'Guests and students watching robot football' },
+  { src: '/timeline/vtapp-history-04.jpeg', alt: 'Participants posing inside an illuminated laser-tag arena' },
+  { src: '/timeline/vtapp-history-05.jpeg', alt: 'A busy virtual reality activity room' },
+  { src: '/timeline/vtapp-history-06.jpeg', alt: 'Students posing at a festival photo booth' },
+  { src: '/timeline/vtapp-history-07.jpeg', alt: 'A participant playing a computer game' },
+  { src: '/timeline/vtapp-history-08.jpeg', alt: 'An illuminated Mortal Kombat installation' },
+  { src: '/timeline/vtapp-history-09.jpeg', alt: 'A participant playing a virtual reality cricket game' },
+] as const;
+
+const PHOTO_PAIRS = [
+  [0, 1],
+  [2, 3],
+  [4, 5],
+  [6, 7],
+  [8, 0],
 ] as const;
 
 const LAST_EDITION_INDEX = EDITION_TIMELINE.length - 1;
@@ -121,14 +150,13 @@ export default function AndhraPradeshBinaryMap() {
   const mapTransformRef = useRef<HTMLDivElement>(null);
   const scanlineRef = useRef<SVGLineElement>(null);
   const markerRef = useRef<SVGGElement>(null);
-  const timelineFillRef = useRef<HTMLSpanElement>(null);
   const lastVisitedRef = useRef<string | null>(null);
   const cells = useMemo(makeCells, []);
   const cellIndex = useMemo(() => new Map(cells.map((cell, index) => [cell.id, index])), [cells]);
   const [values, setValues] = useState<number[]>(() => cells.map((cell) => cell.base));
   const [trail, setTrail] = useState<TrailPoint[]>([]);
   const [scrollEditionIndex, setScrollEditionIndex] = useState(0);
-  const [selectedEditionIndex, setSelectedEditionIndex] = useState(LAST_EDITION_INDEX);
+  const [photoPairIndex, setPhotoPairIndex] = useState(0);
   const [isDesktopStory, setIsDesktopStory] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
@@ -215,9 +243,6 @@ export default function AndhraPradeshBinaryMap() {
       if (markerRef.current) {
         markerRef.current.style.opacity = String(0.5 + next * 0.5);
       }
-      if (timelineFillRef.current) {
-        timelineFillRef.current.style.height = `${next * 100}%`;
-      }
       setScrollEditionIndex((current) => (current === nextEditionIndex ? current : nextEditionIndex));
     };
     const onScroll = () => {
@@ -233,36 +258,30 @@ export default function AndhraPradeshBinaryMap() {
     };
   }, [isDesktopStory, reducedMotion]);
 
-  const scrollDriven = isDesktopStory && !reducedMotion;
-  const activeEditionIndex = scrollDriven ? scrollEditionIndex : selectedEditionIndex;
-
   useEffect(() => {
-    if (scrollDriven || !timelineFillRef.current) return;
-    timelineFillRef.current.style.height = `${(activeEditionIndex / LAST_EDITION_INDEX) * 100}%`;
-  }, [activeEditionIndex, scrollDriven]);
+    if (reducedMotion) return;
+    const interval = window.setInterval(() => {
+      setPhotoPairIndex((current) => (current + 1) % PHOTO_PAIRS.length);
+    }, 3000);
+    return () => window.clearInterval(interval);
+  }, [reducedMotion]);
 
-  const selectEdition = (index: number) => {
-    setSelectedEditionIndex(index);
-    if (!scrollDriven) return;
-    const section = sectionRef.current;
-    if (!section) return;
-    const rect = section.getBoundingClientRect();
-    const distance = Math.max(1, rect.height - window.innerHeight + STICKY_TOP);
-    const sectionTop = window.scrollY + rect.top;
-    window.scrollTo({
-      top: sectionTop - STICKY_TOP + EDITION_TIMELINE[index].threshold * distance,
-      behavior: reducedMotion ? 'auto' : 'smooth',
-    });
-  };
+  const scrollDriven = isDesktopStory && !reducedMotion;
+  const activeEditionIndex = scrollDriven ? scrollEditionIndex : LAST_EDITION_INDEX;
 
   const amaravatiX = CELL_ORIGIN_X + AMARAVATI_CELL.column * CELL_GAP;
   const amaravatiY = CELL_ORIGIN_Y + AMARAVATI_CELL.row * CELL_GAP;
   const capitalCount = EDITION_TIMELINE[activeEditionIndex].edition;
+  const visiblePhotos = PHOTO_PAIRS[photoPairIndex].map((photoIndex) => TIMELINE_PHOTOS[photoIndex]);
+
+  const rotatePhotos = (direction: -1 | 1) => {
+    setPhotoPairIndex((current) => (current + direction + PHOTO_PAIRS.length) % PHOTO_PAIRS.length);
+  };
 
   return (
     <section ref={sectionRef} className="vtapp-map-scroll border-y border-white/30" aria-label="Interactive Andhra Pradesh map">
       <div className="vtapp-map-stage container-x">
-        <div className="grid w-full gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
+        <div className="grid w-full gap-6 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
           <div className="vtapp-map-panel panel brackets scanlines">
             {Array.from({ length: 4 }, (_, index) => (
               <span
@@ -291,7 +310,7 @@ export default function AndhraPradeshBinaryMap() {
                 aria-labelledby="ap-map-svg-title ap-map-svg-description"
               >
                 <title id="ap-map-svg-title">Interactive binary map of Andhra Pradesh</title>
-                <desc id="ap-map-svg-description">Explore three V-TAPP editions around the highlighted VIT-AP node. Move or tap across the digits to mutate the binary field and draw a local trail.</desc>
+                <desc id="ap-map-svg-description">Explore four V-TAPP editions around the highlighted VIT-AP node. Move or tap across the digits to mutate the binary field and draw a local trail.</desc>
                 <defs>
                   <filter id="vtapp-map-glow" x="-80%" y="-80%" width="260%" height="260%">
                     <feGaussianBlur stdDeviation="4" result="blur" />
@@ -299,7 +318,7 @@ export default function AndhraPradeshBinaryMap() {
                   </filter>
                   <linearGradient id="vtapp-trail-gradient" x1="0" x2="1">
                     <stop offset="0" stopColor="rgb(var(--fg))" stopOpacity="0" />
-                    <stop offset="1" stopColor="rgb(var(--em-300))" stopOpacity="0.9" />
+                    <stop offset="1" stopColor="rgb(var(--map-trail-hot))" stopOpacity="0.9" />
                   </linearGradient>
                 </defs>
 
@@ -357,78 +376,53 @@ export default function AndhraPradeshBinaryMap() {
             </div>
           </div>
 
-          <aside className="vtapp-timeline panel brackets flex min-h-[360px] flex-col p-6 sm:p-8" aria-label="V-TAPP edition timeline">
-            <div className="flex items-center justify-between gap-4 border-b border-white/30 pb-5">
-              <div>
-                <p className="mono-label text-brand-500">V-TAPP HISTORY</p>
-                <h2 className="mt-2 font-display text-2xl font-light text-white">Edition timeline</h2>
+          <aside className="vtapp-timeline vtapp-photo-column panel brackets min-h-[440px] p-2" aria-label="V-TAPP event photos">
+            <div className="vtapp-timeline-gallery">
+              <div className="grid h-full grid-rows-2 gap-2">
+                {visiblePhotos.map((photo, index) => (
+                  <figure
+                    key={`${photoPairIndex}-${photo.src}`}
+                    className={`vtapp-timeline-photo vtapp-timeline-photo-${index + 1}`}
+                  >
+                    <Image
+                      src={photo.src}
+                      alt=""
+                      fill
+                      sizes="(min-width: 1280px) 600px, 100vw"
+                      className="scale-110 object-cover opacity-50 blur-xl"
+                      aria-hidden="true"
+                    />
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="(min-width: 1280px) 600px, 100vw"
+                      className="vtapp-timeline-photo-main object-contain"
+                    />
+                  </figure>
+                ))}
               </div>
-              <span className="font-mono text-xs text-slate-500">
-                {String(activeEditionIndex + 1).padStart(2, '0')} / 03
+              <span className="sr-only" aria-live="polite">
+                Photo pair {photoPairIndex + 1} of {PHOTO_PAIRS.length}
               </span>
-            </div>
-
-            <p className="mt-4 font-mono text-[9px] uppercase tracking-[0.16em] text-slate-500">
-              {scrollDriven ? 'Scroll or select an edition' : 'Select an edition to explore'}
-            </p>
-
-            <div className="relative mt-5 flex-1">
-              <span
-                ref={timelineFillRef}
-                className="absolute -left-px top-0 w-px bg-brand-500 transition-[height] duration-300"
-                style={scrollDriven ? undefined : { height: `${(activeEditionIndex / LAST_EDITION_INDEX) * 100}%` }}
-                aria-hidden="true"
-              />
-              <ol className="vtapp-timeline-list border-l border-white/30 pl-5">
-                {EDITION_TIMELINE.map((item, index) => {
-                  const active = index === activeEditionIndex;
-                  const reached = index <= activeEditionIndex;
-                  return (
-                    <li key={item.year} className="relative">
-                      <span
-                        className={`absolute -left-[1.59rem] top-5 h-2.5 w-2.5 border transition-colors duration-300 ${
-                          reached
-                            ? 'border-brand-400 bg-brand-600 shadow-[0_0_16px_rgb(179_40_33/.8)]'
-                            : 'border-white/40 bg-ink-950'
-                        }`}
-                        aria-hidden="true"
-                      />
-                      <button
-                        type="button"
-                        className={`vtapp-timeline-card w-full border px-4 py-3 text-left transition-colors ${
-                          active
-                            ? 'border-brand-500/60 bg-brand-600/10'
-                            : 'border-white/30 bg-ink-900/35 hover:border-white/40 hover:bg-white/[.025]'
-                        }`}
-                        aria-pressed={active}
-                        aria-current={active ? 'step' : undefined}
-                        aria-label={`Explore V-TAPP ${item.year}, edition ${item.edition}`}
-                        onClick={() => selectEdition(index)}
-                      >
-                        <span className="flex items-start justify-between gap-4">
-                          <span>
-                            <span className={`block font-display text-2xl font-light transition-colors ${active ? 'text-white' : 'text-slate-300'}`}>
-                              {item.year}
-                            </span>
-                            <span className={`mt-0.5 block font-mono text-[9px] uppercase tracking-[0.14em] ${active ? 'text-brand-400' : 'text-slate-500'}`}>
-                              {item.label}
-                            </span>
-                          </span>
-                          <span className={`font-mono text-xs ${active ? 'text-brand-400' : 'text-slate-500'}`}>
-                            0{item.edition}
-                          </span>
-                        </span>
-                        <span className={`mt-2 block text-[11px] leading-relaxed ${active ? 'text-slate-300' : 'text-slate-500'}`}>
-                          {item.description}
-                        </span>
-                        <span className={`mt-2 block font-mono text-[8px] uppercase tracking-[0.15em] ${active ? 'text-slate-400' : 'text-slate-600'}`}>
-                          {item.meta}
-                        </span>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ol>
+              <div className="vtapp-timeline-gallery-controls">
+                  <button
+                    type="button"
+                    className="vtapp-timeline-gallery-control"
+                    onClick={() => rotatePhotos(-1)}
+                    aria-label="Show previous two timeline photos"
+                  >
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    className="vtapp-timeline-gallery-control"
+                    onClick={() => rotatePhotos(1)}
+                    aria-label="Show next two timeline photos"
+                  >
+                    →
+                  </button>
+              </div>
             </div>
           </aside>
         </div>

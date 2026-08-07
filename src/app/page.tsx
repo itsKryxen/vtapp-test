@@ -41,7 +41,7 @@ export default async function HomePage() {
             {Array.from({ length: 16 }, (_, index) => (
               <span
                 key={index}
-                className={`grid aspect-square place-items-center border font-mono text-[9px] ${index === 2 || index === 9 || index === 14 ? 'border-brand-400 bg-brand-600/25 text-brand-300 shadow-[0_0_22px_rgb(179_40_33/.45)]' : 'border-white/30 bg-ink-900/50 text-slate-700'}`}
+                className={`grid aspect-square place-items-center border font-mono text-[9px] ${index === 2 || index === 9 || index === 14 ? 'border-brand-400 bg-brand-600/25 text-brand-300 shadow-[0_0_22px_rgba(var(--brand-rgb),.45)]' : 'border-white/30 bg-ink-900/50 text-slate-700'}`}
               >
                 {String(index + 1).padStart(2, '0')}
               </span>

@@ -342,7 +342,7 @@ export default function BulkImportClubs() {
                 className="h-full rounded-full transition-all duration-200"
                 style={{
                   width: `${(progress / validRows.length) * 100}%`,
-                  background: 'linear-gradient(90deg, #cf3f34, #e0685e)',
+                  background: 'linear-gradient(90deg, rgb(var(--brand-500)), var(--brand-bright))',
                 }}
               />
             </div>

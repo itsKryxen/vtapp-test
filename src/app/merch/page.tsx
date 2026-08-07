@@ -16,14 +16,9 @@ export default function MerchPage() {
     <div className="container-x pb-24 pt-28 sm:pt-36">
       <PageHeader
         index="09"
-        slug="MERCH"
-        title={<>Merch</>}
-        description={
-          <>
-            Official {FEST.name} merchandise. Printed for this edition only, in the fest palette,
-            and collected on campus across the two days.
-          </>
-        }
+        slug={"merchandise".toUpperCase()}
+        title={"merchandise".toUpperCase()}
+ 
         meta={MERCH.length > 0 ? `${MERCH.length} ITEMS` : 'DROP PENDING'}
       />
 

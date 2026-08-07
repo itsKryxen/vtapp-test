@@ -34,7 +34,6 @@ export default async function EventsPage({ searchParams }: Props) {
           index="03"
           slug="EVENTS"
           title={<>All events</>}
-          description={<>Every event runs on campus across the two days. Each card links to full rules, timings and the registration form run by the hosting club.</>}
         />
       </div>
 

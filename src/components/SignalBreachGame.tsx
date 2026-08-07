@@ -464,7 +464,7 @@ export default function SignalBreachGame() {
       <div className="panel brackets scanlines relative overflow-hidden p-3 sm:p-5 lg:p-6">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_48%,rgb(179_40_33/.12),transparent_48%)]" />
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-brand-400/70 shadow-[0_0_22px_rgb(224_104_94/.8)] motion-safe:animate-scan"
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-brand-400/70 shadow-[0_0_22px_rgba(var(--brand-bright-rgb),.8)] motion-safe:animate-scan"
           aria-hidden="true"
         />
 
@@ -504,7 +504,7 @@ export default function SignalBreachGame() {
                   aria-label={`Signal node ${node + 1}`}
                   className={`group relative aspect-square overflow-hidden border font-mono text-xs tracking-label transition-all duration-150 focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400 sm:text-sm ${
                     isSignal
-                      ? 'border-brand-300 bg-brand-500 text-white shadow-[0_0_30px_rgb(179_40_33/.75),inset_0_0_24px_rgb(255_255_255/.12)] scale-[1.035]'
+                      ? 'border-brand-300 bg-brand-500 text-white shadow-[0_0_30px_rgba(var(--brand-rgb),.75),inset_0_0_24px_rgb(255_255_255/.12)] scale-[1.035]'
                       : isCorrect
                         ? 'border-emerald-300 bg-emerald-500/30 text-emerald-200 shadow-[0_0_24px_rgb(var(--em-500)/.45)]'
                         : isWrong

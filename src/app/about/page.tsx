@@ -21,8 +21,11 @@ export default function AboutPage() {
       <p className="mt-3 max-w-2xl text-lg leading-relaxed text-slate-300">{FEST.blurb}</p>
 
       <div className="mt-12 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        {STATS.map((s) => (
-          <div key={s.label} className="panel px-4 py-6 text-center">
+        {STATS.map((s, index) => (
+          <div key={s.label} className="event-frame px-4 py-6 text-center">
+            <span className="event-frame-index" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </span>
             <p className="font-display display-md text-white">{s.value}</p>
             <p className="mt-1 text-xs uppercase tracking-[0.16em] text-slate-400">{s.label}</p>
           </div>
@@ -30,7 +33,8 @@ export default function AboutPage() {
       </div>
 
       <div className="mt-16 grid gap-10 lg:grid-cols-2">
-        <section>
+        <section className="event-frame p-6 sm:p-8">
+          <span className="event-card-category-badge">ABOUT</span>
           <h2 className="text-2xl font-bold">What V-TAPP is</h2>
           <div className="mt-4 space-y-4 text-sm leading-relaxed text-slate-300">
             <p>
@@ -47,7 +51,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section>
+        <section className="event-frame p-6 sm:p-8">
+          <span className="event-card-category-badge">CAMPUS</span>
           <h2 className="text-2xl font-bold">Participating schools</h2>
           <ul className="mt-4 space-y-2.5">
             {SCHOOLS.filter((s) => s.code !== 'CENTRAL').map((s) => (
@@ -65,7 +70,8 @@ export default function AboutPage() {
         </section>
       </div>
 
-      <section className="panel mt-16 p-8">
+      <section className="event-frame mt-16 p-8">
+        <span className="event-card-category-badge">CONTACT</span>
         <h2 className="text-xl font-bold">Reach the core team</h2>
         <div className="mt-4 flex flex-wrap gap-x-10 gap-y-4 text-sm">
           <div>
@@ -93,7 +99,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="panel mt-16 p-8">
+      <section className="event-frame mt-16 p-8">
+        <span className="event-card-category-badge">ARCHIVE</span>
         <h2 className="text-xl font-bold">A Glimpse of Previous V-TAPP</h2>
         <div className="mt-6 aspect-video w-full overflow-hidden rounded-lg border border-white/30 bg-black/50">
           <iframe

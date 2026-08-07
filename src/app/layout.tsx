@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Inter, JetBrains_Mono, Orbitron } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -19,6 +19,16 @@ const mono = JetBrains_Mono({
   variable: '--font-original-mono',
   display: 'swap',
   weight: ['400', '500', '700', '800'],
+});
+
+// Squared-off techno face for the hero wordmark. The site's `font-display`
+// stack asks for Ethnocentric, which is licensed and never loaded, so anything
+// using it silently falls back to the system sans — hence the plain look.
+const wordmark = Orbitron({
+  subsets: ['latin'],
+  variable: '--font-wordmark',
+  display: 'swap',
+  weight: ['500', '700', '900'],
 });
 
 export const metadata: Metadata = {
@@ -66,14 +76,20 @@ const THEME_SCRIPT = `
     var light = s === 'light' ||
       (!s && window.matchMedia('(prefers-color-scheme: light)').matches);
     if (light) document.documentElement.classList.add('light');
+    var favicon = light ? '/favicon-light.svg' : '/favicon-dark.svg';
+    document.querySelectorAll('link[rel~="icon"]').forEach(function(link) {
+      link.setAttribute('href', favicon);
+      link.setAttribute('type', 'image/svg+xml');
+    });
   } catch (e) {}
 })();
 `;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${mono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${mono.variable} ${wordmark.variable}`} suppressHydrationWarning>
       <head>
+        <link id="vtapp-theme-favicon" rel="icon" type="image/svg+xml" href="/favicon-dark.svg" />
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>
       <body className="min-h-screen">

@@ -25,7 +25,6 @@ export default async function SponsorsPage() {
         index="06"
         slug="SPONSORS"
         title={<>Sponsors</>}
-        description={<>{FEST.name} runs on the support of the organisations below. They fund the prize pools, the infrastructure and the two days that make this happen.</>}
       />
 
       {byTier.length === 0 ? (
@@ -45,8 +44,8 @@ export default async function SponsorsPage() {
               </div>
 
               <div className={`grid gap-4 ${tier.grid}`}>
-                {list.map((sponsor) => (
-                  <SponsorCard key={sponsor.id} sponsor={sponsor} tier={tier} />
+                {list.map((sponsor, index) => (
+                  <SponsorCard key={sponsor.id} sponsor={sponsor} tier={tier} index={index} />
                 ))}
               </div>
             </section>
@@ -54,7 +53,7 @@ export default async function SponsorsPage() {
         </div>
       )}
 
-      <section className="panel mt-20 p-8 text-center sm:p-12">
+      <section className="event-frame mt-20 p-8 text-center sm:p-12">
         <h2 className="font-display display-md sm:text-3xl">Want to sponsor V-TAPP?</h2>
         <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-400">
           Reach thousands of engineering, business and law students across two days on campus.
@@ -71,38 +70,58 @@ export default async function SponsorsPage() {
 function SponsorCard({
   sponsor,
   tier,
+  index,
 }: {
   sponsor: Sponsor;
   tier: (typeof TIERS)[number];
+  index: number;
 }) {
   const inner = (
     <>
-      <div className={`flex ${tier.logoHeight} w-full items-center justify-center`}>
-        {sponsor.logo_url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={sponsor.logo_url}
-            alt={sponsor.name}
-            loading="lazy"
-            decoding="async"
-            className="max-h-full max-w-full object-contain"
-          />
-        ) : (
-          <span className="text-center font-display text-lg font-light text-white">
-            {sponsor.name}
-          </span>
+      <div className="event-card-header w-full">
+        <span className="event-card-index">{String(index + 1).padStart(2, '0')}</span>
+        <div className="event-card-status">
+          <span className="event-card-status-dot" aria-hidden="true" />
+          <span className="event-card-status-label">OFFICIAL PARTNER</span>
+        </div>
+      </div>
+
+      <div className={`relative z-[2] flex w-full flex-1 flex-col items-center justify-center ${tier.padding}`}>
+        <span className="event-card-category-badge mb-5">{tier.label}</span>
+        <div className={`flex ${tier.logoHeight} w-full items-center justify-center`}>
+          {sponsor.logo_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={sponsor.logo_url}
+              alt={sponsor.name}
+              loading="lazy"
+              decoding="async"
+              className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+            />
+          ) : (
+            <span className="text-center font-display text-lg font-light text-white">
+              {sponsor.name}
+            </span>
+          )}
+        </div>
+
+        {sponsor.blurb && tier.value === 'title' && (
+          <p className="mx-auto mt-5 max-w-xl text-center text-sm leading-relaxed text-slate-400">
+            {sponsor.blurb}
+          </p>
         )}
       </div>
 
-      {sponsor.blurb && tier.value === 'title' && (
-        <p className="mx-auto mt-5 max-w-xl text-center text-sm leading-relaxed text-slate-400">
-          {sponsor.blurb}
-        </p>
+      {sponsor.website && (
+        <div className="event-frame-action w-full">
+          <span>Visit partner</span>
+          <span className="event-card-btn-arrow" aria-hidden="true">↗</span>
+        </div>
       )}
     </>
   );
 
-  const className = `sponsor-cell on-media panel flex flex-col items-center justify-center ${tier.padding} transition hover:border-white/25`;
+  const className = 'sponsor-cell event-frame group flex flex-col items-center justify-center';
 
   if (sponsor.website) {
     return (
@@ -123,7 +142,7 @@ function SponsorCard({
 
 function EmptyState() {
   return (
-    <div className="panel mt-14 p-16 text-center">
+    <div className="event-frame mt-14 p-16 text-center">
       <p className="font-display text-xl font-light text-white">Sponsors will be announced soon</p>
       <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-slate-400">
         We&apos;re finalising partnerships for this edition. Check back closer to{' '}

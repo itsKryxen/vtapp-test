@@ -123,7 +123,7 @@ export default function CuteRobotCompanion() {
     >
       {/* Speech / Thought Bubble */}
       {showMessage && (
-        <div className="pointer-events-none absolute -top-14 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-brand-500/60 bg-ink-950/95 px-3 py-1.5 font-mono text-[11px] font-semibold text-white shadow-[0_0_20px_rgba(179,40,33,0.5)] backdrop-blur-md animate-bounce">
+        <div className="pointer-events-none absolute -top-14 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-brand-500/60 bg-ink-950/95 px-3 py-1.5 font-mono text-[11px] font-semibold text-white shadow-[0_0_20px_rgba(var(--brand-rgb),0.5)] backdrop-blur-md animate-bounce">
           {message}
           <div className="absolute -bottom-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-b border-r border-brand-500/60 bg-ink-950" />
         </div>
@@ -148,19 +148,19 @@ export default function CuteRobotCompanion() {
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="drop-shadow-[0_8px_16px_rgba(179,40,33,0.5)]"
+          className="drop-shadow-[0_8px_16px_rgba(var(--brand-rgb),0.5)]"
         >
           {/* Antenna */}
-          <line x1="32" y1="12" x2="32" y2="4" stroke="#e0685e" strokeWidth="2.5" strokeLinecap="round" />
-          <circle cx="32" cy="3" r="3" fill="#ff4d4d" className="animate-pulse" />
-          <circle cx="32" cy="3" r="5" fill="#ff4d4d" opacity="0.4" className="animate-ping" />
+          <line x1="32" y1="12" x2="32" y2="4" stroke="var(--brand-bright)" strokeWidth="2.5" strokeLinecap="round" />
+          <circle cx="32" cy="3" r="3" fill="var(--brand)" className="animate-pulse" />
+          <circle cx="32" cy="3" r="5" fill="var(--brand)" opacity="0.4" className="animate-ping" />
 
           {/* Ears / Head Joints */}
           <rect x="10" y="20" width="4" height="8" rx="2" fill="#718096" />
           <rect x="50" y="20" width="4" height="8" rx="2" fill="#718096" />
 
           {/* Robot Head Outer Frame */}
-          <rect x="13" y="12" width="38" height="26" rx="8" fill="#1a1d24" stroke="#e0685e" strokeWidth="2" />
+          <rect x="13" y="12" width="38" height="26" rx="8" fill="#1a1d24" stroke="var(--brand-bright)" strokeWidth="2" />
 
           {/* Screen Display Visor */}
           <rect x="16" y="15" width="32" height="20" rx="5" fill="#090a0f" stroke="#2d3748" strokeWidth="1" />
@@ -193,12 +193,12 @@ export default function CuteRobotCompanion() {
           <path
             d="M20 40 C20 37, 44 37, 44 40 L40 52 C40 54, 24 54, 24 52 Z"
             fill="#111318"
-            stroke="#e0685e"
+            stroke="var(--brand-bright)"
             strokeWidth="1.5"
           />
 
           {/* Chest Reactor Pulse Light */}
-          <circle cx="32" cy="45" r="3" fill="#e0685e" className="animate-pulse" />
+          <circle cx="32" cy="45" r="3" fill="var(--brand-bright)" className="animate-pulse" />
 
           {/* Arms */}
           <path d="M16 41 C12 43, 10 48, 14 50" stroke="#718096" strokeWidth="2" strokeLinecap="round" />

@@ -19,11 +19,10 @@ export default async function ClubsPage() {
         index="05"
         slug="CLUBS"
         title={<>Clubs</>}
-        description={<>Every event at V-TAPP is proposed, run and staffed by a student club. Tap any club to see what they&apos;re hosting.</>}
       />
 
       {clubs.length === 0 ? (
-        <div className="panel mt-10 p-16 text-center">
+        <div className="event-frame mt-10 p-16 text-center">
           <p className="font-display text-xl font-light text-white">Clubs announced soon</p>
           <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-slate-400">
             Club registrations for this edition are still open.

@@ -117,7 +117,7 @@ export function LoadPanel({ label = 'Resolving' }: { label?: string }) {
         <path
           d="M60 74 L100 158 L140 74"
           pathLength={1}
-          stroke="#e0685e"
+          stroke="var(--brand-bright)"
           strokeWidth="2.5"
           strokeLinejoin="round"
           className="bp-draw"

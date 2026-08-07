@@ -5,6 +5,14 @@ import { useEffect, useState } from 'react';
 export const THEME_KEY = 'vtapp-theme';
 export type Theme = 'dark' | 'light';
 
+function syncFavicon(theme: Theme) {
+  const href = theme === 'light' ? '/favicon-light.svg' : '/favicon-dark.svg';
+  document.querySelectorAll<HTMLLinkElement>('link[rel~="icon"]').forEach((link) => {
+    link.href = href;
+    link.type = 'image/svg+xml';
+  });
+}
+
 /**
  * Dark / light switch.
  *
@@ -18,13 +26,16 @@ export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    const initialTheme = document.documentElement.classList.contains('light') ? 'light' : 'dark';
     setMounted(true);
-    setTheme(document.documentElement.classList.contains('light') ? 'light' : 'dark');
+    setTheme(initialTheme);
+    syncFavicon(initialTheme);
   }, []);
 
   function apply(next: Theme) {
     setTheme(next);
     document.documentElement.classList.toggle('light', next === 'light');
+    syncFavicon(next);
     try {
       localStorage.setItem(THEME_KEY, next);
     } catch {
@@ -52,7 +63,7 @@ export default function ThemeToggle() {
             aria-pressed={active}
             title={t === 'dark' ? 'Dark mode' : 'Light mode'}
             className={`flex w-9 items-center justify-center transition-colors ${
-              active ? 'bg-brand-600 on-brand' : 'text-slate-500 hover:text-white'
+              active ? 'bg-brand-600 on-brand light:bg-[color:var(--brand)]' : 'text-slate-500 hover:text-white'
             }`}
           >
             {t === 'dark' ? <MoonIcon /> : <SunIcon />}

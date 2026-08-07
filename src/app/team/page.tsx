@@ -26,7 +26,6 @@ export default async function TeamPage() {
         index="07"
         slug="TEAM"
         title={<>Team</>}
-        description={<>{FEST.name} is brought to life by the combined efforts of our students and faculty. These are the people putting in the late nights so that two days in September go off without a hitch.</>}
       />
 
       {team.length === 0 ? (

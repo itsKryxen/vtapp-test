@@ -58,54 +58,64 @@ export default function ClubDirectory({ clubs }: { clubs: Club[] }) {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="panel mt-8 p-16 text-center">
+        <div className="event-frame mt-8 p-16 text-center">
           <p className="font-display text-lg font-light text-white">No clubs match “{q}”</p>
           <p className="mt-2 text-sm text-slate-400">Try a shorter search term.</p>
         </div>
       ) : (
         <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((club) => {
+          {filtered.map((club, index) => {
             const accent = schoolAccent(club.school);
+            const displayIndex = String(index + 1).padStart(2, '0');
             return (
               <Link
                 key={club.id}
                 href={`/events?school=${club.school}`}
-                className="group panel flex items-center gap-4 p-5 transition hover:border-white/25"
+                className="event-frame group flex min-h-[168px] flex-col"
               >
-                <div
-                  className="relative grid h-14 w-14 shrink-0 place-items-center overflow-hidden border border-white/30 bg-ink-800"
-                  style={{ boxShadow: `0 0 0 1px ${accent}22` }}
-                >
-                  {club.logo_url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={club.logo_url}
-                      alt=""
-                      width={56}
-                      height={56}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <span
-                      className="font-mono text-sm tracking-label"
-                      style={{ color: accent }}
-                    >
-                      {initials(club.name)}
-                    </span>
-                  )}
+                <div className="event-card-header">
+                  <span className="event-card-index">{displayIndex}</span>
+                  <div className="event-card-status">
+                    <span className="event-card-status-dot" aria-hidden="true" />
+                    <span className="event-card-status-label">REGISTERED CLUB</span>
+                  </div>
                 </div>
 
-                <div className="min-w-0">
-                  <h2 className="truncate font-display text-base font-bold text-white">
-                    {club.name}
-                  </h2>
-                  {club.tagline && (
-                    <p className="mt-0.5 line-clamp-2 text-sm leading-snug text-slate-400">
-                      {club.tagline}
-                    </p>
-                  )}
+                <div className="flex flex-1 items-center gap-4 p-4">
+                  <div
+                    className="relative grid h-[72px] w-[72px] shrink-0 place-items-center overflow-hidden border bg-[var(--ec-surface)]"
+                    style={{ borderColor: `${accent}66`, boxShadow: `0 0 18px ${accent}18` }}
+                  >
+                    {club.logo_url ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={club.logo_url}
+                        alt=""
+                        width={72}
+                        height={72}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                      <span className="font-mono text-sm tracking-label" style={{ color: accent }}>
+                        {initials(club.name)}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="min-w-0">
+                    <span className="event-card-category-badge">{club.school}</span>
+                    <h2 className="event-card-title mt-2">{club.name}</h2>
+                    {club.tagline && (
+                      <p className="event-card-tagline">{club.tagline}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="event-frame-action">
+                  <span>View events</span>
+                  <span className="event-card-btn-arrow" aria-hidden="true">→</span>
                 </div>
               </Link>
             );

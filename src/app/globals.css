@@ -25,7 +25,7 @@
   inset: 0;
   overflow: hidden;
   background:
-    radial-gradient(circle at 50% 48%, rgb(177 18 38 / 0.045), transparent 38%),
+    radial-gradient(circle at 50% 48%, rgba(var(--brand-rgb), 0.045), transparent 38%),
     rgb(var(--ink-950));
   will-change: opacity;
 }
@@ -59,7 +59,7 @@
   width: min(88vw, 980px);
   aspect-ratio: 1.8;
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgb(177 18 38 / 0.16), rgb(177 18 38 / 0.055) 38%, transparent 72%);
+  background: radial-gradient(ellipse at center, rgba(var(--brand-rgb), 0.16), rgba(var(--brand-rgb), 0.055) 38%, transparent 72%);
   filter: blur(12px);
   transform: translate(-50%, -50%);
   transform-origin: center;
@@ -109,11 +109,11 @@
   width: clamp(7px, 1.1vw, 12px);
   aspect-ratio: 1;
   border-radius: 999px;
-  background: #b11226;
+  background: var(--brand);
   box-shadow:
-    0 0 8px rgb(177 18 38 / 0.62),
-    0 0 22px rgb(177 18 38 / 0.24),
-    0 0 42px rgb(177 18 38 / 0.12);
+    0 0 8px rgba(var(--brand-rgb), 0.62),
+    0 0 22px rgba(var(--brand-rgb), 0.24),
+    0 0 42px rgba(var(--brand-rgb), 0.12);
   transform-origin: center;
   will-change: transform, opacity;
 }
@@ -220,7 +220,18 @@ html[data-vtapp-splash] .marquee-track {
   --wash: rgba(var(--brand-rgb), 0.14);
   --scanline: rgba(255, 255, 255, 0.028);
 
-  /* brand, fixed across themes */
+  /* dark brand ramp, sampled from the crimson identity */
+  --brand-50: 253 243 242;
+  --brand-100: 251 227 225;
+  --brand-200: 246 197 193;
+  --brand-300: 238 156 149;
+  --brand-400: 224 104 94;
+  --brand-500: 207 63 52;
+  --brand-600: 179 40 33;
+  --brand-700: 143 31 26;
+  --brand-800: 107 23 19;
+  --brand-900: 71 16 13;
+  --brand-950: 42 9 8;
   --brand-rgb: 179, 40, 33;
   --brand-bright-rgb: 224, 104, 94;
   --brand-light-rgb: 238, 156, 149;
@@ -274,6 +285,17 @@ html[data-vtapp-splash] .marquee-track {
   --scanline: rgba(0, 229, 255, 0.03);
 
   /* Light Theme Identity Colors */
+  --brand-50: 236 254 255;
+  --brand-100: 207 250 254;
+  --brand-200: 165 243 252;
+  --brand-300: 103 232 249;
+  --brand-400: 34 211 238;
+  --brand-500: 6 182 212;
+  --brand-600: 8 145 178;
+  --brand-700: 14 116 144;
+  --brand-800: 21 94 117;
+  --brand-900: 22 78 99;
+  --brand-950: 8 51 68;
   --brand-rgb: 0, 229, 255;
   --brand-bright-rgb: 8, 194, 214;
   --brand-light-rgb: 0, 255, 157;
@@ -382,8 +404,8 @@ html[data-vtapp-splash] .marquee-track {
   height: 10px;
   border: 1px solid rgb(255 255 255 / 0.72);
   border-radius: 9999px;
-  background: #cf3f34;
-  box-shadow: 0 0 7px #cf3f34, 0 0 16px rgb(179 40 33 / 0.75);
+  background: rgb(var(--brand-500));
+  box-shadow: 0 0 7px rgb(var(--brand-500)), 0 0 16px rgba(var(--brand-rgb), 0.75);
   animation: dotCursorBlink 0.9s step-end infinite;
 }
 
@@ -451,6 +473,7 @@ html[data-vtapp-splash] .marquee-track {
   color: rgb(var(--fg) / 0.7);
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 8px;
+  font-weight: 700;
   letter-spacing: 0.08em;
   line-height: 1;
   text-transform: uppercase;
@@ -465,6 +488,7 @@ html[data-vtapp-splash] .marquee-track {
 .navigation-rail-link > span {
   color: rgb(var(--slate-600));
   font-size: 7px;
+  font-weight: 500;
   letter-spacing: 0;
   transition: color 180ms ease;
 }
@@ -485,6 +509,85 @@ html[data-vtapp-splash] .marquee-track {
   color: var(--brand-bright);
 }
 
+/* ── Featured header links (Events, Schedule) ──
+ * These two carry the fest's live content, so they read as instrument chips
+ * rather than plain nav text: brand frame, index readout, underline that fills
+ * on hover and stays filled on the active route. */
+.nav-feature-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  overflow: hidden;
+  padding: 0.55rem 1rem;
+  border: 1px solid rgba(var(--brand-rgb), 0.28);
+  background: linear-gradient(120deg, rgba(var(--brand-rgb), 0.1), transparent 70%);
+  color: rgb(var(--slate-400));
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: color 200ms ease, border-color 200ms ease, background-color 200ms ease,
+    box-shadow 200ms ease, transform 200ms ease;
+}
+
+.nav-feature-link-index {
+  color: rgba(var(--brand-bright-rgb), 0.85);
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  transition: color 200ms ease, text-shadow 200ms ease;
+}
+
+.nav-feature-link-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--brand-bright);
+  box-shadow: 0 0 12px var(--brand-glow);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.nav-feature-link:hover,
+.nav-feature-link:focus-visible,
+.nav-feature-link.is-active {
+  color: rgb(var(--fg));
+  border-color: rgba(var(--brand-rgb), 0.6);
+  background: linear-gradient(120deg, rgba(var(--brand-rgb), 0.22), rgba(var(--brand-rgb), 0.04) 75%);
+  box-shadow: 0 0 22px rgba(var(--brand-rgb), 0.18), inset 0 0 18px rgba(var(--brand-rgb), 0.08);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.nav-feature-link:hover .nav-feature-link-index,
+.nav-feature-link:focus-visible .nav-feature-link-index,
+.nav-feature-link.is-active .nav-feature-link-index {
+  color: var(--brand-bright);
+  text-shadow: 0 0 10px var(--brand-glow);
+}
+
+.nav-feature-link:hover .nav-feature-link-bar,
+.nav-feature-link:focus-visible .nav-feature-link-bar,
+.nav-feature-link.is-active .nav-feature-link-bar {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-feature-link,
+  .nav-feature-link-bar {
+    transition: none;
+  }
+
+  .nav-feature-link:hover,
+  .nav-feature-link.is-active {
+    transform: none;
+  }
+}
+
 @media (max-width: 1279px) {
   body {
     padding-bottom: calc(60px + env(safe-area-inset-bottom));
@@ -500,9 +603,7 @@ html[data-vtapp-splash] .marquee-track {
     overflow-y: auto;
     padding-bottom: 0;
     border: 1px solid rgb(var(--fg) / 0.13);
-    background:
-      linear-gradient(180deg, rgb(var(--ink-900) / 0.98), rgba(var(--brand-rgb), 0.16)),
-      rgb(var(--ink-950) / 0.96);
+    background: color-mix(in srgb, rgb(var(--ink-900)) 90%, var(--brand) 10%);
     box-shadow: 12px 18px 44px rgb(0 0 0 / 0.28), 0 0 32px rgba(var(--brand-rgb), 0.11);
     clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 16px);
     transform: translateY(-50%);
@@ -1067,20 +1168,26 @@ html[data-vtapp-splash] .marquee-track {
 .hero-identity-logo {
   transform: translate3d(var(--logo-x, 0), var(--logo-y, 0), 0) rotate(var(--logo-rotate, 0deg));
   transition: transform 100ms linear;
-  filter: drop-shadow(0 0 28px rgb(179 40 33 / 0.22));
+  filter: drop-shadow(0 0 28px rgba(var(--brand-rgb), 0.22));
   will-change: transform;
+}
+
+/* The mark artwork is crimson. Light theme runs on the blue brand, so swing the
+ * hue rather than shipping a second PNG — the gradient inside it survives. */
+.light .hero-identity-logo img {
+  filter: hue-rotate(185deg) saturate(1.45);
 }
 
 @keyframes editionGlow {
   0%, 100% {
-    border-color: rgb(179 40 33 / 0.3);
-    background-color: rgb(179 40 33 / 0.08);
-    box-shadow: 0 0 0 rgb(179 40 33 / 0), inset 0 0 0 rgb(179 40 33 / 0);
+    border-color: rgba(var(--brand-rgb), 0.3);
+    background-color: rgba(var(--brand-rgb), 0.08);
+    box-shadow: 0 0 0 rgba(var(--brand-rgb), 0), inset 0 0 0 rgba(var(--brand-rgb), 0);
   }
   50% {
-    border-color: rgb(239 68 68 / 0.8);
-    background-color: rgb(179 40 33 / 0.28);
-    box-shadow: 0 0 26px rgb(179 40 33 / 0.32), inset 0 0 18px rgb(239 68 68 / 0.12);
+    border-color: rgba(var(--brand-bright-rgb), 0.8);
+    background-color: rgba(var(--brand-rgb), 0.28);
+    box-shadow: 0 0 26px rgba(var(--brand-rgb), 0.32), inset 0 0 18px rgba(var(--brand-bright-rgb), 0.12);
   }
 }
 
@@ -1101,8 +1208,8 @@ html[data-vtapp-splash] .marquee-track {
   width: min(100%, 26rem);
   min-height: 3.4rem;
   padding: 0.7rem 1rem;
-  border: 1px solid rgb(179 40 33 / 0.3);
-  background-color: rgb(179 40 33 / 0.08);
+  border: 1px solid rgba(var(--brand-rgb), 0.3);
+  background-color: rgba(var(--brand-rgb), 0.08);
   animation: editionGlow 4.8s ease-in-out infinite;
 }
 
@@ -1136,6 +1243,193 @@ html[data-vtapp-splash] .marquee-track {
     width: 100%;
     border-right-color: transparent;
   }
+}
+
+/* ==========================================================================
+   HERO WORDMARK — "V-TAPP26" assembled from miniature V-TAPP marks
+   Geometry and timing live in HeroWordmark.tsx (framer-motion); this file only
+   supplies the type the mosaic is sampled from and the look of one tile.
+   ========================================================================== */
+
+.hero-wordmark {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+
+/* Soft brand bloom behind the mosaic. Static, so the tiles above it can animate
+ * without dragging a filter region along with them. */
+.hero-wordmark::before {
+  content: '';
+  position: absolute;
+  inset: -18% -6%;
+  background: radial-gradient(
+    ellipse 55% 60% at 50% 50%,
+    rgba(var(--brand-rgb), 0.16),
+    transparent 72%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* The real type. It sets the box, then goes invisible once the mosaic that was
+ * sampled from it is on screen — the mosaic is the visible wordmark.
+ * `pre` matters: the run of spaces before "26" is the gap in the mosaic, and
+ * the sampled canvas does not collapse whitespace either. */
+.hero-wordmark-ghost {
+  display: inline-block;
+  white-space: pre;
+}
+
+.hero-wordmark-ghost.is-sampled {
+  opacity: 0;
+}
+
+.hero-wordmark-mosaic {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  translate: 0 -50%;
+  pointer-events: none;
+}
+
+/* Each tile is the V-TAPP mark used as a mask, so its colour comes from the
+ * theme's brand token: crimson in dark, blue in light. */
+.hero-wordmark-tile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(
+    135deg,
+    rgb(var(--brand-bright-rgb)),
+    rgb(var(--brand-rgb))
+  );
+  -webkit-mask-image: url('/vtapp-mark-transparent.png');
+  mask-image: url('/vtapp-mark-transparent.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  will-change: transform, opacity;
+}
+
+/* assembly head that leads the tiles across the word */
+.hero-wordmark-beam {
+  position: absolute;
+  top: -8%;
+  left: 0;
+  width: 2px;
+  height: 116%;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(var(--brand-bright-rgb), 0.9) 18%,
+    rgba(var(--brand-bright-rgb), 0.9) 82%,
+    transparent
+  );
+  box-shadow: 0 0 18px 4px rgba(var(--brand-rgb), 0.45);
+  pointer-events: none;
+}
+
+.hero-wordmark-beam::before,
+.hero-wordmark-beam::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: 0.6rem;
+  height: 0.3rem;
+  translate: -50% 0;
+  background: rgba(var(--brand-bright-rgb), 0.9);
+  box-shadow: 0 0 10px rgba(var(--brand-rgb), 0.8);
+}
+
+.hero-wordmark-beam::before {
+  top: 0;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.hero-wordmark-beam::after {
+  bottom: 0;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+
+/* ==========================================================================
+   HERO EDITION CHIP — instrument readout for "4th Edition"
+   Sequencing lives in HeroEditionBadge.tsx; this is the static look.
+   ========================================================================== */
+
+.hero-edition-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  overflow: hidden;
+  padding: 0.6rem 1.05rem;
+  border: 1px solid rgba(var(--brand-rgb), 0.42);
+  background: linear-gradient(
+    120deg,
+    rgba(var(--brand-rgb), 0.16),
+    rgba(var(--brand-rgb), 0.04) 55%,
+    transparent
+  );
+  box-shadow: inset 0 0 22px rgba(var(--brand-rgb), 0.1);
+  transform-origin: left center;
+}
+
+.hero-edition-chip-rule {
+  width: 1.6rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--brand-bright-rgb), 0.9));
+}
+
+.hero-edition-chip-num {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  min-width: 2.1ch;
+  font-family: var(--font-wordmark), monospace;
+  font-size: clamp(1.15rem, 2.1vw, 1.75rem);
+  font-weight: 900;
+  line-height: 1;
+  color: rgb(var(--brand-bright-rgb));
+  text-shadow: 0 0 18px rgba(var(--brand-rgb), 0.55);
+}
+
+.hero-edition-chip-num > span {
+  display: block;
+}
+
+.hero-edition-chip-div {
+  width: 1px;
+  height: 1.35rem;
+  background: rgb(var(--fg) / 0.28);
+}
+
+.hero-edition-chip-label {
+  display: inline-flex;
+  font-family: var(--font-wordmark), monospace;
+  font-size: clamp(0.72rem, 1.15vw, 0.95rem);
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+  color: rgb(var(--fg) / 0.92);
+}
+
+.hero-edition-chip-scan {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 45%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--brand-bright-rgb), 0.16),
+    rgba(var(--brand-bright-rgb), 0.34),
+    transparent
+  );
+  pointer-events: none;
 }
 
 .hero-blueprint-wrap {
@@ -1272,8 +1566,8 @@ html[data-vtapp-splash] .marquee-track {
   /* Icon3D shading: the dark extrude and white specular are tuned for black.
      On a pale ground the highlight vanishes and the extrude reads as a smudge,
      so light mode uses a lighter extrude and a dark "shadow" highlight. */
-  --icon-extrude: #f3c9c5;
-  --icon-highlight: #7a1a15;
+  --icon-extrude: #b9edf5;
+  --icon-highlight: #075d70;
 }
 
 :root {
@@ -1354,16 +1648,16 @@ html[data-vtapp-splash] .marquee-track {
   color: rgb(var(--slate-500));
 }
 
-/* ---- crimson on white wants a touch more weight to hold ---- */
+/* ---- blue on white wants a touch more weight to hold ---- */
 .light .tag-index,
 .light .text-brand-400 {
-  color: #a8241d;
+  color: rgb(var(--brand-700));
 }
 
 /* but inside .on-media the ground is still dark, so keep the bright tone */
 .light .on-media .tag-index,
 .light .on-media .text-brand-400 {
-  color: #e0685e;
+  color: rgb(var(--brand-300));
 }
 
 /*
@@ -1477,10 +1771,10 @@ html[data-vtapp-splash] .marquee-track {
   border-left: 1px solid rgb(var(--fg) / 0.06);
 }
 ::-webkit-scrollbar-thumb {
-  background: #b32821;
+  background: rgb(var(--brand-600));
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #cf3f34;
+  background: rgb(var(--brand-500));
 }
 
 /* ==========================================================================
@@ -1488,8 +1782,13 @@ html[data-vtapp-splash] .marquee-track {
    ========================================================================== */
 
 .vtapp-map-scroll {
+  --map-trail-hot: var(--em-300);
   position: relative;
   background: rgb(var(--ink-950) / 0.96);
+}
+
+.light .vtapp-map-scroll {
+  --map-trail-hot: var(--brand-500);
 }
 
 .vtapp-map-stage {
@@ -1510,20 +1809,117 @@ html[data-vtapp-splash] .marquee-track {
     rgb(var(--ink-900) / 0.94);
 }
 
-.vtapp-timeline-list {
-  display: grid;
-  gap: 0.7rem;
+.vtapp-photo-column {
+  display: flex;
+  min-width: 0;
 }
 
-.vtapp-timeline-card {
+.vtapp-timeline-gallery {
   position: relative;
-  min-height: 104px;
+  flex: 1;
+  min-height: 0;
+  perspective: 1000px;
 }
 
-.vtapp-timeline-card:focus-visible {
-  outline: 1px solid rgb(var(--em-300));
-  outline-offset: 3px;
-  box-shadow: 0 0 0 4px rgb(var(--em-500) / 0.12);
+.vtapp-timeline-photo {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid rgb(var(--fg) / 0.18);
+  background: rgb(var(--ink-900));
+  box-shadow: 0 12px 28px rgb(0 0 0 / 0.2);
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.vtapp-timeline-photo-main {
+  z-index: 1;
+  animation: vtappTimelinePhotoSettle 3s ease-out both;
+}
+
+.vtapp-timeline-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgb(0 0 0 / 0.38), transparent 24%, transparent 76%, rgb(0 0 0 / 0.28)),
+    linear-gradient(180deg, transparent 55%, rgb(0 0 0 / 0.5));
+  pointer-events: none;
+}
+
+.vtapp-timeline-photo-1 {
+  transform-origin: 50% 100%;
+  animation: vtappTimelineFoldLeft 1050ms cubic-bezier(.16,1,.3,1) both;
+}
+
+.vtapp-timeline-photo-2 {
+  transform-origin: 50% 0;
+  animation: vtappTimelineFoldRight 1050ms 110ms cubic-bezier(.16,1,.3,1) both;
+}
+
+.vtapp-timeline-gallery-controls {
+  position: absolute;
+  left: 50%;
+  bottom: 0.75rem;
+  z-index: 4;
+  display: flex;
+  gap: 0.35rem;
+  transform: translateX(-50%);
+}
+
+.vtapp-timeline-gallery-control {
+  display: grid;
+  width: 1.75rem;
+  height: 1.5rem;
+  place-items: center;
+  border: 1px solid rgb(var(--fg) / 0.18);
+  background: rgb(var(--ink-950) / 0.8);
+  backdrop-filter: blur(8px);
+  color: rgb(var(--slate-300));
+  font-family: var(--font-mono);
+  font-size: 11px;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+.vtapp-timeline-gallery-control:hover,
+.vtapp-timeline-gallery-control:focus-visible {
+  border-color: rgb(var(--em-400) / 0.7);
+  background: rgb(var(--em-500) / 0.1);
+  color: rgb(var(--fg));
+  outline: none;
+}
+
+@keyframes vtappTimelineFoldLeft {
+  from {
+    opacity: 0.3;
+    transform: translateY(14px) rotateX(38deg) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg) scale(1);
+  }
+}
+
+@keyframes vtappTimelineFoldRight {
+  from {
+    opacity: 0.3;
+    transform: translateY(-14px) rotateX(-38deg) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg) scale(1);
+  }
+}
+
+@keyframes vtappTimelinePhotoSettle {
+  from {
+    transform: scale(1.025);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 .vtapp-map-border-signal {
@@ -1545,8 +1941,8 @@ html[data-vtapp-splash] .marquee-track {
   width: 3.5rem;
   height: 2px;
   flex: none;
-  background: linear-gradient(90deg, rgb(var(--brand) / 0.45), var(--brand-bright));
-  box-shadow: 0 0 7px rgb(207 63 52 / 0.55);
+  background: linear-gradient(90deg, rgba(var(--brand-rgb), 0.08), var(--brand-bright));
+  box-shadow: 0 0 7px rgba(var(--brand-rgb), 0.55);
 }
 
 .vtapp-map-border-signal-tip {
@@ -1577,7 +1973,8 @@ html[data-vtapp-splash] .marquee-track {
 }
 
 .light .vtapp-map-border-signal-tail {
-  background: linear-gradient(90deg, rgb(var(--brand) / 0.45), var(--brand));
+  background: linear-gradient(90deg, rgba(var(--brand-rgb), 0.08), var(--brand));
+  box-shadow: 0 0 9px rgba(var(--brand-rgb), 0.65);
 }
 
 .light .vtapp-map-border-signal-label > span:first-child {
@@ -1631,7 +2028,8 @@ html[data-vtapp-splash] .marquee-track {
 }
 
 .vtapp-map-cell-1 {
-  fill: rgb(var(--slate-200) / 0.9);
+  fill: rgb(var(--brand-rgb));
+  filter: drop-shadow(0 0 4px rgba(var(--brand-rgb), 0.5));
 }
 
 .vtapp-map-cell-2 {
@@ -1656,7 +2054,8 @@ html[data-vtapp-splash] .marquee-track {
 }
 
 .vtapp-map-trail-hot {
-  fill: rgb(var(--em-300));
+  fill: rgb(var(--map-trail-hot));
+  filter: drop-shadow(0 0 5px rgb(var(--map-trail-hot) / 0.75));
 }
 
 .vtapp-map-marker circle,
@@ -1696,7 +2095,11 @@ html[data-vtapp-splash] .marquee-track {
 
   .vtapp-map-panel,
   .vtapp-timeline {
-    min-height: min(680px, calc(100svh - 128px));
+    min-height: min(760px, calc(100svh - 112px));
+  }
+
+  .vtapp-photo-column {
+    padding: 0.5rem;
   }
 }
 
@@ -1705,8 +2108,8 @@ html[data-vtapp-splash] .marquee-track {
     min-height: 520px;
   }
 
-  .vtapp-timeline-list {
-    gap: 0.85rem;
+  .vtapp-photo-column {
+    min-height: 500px;
   }
 }
 
@@ -1715,8 +2118,8 @@ html[data-vtapp-splash] .marquee-track {
     min-height: 460px;
   }
 
-  .vtapp-timeline-card {
-    min-height: 0;
+  .vtapp-photo-column {
+    min-height: 420px;
   }
 }
 
@@ -1733,6 +2136,16 @@ html[data-vtapp-splash] .marquee-track {
   .vtapp-map-border-signal {
     animation: none;
     offset-rotate: 0deg;
+  }
+
+  .vtapp-timeline-photo {
+    animation: none;
+    transform: none;
+    filter: none;
+  }
+
+  .vtapp-timeline-photo-main {
+    animation: none;
   }
 
 
@@ -1938,7 +2351,7 @@ html[data-vtapp-splash] .marquee-track {
   opacity: 0.1;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .hero-blueprint-layer {
     position: relative;
     inset: auto;
@@ -2308,7 +2721,7 @@ html[data-vtapp-splash] .marquee-track {
 }
 
 .hero--scanning .hero-identity-logo {
-  filter: drop-shadow(0 0 40px rgb(179 40 33 / 0.55));
+  filter: drop-shadow(0 0 40px rgba(var(--brand-rgb), 0.55));
   transition: filter 0.3s ease;
 }
 
@@ -2318,7 +2731,7 @@ html[data-vtapp-splash] .marquee-track {
 }
 
 .hero--scanning .hero-edition-badge {
-  box-shadow: 0 0 32px rgb(179 40 33 / 0.45), inset 0 0 24px rgb(239 68 68 / 0.18);
+  box-shadow: 0 0 32px rgba(var(--brand-rgb), 0.45), inset 0 0 24px rgba(var(--brand-bright-rgb), 0.18);
   transition: box-shadow 0.4s ease;
 }
 
@@ -2340,7 +2753,7 @@ html[data-vtapp-splash] .marquee-track {
 
 /* Override the static drop-shadow on hero-identity-logo */
 .hero-identity-logo {
-  filter: drop-shadow(0 0 28px rgb(179 40 33 / 0.22));
+  filter: drop-shadow(0 0 28px rgba(var(--brand-rgb), 0.22));
   animation: logoCoreGlow 4.5s ease-in-out infinite, heroHudFloat1 6.2s ease-in-out infinite;
   will-change: filter, transform;
 }
@@ -2420,7 +2833,7 @@ html[data-vtapp-splash] .marquee-track {
 }
 
 .hero--scanning .hero-identity-logo {
-  filter: drop-shadow(0 0 40px rgb(179 40 33 / 0.55));
+  filter: drop-shadow(0 0 40px rgba(var(--brand-rgb), 0.55));
   transition: filter 0.3s ease;
 }
 
@@ -2430,7 +2843,7 @@ html[data-vtapp-splash] .marquee-track {
 }
 
 .hero--scanning .hero-edition-badge {
-  box-shadow: 0 0 32px rgb(179 40 33 / 0.45), inset 0 0 24px rgb(239 68 68 / 0.18);
+  box-shadow: 0 0 32px rgba(var(--brand-rgb), 0.45), inset 0 0 24px rgba(var(--brand-bright-rgb), 0.18);
   transition: box-shadow 0.4s ease;
 }
 
@@ -2452,7 +2865,7 @@ html[data-vtapp-splash] .marquee-track {
 
 /* Override the static drop-shadow on hero-identity-logo */
 .hero-identity-logo {
-  filter: drop-shadow(0 0 28px rgb(179 40 33 / 0.22));
+  filter: drop-shadow(0 0 28px rgba(var(--brand-rgb), 0.22));
   animation: logoCoreGlow 4.5s ease-in-out infinite, heroHudFloat1 6.2s ease-in-out infinite;
   will-change: filter, transform;
 }
@@ -2633,6 +3046,134 @@ html[data-vtapp-splash] .marquee-track {
     0 0 0 1px var(--ec-accent),
     0 0 28px var(--ec-accent-glow);
   border-color: var(--ec-accent);
+}
+
+/* Reusable event-card frame for cards whose content is not an event. Clubs,
+ * sponsors and About keep their own information architecture while sharing
+ * the master card's chamfer, theme tokens, engineering corners and grid. */
+.event-frame {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--ec-bg);
+  border: 1px solid var(--ec-border);
+  box-shadow: var(--ec-shadow);
+  clip-path: polygon(
+    0 8px,
+    8px 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    0 calc(100% - 8px)
+  );
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 280ms ease;
+}
+
+.event-frame::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--ec-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ec-grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse 80% 80% at center, black 40%, transparent 100%);
+  opacity: 0;
+  transition: opacity 280ms ease;
+}
+
+.event-frame::after {
+  content: '';
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--ec-bracket), var(--ec-bracket)) left top / 14px 2px no-repeat,
+    linear-gradient(var(--ec-bracket), var(--ec-bracket)) left top / 2px 14px no-repeat,
+    linear-gradient(var(--ec-bracket), var(--ec-bracket)) right top / 14px 2px no-repeat,
+    linear-gradient(var(--ec-bracket), var(--ec-bracket)) right top / 2px 14px no-repeat,
+    linear-gradient(var(--ec-bracket), var(--ec-bracket)) left bottom / 14px 2px no-repeat,
+    linear-gradient(var(--ec-bracket), var(--ec-bracket)) left bottom / 2px 14px no-repeat,
+    linear-gradient(var(--ec-bracket), var(--ec-bracket)) right bottom / 14px 2px no-repeat,
+    linear-gradient(var(--ec-bracket), var(--ec-bracket)) right bottom / 2px 14px no-repeat;
+  opacity: 0.72;
+  transition: opacity 280ms ease;
+}
+
+.event-frame > * {
+  position: relative;
+  z-index: 2;
+}
+
+.event-frame:hover {
+  transform: translateY(-4px);
+  border-color: var(--ec-accent);
+  box-shadow:
+    0 24px 56px rgba(0, 0, 0, 0.45),
+    0 0 0 1px var(--ec-accent),
+    0 0 28px var(--ec-accent-glow);
+}
+
+.event-frame:hover::before,
+.event-frame:hover::after {
+  opacity: 1;
+}
+
+.event-frame:hover .event-card-title {
+  color: var(--ec-accent-bright);
+}
+
+.event-frame:hover .event-card-status-dot {
+  opacity: 1;
+}
+
+.event-frame-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border-top: 1px solid var(--ec-border-inner);
+  background: var(--ec-accent-soft);
+  color: var(--ec-text-secondary);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+.event-frame:hover .event-frame-action {
+  background: var(--ec-accent);
+  color: #fff;
+}
+
+.event-frame:hover .event-frame-action .event-card-btn-arrow {
+  transform: translateX(2px);
+}
+
+.event-frame-index {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.85rem;
+  color: var(--ec-accent);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.event-frame .event-card-category-badge + h2 {
+  margin-top: 0.9rem;
 }
 
 /* ── Corner brackets (decorative engineering marks) ── */

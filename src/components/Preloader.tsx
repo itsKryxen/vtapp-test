@@ -127,7 +127,7 @@ export default function Preloader() {
         <path
           d="M60 74 L100 158 L140 74"
           pathLength={1}
-          stroke="#e0685e"
+          stroke="var(--brand-bright)"
           strokeWidth="2.5"
           strokeLinejoin="round"
           className="bp-draw"
@@ -139,7 +139,7 @@ export default function Preloader() {
           x2="126"
           y2="74"
           pathLength={1}
-          stroke="#e0685e"
+          stroke="var(--brand-bright)"
           strokeWidth="2.5"
           className="bp-draw"
           style={{ animationDelay: '0.7s' }}

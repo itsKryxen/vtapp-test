@@ -3449,3 +3449,337 @@ html[data-vtapp-splash] .marquee-track {
     letter-spacing: 0.1em;
   }
 }
+
+/* ==========================================================================
+   VTAPP 2026 REDESIGNED TEAM MEMBER CARD
+   ========================================================================== */
+
+.team-member-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4.15; /* Maintain exact proportions */
+  background: #050505;
+  border: 1px solid rgba(115, 115, 115, 0.25);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(214, 40, 40, 0.04);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  
+  /* Clipped futuristic corners */
+  clip-path: polygon(
+    0 12px,
+    12px 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0 calc(100% - 12px)
+  );
+  
+  transition: transform 350ms cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 350ms ease,
+              box-shadow 350ms ease;
+}
+
+/* Subtle background texture for Dark Theme Card */
+.team-member-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 16px 16px;
+  pointer-events: none;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+/* Light Theme overrides */
+.light .team-member-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(184, 184, 184, 0.35);
+  box-shadow: 0 16px 35px rgba(20, 30, 45, 0.08);
+}
+
+.light .team-member-card::before {
+  background-image: 
+    linear-gradient(rgba(21, 155, 215, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(21, 155, 215, 0.02) 1px, transparent 1px);
+}
+
+/* Hover State animations */
+.team-member-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(214, 40, 40, 0.65);
+  box-shadow: 0 25px 50px rgba(214, 40, 40, 0.16), 0 0 20px rgba(214, 40, 40, 0.12);
+}
+
+.light .team-member-card:hover {
+  border-color: rgba(21, 155, 215, 0.6);
+  box-shadow: 0 25px 45px rgba(21, 155, 215, 0.16), 0 0 20px rgba(21, 155, 215, 0.1);
+}
+
+/* HUD corner accents: ◤ and ◥ */
+.team-member-hud-accent-tl,
+.team-member-hud-accent-tr {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-color: rgba(214, 40, 40, 0.4);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 8;
+  opacity: 0.7;
+  transition: opacity 350ms ease, border-color 350ms ease;
+}
+
+.light .team-member-hud-accent-tl,
+.light .team-member-hud-accent-tr {
+  border-color: rgba(21, 155, 215, 0.4);
+}
+
+.team-member-card:hover .team-member-hud-accent-tl,
+.team-member-card:hover .team-member-hud-accent-tr {
+  opacity: 1;
+  border-color: var(--ec-accent);
+}
+
+.team-member-hud-accent-tl {
+  top: 6px;
+  left: 6px;
+  border-width: 1.5px 0 0 1.5px;
+}
+
+.team-member-hud-accent-tr {
+  top: 6px;
+  right: 6px;
+  border-width: 1.5px 1.5px 0 0;
+}
+
+/* Portrait Image wrap - takes 60% height */
+.team-member-portrait-container {
+  position: relative;
+  width: 100%;
+  height: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* Spotlight overlay */
+.team-member-portrait-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0%, transparent 68%);
+  pointer-events: none;
+  z-index: 4;
+}
+
+.light .team-member-portrait-container::after {
+  background: radial-gradient(circle at center, rgba(21, 155, 215, 0.04) 0%, transparent 68%);
+}
+
+/* Watermark styles */
+.team-member-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  opacity: 0.07; /* Strict 5-8% opacity */
+  z-index: 1;
+  pointer-events: none;
+  /* Deep Red tint for Dark theme using CSS filter */
+  filter: brightness(0) saturate(100%) invert(18%) sepia(90%) saturate(6000%) hue-rotate(350deg) brightness(80%) contrast(110%);
+  transition: opacity 350ms ease;
+}
+
+.light .team-member-watermark {
+  /* Soft Blue tint for Light theme using CSS filter */
+  filter: brightness(0) saturate(100%) invert(53%) sepia(70%) saturate(3000%) hue-rotate(170deg) brightness(95%) contrast(90%);
+}
+
+.team-member-portrait {
+  height: 90%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
+  transition: transform 350ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 3;
+}
+
+.light .team-member-portrait {
+  filter: drop-shadow(0 6px 12px rgba(20, 30, 45, 0.12));
+}
+
+.team-member-card:hover .team-member-portrait {
+  transform: scale(1.04);
+}
+
+/* Laser/Scanner Line animation on hover */
+.team-member-scanner-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, #d62828, transparent);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.light .team-member-scanner-line {
+  background: linear-gradient(90deg, transparent, #159bd7, transparent);
+}
+
+.team-member-card:hover .team-member-scanner-line {
+  animation: teamScannerSweep 350ms cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes teamScannerSweep {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Thin futuristic divider: ────────●──────── */
+.team-member-divider {
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.light .team-member-divider {
+  background: rgba(21, 155, 215, 0.15);
+}
+
+.team-member-divider-node {
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.15);
+  transition: background-color 350ms ease, box-shadow 350ms ease;
+}
+
+.team-member-card:hover .team-member-divider-node {
+  background-color: #d62828;
+  box-shadow: 0 0 8px #d62828, 0 0 16px #d62828;
+}
+
+.light .team-member-card:hover .team-member-divider-node {
+  background-color: #159bd7;
+  box-shadow: 0 0 8px #159bd7, 0 0 16px #159bd7;
+}
+
+/* Details/Info section (middle) */
+.team-member-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem 0.25rem;
+  text-align: center;
+  z-index: 2;
+}
+
+.team-member-name {
+  font-family: var(--font-display, sans-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.light .team-member-name {
+  color: #171717;
+}
+
+/* Leadership badge (under the name) */
+.team-member-badge-container {
+  margin-top: 0.5rem;
+}
+
+.team-member-badge {
+  padding: 2px 10px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  transition: background-color 350ms ease, border-color 350ms ease;
+}
+
+.light .team-member-badge {
+  color: #171717;
+  background: rgba(21, 155, 215, 0.08);
+  border-color: rgba(21, 155, 215, 0.15);
+}
+
+.team-member-card:hover .team-member-badge {
+  background: rgba(214, 40, 40, 0.15);
+  border-color: rgba(214, 40, 40, 0.35);
+  color: #ffffff;
+}
+
+.light .team-member-card:hover .team-member-badge {
+  background: rgba(21, 155, 215, 0.15);
+  border-color: rgba(21, 155, 215, 0.35);
+  color: #171717;
+}
+
+/* Dedicated bottom panel strip (Designation) */
+.team-member-designation-panel {
+  width: 100%;
+  height: 38px;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(158, 27, 27, 0.95), rgba(214, 40, 40, 0.95));
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 1px 12px rgba(255, 255, 255, 0.1);
+  z-index: 5;
+  padding: 0 0.75rem;
+  text-align: center;
+}
+
+.light .team-member-designation-panel {
+  background: #00e5ff;
+  border-top: 1px solid rgba(21, 155, 215, 0.25);
+  box-shadow: 0 -2px 10px rgba(21, 155, 215, 0.05);
+}
+
+.team-member-designation-text {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.light .team-member-designation-text {
+  color: #000000; /* Solid Black text */
+}

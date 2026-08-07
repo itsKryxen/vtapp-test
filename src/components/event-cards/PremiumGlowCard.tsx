@@ -17,7 +17,7 @@ export default function PremiumGlowCard({ event, clubName, priority = false, ind
   
   return (
     <div 
-      className="group relative flex flex-col h-full bg-ink-950 border border-white/5 hover:border-transparent transition-all duration-500 overflow-hidden rounded-xl"
+      className="group relative flex flex-col h-full bg-ink-950 border border-white/40 hover:border-transparent transition-all duration-500 overflow-hidden rounded-xl"
       style={{ '--card-accent': accent } as React.CSSProperties}
     >
       {/* Glow Effect on Hover */}
@@ -30,7 +30,7 @@ export default function PremiumGlowCard({ event, clubName, priority = false, ind
       <div className="relative flex flex-col flex-1 h-full bg-ink-950 rounded-xl overflow-hidden m-[1px] z-10">
         
         {/* Media Area */}
-        <div className="relative h-48 w-full overflow-hidden bg-ink-900 border-b border-white/10">
+        <div className="relative h-48 w-full overflow-hidden bg-ink-900 border-b border-white/30">
           {event.thumbnail_url || event.poster_url ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -48,7 +48,7 @@ export default function PremiumGlowCard({ event, clubName, priority = false, ind
           <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-transparent to-transparent opacity-80" />
           
           {/* Category Badge overlay */}
-          <div className="absolute top-4 left-4 bg-ink-950/80 backdrop-blur-md border border-white/10 px-2 py-1 rounded">
+          <div className="absolute top-4 left-4 bg-ink-950/80 backdrop-blur-md border border-white/30 px-2 py-1 rounded">
              <span className="font-mono text-[9px] uppercase tracking-wider text-white">
                 {category?.label ?? event.category}
              </span>
@@ -79,7 +79,7 @@ export default function PremiumGlowCard({ event, clubName, priority = false, ind
         <div className="p-5 pt-0 mt-2 flex gap-3">
           <Link 
             href={`/events/${event.slug}`}
-            className="flex-1 flex items-center justify-center py-2.5 rounded border border-white/10 font-mono text-[10px] uppercase tracking-widest text-slate-300 hover:border-white/30 transition-colors duration-200"
+            className="flex-1 flex items-center justify-center py-2.5 rounded border border-white/30 font-mono text-[10px] uppercase tracking-widest text-slate-300 hover:border-white/30 transition-colors duration-200"
           >
             Explore
           </Link>

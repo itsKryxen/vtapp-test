@@ -27,10 +27,7 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
   };
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (
-      window.matchMedia('(pointer: coarse)').matches ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) return;
+    if (window.matchMedia('(pointer: coarse)').matches) return;
 
     const section = sectionRef.current;
     if (!section) return;
@@ -59,7 +56,7 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
       onPointerMove={handlePointerMove}
       onPointerLeave={reset}
     >
-      <div className="flex w-full flex-col border-b border-white/10 pb-12 lg:min-h-[calc(100svh-12rem)] lg:justify-center lg:border-b-0 lg:border-r lg:pb-0 lg:pr-12">
+      <div className="flex w-full flex-col border-b border-white/30 pb-12 lg:min-h-[calc(100svh-12rem)] lg:justify-center lg:border-b-0 lg:border-r lg:pb-0 lg:pr-12">
         <div className="hero-identity-lockup flex items-center justify-center gap-4 sm:gap-8 lg:justify-start">
           <div className="hero-identity-logo shrink-0">
             <Image
@@ -79,9 +76,9 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
         </div>
 
         <div className="mt-7 flex justify-center lg:justify-start">
-          <p className="hero-edition-badge inline-flex font-mono text-[clamp(1.05rem,2vw,1.7rem)] uppercase tracking-[0.2em] text-white sm:tracking-[0.27em]" aria-label="7th Edition">
+          <p className="hero-edition-badge inline-flex font-mono text-[clamp(1.05rem,2vw,1.7rem)] uppercase tracking-[0.2em] text-white sm:tracking-[0.27em]" aria-label="4th Edition">
             <span className="hero-edition-slot" aria-hidden="true">
-              <span className="hero-edition-typewriter">7th Edition</span>
+              <span className="hero-edition-typewriter">4th Edition</span>
             </span>
           </p>
         </div>

@@ -43,7 +43,7 @@ export default async function AdminClubsPage() {
         ) : (
           <div className="panel overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="border-b border-white/10 text-[10px] uppercase tracking-[0.14em] text-slate-500">
+              <thead className="border-b border-white/30 text-[10px] uppercase tracking-[0.14em] text-slate-500">
                 <tr>
                   <th className="px-4 py-3">Club ID</th>
                   <th className="px-4 py-3">Name</th>

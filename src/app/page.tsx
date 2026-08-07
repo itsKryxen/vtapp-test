@@ -11,14 +11,14 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="scanlines relative overflow-hidden border-b border-white/10">
+      <section className="scanlines relative overflow-hidden border-b border-white/30">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_50%,rgb(var(--em-500)/.1),transparent_36%)]" />
         <HeroIdentity countdownTo={COUNTDOWN_TARGET} />
       </section>
 
       <AndhraPradeshBinaryMap />
 
-      <section className="relative overflow-hidden border-y border-white/10 py-20 sm:py-28">
+      <section className="relative overflow-hidden border-y border-white/30 py-20 sm:py-28">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_75%_50%,rgb(179_40_33/.16),transparent_35%)]" />
         <div className="container-x relative grid items-center gap-12 lg:grid-cols-[1fr_.8fr]">
           <div>
@@ -41,7 +41,7 @@ export default async function HomePage() {
             {Array.from({ length: 16 }, (_, index) => (
               <span
                 key={index}
-                className={`grid aspect-square place-items-center border font-mono text-[9px] ${index === 2 || index === 9 || index === 14 ? 'border-brand-400 bg-brand-600/25 text-brand-300 shadow-[0_0_22px_rgb(179_40_33/.45)]' : 'border-white/10 bg-ink-900/50 text-slate-700'}`}
+                className={`grid aspect-square place-items-center border font-mono text-[9px] ${index === 2 || index === 9 || index === 14 ? 'border-brand-400 bg-brand-600/25 text-brand-300 shadow-[0_0_22px_rgb(179_40_33/.45)]' : 'border-white/30 bg-ink-900/50 text-slate-700'}`}
               >
                 {String(index + 1).padStart(2, '0')}
               </span>

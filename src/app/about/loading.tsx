@@ -9,7 +9,7 @@ export default function Loading() {
           <SkelText lines={4} />
         </div>
 
-        <div className="grid gap-px border border-white/[0.08] bg-white/[0.08]">
+        <div className="grid gap-px border border-white/30 bg-white/[0.08]">
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="flex items-center justify-between gap-6 bg-ink-950 p-5">
               <Skel delay={(i % 3) as 0 | 1 | 2} className="h-3 w-24" />

@@ -190,7 +190,7 @@ export default function BulkImportClubs() {
     <section className="mt-8">
       <div className="panel overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
+        <div className="flex items-center justify-between border-b border-white/30 px-6 py-4">
           <div>
             <h2 className="font-display text-lg font-light text-white">Bulk import clubs</h2>
             <p className="mt-0.5 text-xs text-slate-500">Upload a CSV to register multiple clubs at once</p>
@@ -214,7 +214,7 @@ export default function BulkImportClubs() {
             className={`m-4 flex flex-col items-center justify-center  border-2 border-dashed p-12 text-center transition-all duration-200 ${
               dragOver
                 ? 'border-brand-500 bg-brand-500/10'
-                : 'border-white/10 hover:border-white/20 hover:bg-white/[0.02]'
+                : 'border-white/30 hover:border-white/40 hover:bg-white/[0.02]'
             }`}
             onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
             onDragLeave={() => setDragOver(false)}
@@ -262,9 +262,9 @@ export default function BulkImportClubs() {
             </div>
 
             {/* Table */}
-            <div className="overflow-x-auto border border-white/10">
+            <div className="overflow-x-auto border border-white/30">
               <table className="w-full text-left text-sm">
-                <thead className="border-b border-white/10 text-[10px] uppercase tracking-[0.14em] text-slate-500">
+                <thead className="border-b border-white/30 text-[10px] uppercase tracking-[0.14em] text-slate-500">
                   <tr>
                     <th className="px-3 py-2.5 w-8">#</th>
                     <th className="px-3 py-2.5">School</th>
@@ -369,9 +369,9 @@ export default function BulkImportClubs() {
             </div>
 
             {/* Results table */}
-            <div className="overflow-x-auto border border-white/10">
+            <div className="overflow-x-auto border border-white/30">
               <table className="w-full text-left text-sm">
-                <thead className="border-b border-white/10 text-[10px] uppercase tracking-[0.14em] text-slate-500">
+                <thead className="border-b border-white/30 text-[10px] uppercase tracking-[0.14em] text-slate-500">
                   <tr>
                     <th className="px-3 py-2.5">Club name</th>
                     <th className="px-3 py-2.5">Club ID</th>

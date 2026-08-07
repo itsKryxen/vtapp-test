@@ -68,7 +68,7 @@ export default function StatusClient() {
   return (
     <div className="mx-auto max-w-2xl">
       {/* lookup */}
-      <div className="flex flex-wrap items-stretch gap-px border border-white/[0.08] bg-white/[0.08]">
+      <div className="flex flex-wrap items-stretch gap-px border border-white/30 bg-white/[0.08]">
         <div className="flex flex-1 items-center gap-3 bg-ink-950 px-4">
           <span className="mono-label text-brand-500">REF</span>
           <input
@@ -107,7 +107,7 @@ export default function StatusClient() {
           const copy = STATUS_COPY[o.status];
           return (
             <div key={o.reference} className="panel brackets">
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] px-5 py-3.5">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/30 px-5 py-3.5">
                 <span className="font-mono text-sm tracking-widest text-white">{o.reference}</span>
                 <span
                   className={`border px-2.5 py-1 font-mono text-[10px] tracking-label ${copy.tone}`}
@@ -116,7 +116,7 @@ export default function StatusClient() {
                 </span>
               </div>
 
-              <dl className="divide-y divide-white/[0.06]">
+              <dl className="divide-y divide-white/20">
                 <Row
                   k="TICKET"
                   v={o.kind === 'combo' ? 'Combo pass, all events' : `${o.event_ids.length} event(s)`}

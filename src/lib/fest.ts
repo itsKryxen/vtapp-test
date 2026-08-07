@@ -7,7 +7,7 @@ export const FEST = {
   /** The official strapline from the logo. */
   tagline: 'The Pinnacle of Innovation and Creativity',
   /** Longer supporting line used under the hero headline. */
-  blurb: 'Two days. Seven schools. One campus running at full throttle.',
+  blurb: 'Two days. Eight schools. One campus running at full throttle.',
   /** Every V-TAPP event runs on campus, there is no online/hybrid track. */
   allOnCampus: true,
   /** ISO strings in IST (+05:30) */
@@ -24,7 +24,7 @@ export const FEST = {
 
 export const STATS = [
   { value: '60+', label: 'Events' },
-  { value: '7', label: 'Schools' },
+  { value: '8', label: 'Schools' },
   { value: '₹10L', label: 'Prize pool' },
   { value: '8000+', label: 'Participants' },
 ];

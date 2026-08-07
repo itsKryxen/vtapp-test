@@ -78,7 +78,7 @@ export default function ClubLogoUploader({ onChange, initialUrl = null, onClear 
 
       <div className="flex items-center gap-5">
         {/* preview well, round, like it renders on the directory */}
-        <div className="relative h-20 w-20 shrink-0 overflow-hidden border border-white/10 bg-ink-800">
+        <div className="relative h-20 w-20 shrink-0 overflow-hidden border border-white/30 bg-ink-800">
           {preview ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={preview} alt="Club logo preview" className="h-full w-full object-cover" />

@@ -63,7 +63,7 @@ export default function ReviewCard({ event, clubName, compact = false }: Props) 
   return (
     <article className="panel overflow-hidden">
       <div className="flex flex-wrap gap-5 p-5">
-        <div className="relative aspect-[4/5] w-28 shrink-0 overflow-hidden border border-white/10 bg-ink-800">
+        <div className="relative aspect-[4/5] w-28 shrink-0 overflow-hidden border border-white/30 bg-ink-800">
           {event.poster_url ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={event.thumbnail_url ?? event.poster_url} alt="" className="h-full w-full object-cover" />

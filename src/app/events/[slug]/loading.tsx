@@ -24,7 +24,7 @@ export default function Loading() {
           <SkelText lines={4} className="mt-7 max-w-2xl" />
 
           {/* fact grid */}
-          <div className="mt-10 grid gap-px border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2">
+          <div className="mt-10 grid gap-px border border-white/30 bg-white/[0.08] sm:grid-cols-2">
             {Array.from({ length: 4 }).map((_, i) => (
               <div key={i} className="flex items-center gap-4 bg-ink-950 p-5">
                 <Skel delay={(i % 3) as 0 | 1 | 2} className="h-10 w-10 shrink-0" />

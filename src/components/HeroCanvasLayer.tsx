@@ -114,9 +114,6 @@ export default function HeroCanvasLayer() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) return;
-
     let w = 0, h = 0;
 
     function resize() {

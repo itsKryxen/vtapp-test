@@ -469,7 +469,7 @@ export default function SignalBreachGame() {
         />
 
         <div className="relative">
-          <div className="mb-5 grid grid-cols-2 gap-px border border-white/10 bg-white/10 sm:grid-cols-4">
+          <div className="mb-5 grid grid-cols-2 gap-px border border-white/30 bg-white/10 sm:grid-cols-4">
             <Readout label="Round" value={`${String(round).padStart(2, '0')} / 06`} />
             <Readout label="Score" value={String(score).padStart(5, '0')} />
             <Readout label="Accuracy" value={`${accuracy}%`} />
@@ -648,7 +648,7 @@ export default function SignalBreachGame() {
               return (
                 <span
                   key={layer}
-                  className={`grid aspect-square place-items-center border font-mono text-[9px] ${complete ? 'border-emerald-400/60 bg-emerald-500/20 text-emerald-300' : current ? 'border-brand-400 bg-brand-600/15 text-brand-400' : 'border-white/10 text-slate-600'}`}
+                  className={`grid aspect-square place-items-center border font-mono text-[9px] ${complete ? 'border-emerald-400/60 bg-emerald-500/20 text-emerald-300' : current ? 'border-brand-400 bg-brand-600/15 text-brand-400' : 'border-white/30 text-slate-600'}`}
                 >
                   {String(layer).padStart(2, '0')}
                 </span>

@@ -73,7 +73,7 @@ export default function ClubDirectory({ clubs }: { clubs: Club[] }) {
                 className="group panel flex items-center gap-4 p-5 transition hover:border-white/25"
               >
                 <div
-                  className="relative grid h-14 w-14 shrink-0 place-items-center overflow-hidden border border-white/10 bg-ink-800"
+                  className="relative grid h-14 w-14 shrink-0 place-items-center overflow-hidden border border-white/30 bg-ink-800"
                   style={{ boxShadow: `0 0 0 1px ${accent}22` }}
                 >
                   {club.logo_url ? (

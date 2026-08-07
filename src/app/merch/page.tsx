@@ -30,7 +30,7 @@ export default function MerchPage() {
       {MERCH.length === 0 ? <Waiting /> : <Grid items={MERCH} />}
 
       {/* how it works */}
-      <section className="mt-20 grid gap-px border border-white/[0.08] bg-white/[0.08] sm:grid-cols-3">
+      <section className="mt-20 grid gap-px border border-white/30 bg-white/[0.08] sm:grid-cols-3">
         <Fact icon="calendar" k="Drop opens" v={MERCH_INFO.opensOn ?? 'To be announced'} />
         <Fact icon="pin" k="Collect at" v={MERCH_INFO.collectAt} />
         <Fact icon="campus" k="Delivery" v="On campus only" />
@@ -60,7 +60,7 @@ export default function MerchPage() {
 
 function Grid({ items }: { items: MerchItem[] }) {
   return (
-    <div className="mt-14 grid gap-px border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-3">
+    <div className="mt-14 grid gap-px border border-white/30 bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-3">
       {items.map((item, i) => (
         <Card key={item.id} item={item} index={i} />
       ))}
@@ -75,7 +75,7 @@ function Card({ item, index }: { item: MerchItem; index: number }) {
   return (
     <article className="group flex flex-col bg-ink-950 transition-colors hover:bg-white/[0.02]">
       {/* artwork, 4:5 like the event posters */}
-      <div className="on-media relative aspect-poster overflow-hidden border-b border-white/[0.08] bg-white/[0.02]">
+      <div className="on-media relative aspect-poster overflow-hidden border-b border-white/30 bg-white/[0.02]">
         {item.image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img

@@ -14,7 +14,7 @@
 /.swc/
 
 # Local Environment Variables (Never commit secrets)
-.env*.local
+.env.local
 .env
 !.env.example
 

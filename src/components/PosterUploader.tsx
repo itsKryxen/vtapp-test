@@ -117,7 +117,7 @@ export default function PosterUploader({ onChange, initialUrl = null }: Props) {
         }`}
       >
         {/* ---- 4:5 preview well ---- */}
-        <div className="relative aspect-[4/5] w-28 shrink-0 overflow-hidden border border-white/10 bg-ink-800 sm:w-36">
+        <div className="relative aspect-[4/5] w-28 shrink-0 overflow-hidden border border-white/30 bg-ink-800 sm:w-36">
           {preview ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={preview} alt="Poster preview" className="h-full w-full object-cover" />

@@ -148,7 +148,7 @@ export default function PosterGuidelinesPage() {
 
 function Row({ k, v }: { k: string; v: string }) {
   return (
-    <div className="flex items-baseline justify-between gap-3 border-b border-white/10 pb-2">
+    <div className="flex items-baseline justify-between gap-3 border-b border-white/30 pb-2">
       <dt className="text-slate-500">{k}</dt>
       <dd className="text-right font-medium text-slate-200">{v}</dd>
     </div>

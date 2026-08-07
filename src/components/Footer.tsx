@@ -18,7 +18,7 @@ const EXPLORE = [
 
 export default function Footer() {
   return (
-    <footer className="relative z-10 mt-32 border-t border-white/10 bg-ink-950">
+    <footer className="relative z-10 mt-32 border-t border-white/30 bg-ink-950">
       {/* index strip */}
       <div className="container-x flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-white/[0.06] py-3">
         <span className="mono-label text-brand-500">V-TAPP / 2026</span>
@@ -82,7 +82,7 @@ export default function Footer() {
       </div>
 
       {/* bottom bar */}
-      <div className="border-t border-white/10">
+      <div className="border-t border-white/30">
         <div className="container-x grid gap-4 py-5 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
           <p className="mono-label">
             © {new Date().getFullYear()} {FEST.university.toUpperCase()}

@@ -107,13 +107,11 @@ const CircuitWordmark = forwardRef<SVGSVGElement, CircuitWordmarkProps>(function
 
         <filter id={`${id}-soft-glow`} x="-60%" y="-60%" width="220%" height="220%">
           <feGaussianBlur stdDeviation="4.5" result="blur" />
-          <feColorMatrix
-            in="blur"
-            type="matrix"
-            values="0.69 0 0 0 0.12  0 0.07 0 0 0  0 0 0.15 0 0  0 0 0 0.72 0"
-          />
+          <feComponentTransfer in="blur" result="fadedBlur">
+            <feFuncA type="linear" slope="0.72" />
+          </feComponentTransfer>
           <feMerge>
-            <feMergeNode />
+            <feMergeNode in="fadedBlur" />
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
@@ -127,23 +125,23 @@ const CircuitWordmark = forwardRef<SVGSVGElement, CircuitWordmarkProps>(function
           clipPath={`url(#${id}-clip-${name})`}
           style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
         >
-          <use className="vtapp-letter-base" href={`#${id}-silhouette`} fill="#B11226" />
+          <use className="vtapp-letter-base" href={`#${id}-silhouette`} fill="var(--circuit-base, #B11226)" />
           <use
             className="vtapp-letter-reveal"
             href={`#${id}-silhouette`}
-            fill="#D53A4F"
+            fill="var(--circuit-reveal, #D53A4F)"
             mask={`url(#${id}-mask-${name})`}
           />
         </g>
       ))}
 
       <g className="vtapp-tagline" clipPath={`url(#${id}-clip-tagline)`}>
-        <use href={`#${id}-silhouette`} fill="#B11226" />
+        <use href={`#${id}-silhouette`} fill="var(--circuit-base, #B11226)" />
       </g>
 
       <g
         className="vtapp-circuit-network"
-        stroke="#B11226"
+        stroke="var(--circuit-base, #B11226)"
         strokeLinecap="round"
         strokeLinejoin="round"
         filter={`url(#${id}-soft-glow)`}
@@ -163,7 +161,7 @@ const CircuitWordmark = forwardRef<SVGSVGElement, CircuitWordmarkProps>(function
         )}
       </g>
 
-      <g className="vtapp-energy-nodes" fill="#B11226" filter={`url(#${id}-soft-glow)`}>
+      <g className="vtapp-energy-nodes" fill="var(--circuit-base, #B11226)" filter={`url(#${id}-soft-glow)`}>
         <circle className="vtapp-energy-node" cx="10" cy="25" r="3.2" />
         <circle className="vtapp-energy-node" cx="220" cy="112" r="2.4" />
         <circle className="vtapp-energy-node" cx="282" cy="25" r="2.7" />

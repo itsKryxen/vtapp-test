@@ -81,7 +81,7 @@ function SingleSponsorCard({ sponsor, idx }: { sponsor: Sponsor; idx: number }) 
       {/* Header metadata tag */}
       <div className="absolute left-2.5 top-2 flex items-center gap-1.5 pointer-events-none">
         <span
-          className="font-mono text-[8px] uppercase tracking-widest px-1 py-0.5 rounded bg-black/60 border border-white/10"
+          className="font-mono text-[8px] uppercase tracking-widest px-1 py-0.5 rounded bg-black/60 border border-white/30"
           style={{ color: accentColor }}
         >
           {sponsor.tier}
@@ -206,7 +206,7 @@ export default function SponsorStrip({ initialSponsors }: SponsorStripProps) {
       )}
 
       {/* Interactive Tier Filter Tabs */}
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-white/30 pb-4">
         <div className="flex items-center gap-2">
           <span className="font-mono text-[10px] uppercase tracking-widest text-slate-400">FILTER BY TIER:</span>
           <div className="flex flex-wrap gap-1.5">
@@ -215,7 +215,7 @@ export default function SponsorStrip({ initialSponsors }: SponsorStripProps) {
               className={`font-mono text-[11px] uppercase tracking-wider px-3 py-1 border transition-all duration-200 ${
                 selectedTier === 'all'
                   ? 'border-brand-500 bg-brand-500/20 text-white shadow-[0_0_10px_rgba(224,104,94,0.3)]'
-                  : 'border-white/10 bg-black/40 text-slate-400 hover:border-white/30 hover:text-white'
+                  : 'border-white/30 bg-black/40 text-slate-400 hover:border-white/30 hover:text-white'
               }`}
             >
               ALL ({sponsorsList.length})
@@ -231,7 +231,7 @@ export default function SponsorStrip({ initialSponsors }: SponsorStripProps) {
                   className={`font-mono text-[11px] uppercase tracking-wider px-3 py-1 border transition-all duration-200 ${
                     isActive
                       ? 'border-brand-500 bg-brand-500/20 text-white shadow-[0_0_10px_rgba(224,104,94,0.3)]'
-                      : 'border-white/10 bg-black/40 text-slate-400 hover:border-white/30 hover:text-white'
+                      : 'border-white/30 bg-black/40 text-slate-400 hover:border-white/30 hover:text-white'
                   }`}
                   style={isActive ? { borderColor: tier.accent } : undefined}
                 >
@@ -245,7 +245,7 @@ export default function SponsorStrip({ initialSponsors }: SponsorStripProps) {
       </div>
 
       {/* Dual Moving Marquee Container */}
-      <div className="relative w-full overflow-hidden border-y border-white/10 bg-black/40 py-6 space-y-4">
+      <div className="relative w-full overflow-hidden border-y border-white/30 bg-black/40 py-6 space-y-4">
         {/* Edge Soft Fade Gradient Masks */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-20 sm:w-40 bg-gradient-to-r from-ink-950 to-transparent z-20" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-20 sm:w-40 bg-gradient-to-l from-ink-950 to-transparent z-20" />
@@ -266,7 +266,7 @@ export default function SponsorStrip({ initialSponsors }: SponsorStripProps) {
       </div>
 
       {/* Cyberpunk Sponsorship Call To Action Dock */}
-      <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/10 bg-ink-900/60 p-5 backdrop-blur-md">
+      <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/30 bg-ink-900/60 p-5 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-brand-500/40 bg-brand-500/10 text-brand-400 font-mono text-lg font-bold">
             🤝

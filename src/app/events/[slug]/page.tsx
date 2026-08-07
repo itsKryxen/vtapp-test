@@ -83,7 +83,7 @@ export default async function EventDetailPage({ params }: Props) {
       <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,380px)_1fr]">
         {/* ---------------- poster ---------------- */}
         <div className="lg:sticky lg:top-28 lg:self-start">
-          <div className="overflow-hidden border border-white/10">
+          <div className="overflow-hidden border border-white/30">
             <div className="on-media relative aspect-[4/5] w-full bg-ink-800">
               {event.poster_url ? (
                 // eslint-disable-next-line @next/next/no-img-element

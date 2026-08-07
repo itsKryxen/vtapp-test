@@ -47,7 +47,7 @@ export default async function SchedulePage() {
                 {day}
               </h2>
 
-              <ol className="relative space-y-3 border-l border-white/10 pl-6">
+              <ol className="relative space-y-3 border-l border-white/30 pl-6">
                 {list.map((e) => {
                   const accent = schoolAccent(e.school);
                   return (

@@ -120,7 +120,7 @@ export default function ReturnClient() {
     <div className="mx-auto max-w-xl">
       <div className="panel brackets">
         {/* status band */}
-        <div className="flex items-center justify-between border-b border-white/[0.08] px-6 py-4">
+        <div className="flex items-center justify-between border-b border-white/30 px-6 py-4">
           <span className="mono-label">ORDER</span>
           <span className={`border px-3 py-1.5 font-mono text-[10px] tracking-label ${copy.tone}`}>
             {copy.label}
@@ -147,7 +147,7 @@ export default function ReturnClient() {
           <p className="mt-4 text-sm leading-relaxed text-slate-400">{copy.note}</p>
         </div>
 
-        <dl className="divide-y divide-white/[0.06] border-t border-white/[0.08]">
+        <dl className="divide-y divide-white/20 border-t border-white/30">
           <Row k="NAME" v={order.buyer_name} />
           <Row k="EMAIL" v={order.buyer_email} />
           <Row
@@ -175,7 +175,7 @@ export default function ReturnClient() {
           </p>
         )}
 
-        <div className="flex flex-wrap gap-3 border-t border-white/[0.08] p-6">
+        <div className="flex flex-wrap gap-3 border-t border-white/30 p-6">
           <Link href="/events" className="btn-primary flex-1">
             Browse events
           </Link>

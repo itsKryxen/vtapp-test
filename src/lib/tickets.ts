@@ -43,7 +43,7 @@ export const COMBO = {
   name: 'V-TAPP Combo Pass',
   blurb: 'One pass, every event, both days.',
   perks: [
-    'Entry to every event across all seven schools',
+    'Entry to every event across all eight schools',
     'Both days, 11 and 12 September',
     'No per-event booking, no queueing twice',
     'Fest kit and participation certificate',
@@ -97,7 +97,7 @@ export const STATUS_COPY: Record<OrderStatus, { label: string; tone: string; not
   },
   cancelled: {
     label: 'CANCELLED',
-    tone: 'text-slate-400 border-white/20',
+    tone: 'text-slate-400 border-white/40',
     note: 'This order was cancelled before payment.',
   },
 };

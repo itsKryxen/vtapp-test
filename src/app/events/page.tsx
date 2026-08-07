@@ -9,7 +9,7 @@ import { FEST } from '@/lib/fest';
 
 export const metadata: Metadata = {
   title: 'All events',
-  description: 'Every event at V-TAPP 2026, across all seven schools of VIT-AP University.',
+  description: 'Every event at V-TAPP 2026, across all eight schools of VIT-AP University.',
 };
 
 export const revalidate = 120;
@@ -67,7 +67,7 @@ export default async function EventsPage({ searchParams }: Props) {
         </div>
       ) : (
         <EventCircuitField>
-          <div className="grid items-stretch gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid items-stretch gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {events.map((e, i) => (
               <EventCard
                 key={e.id}

@@ -40,12 +40,12 @@ export default function Countdown({
 
   if (variant === 'timeline') {
     return (
-      <div className="relative grid grid-cols-4 border border-white/10 bg-ink-950">
+      <div className="relative grid grid-cols-4 border border-white/30 bg-ink-950">
         <div className="pointer-events-none absolute left-[12.5%] right-[12.5%] top-1/2 h-px bg-gradient-to-r from-transparent via-[var(--brand)] to-transparent" />
         {units.map((unit, index) => (
           <div
             key={unit.label}
-            className="relative flex min-h-24 flex-col items-center justify-center border-r border-white/10 px-1 py-4 last:border-r-0 sm:min-h-36 sm:px-3 sm:py-5"
+            className="relative flex min-h-24 flex-col items-center justify-center border-r border-white/30 px-1 py-4 last:border-r-0 sm:min-h-36 sm:px-3 sm:py-5"
           >
             <span className="relative z-10 bg-ink-950 px-1 font-display text-[clamp(1.5rem,8vw,2.25rem)] tabular-nums text-white sm:px-3 sm:text-5xl lg:text-6xl">
               {mounted ? String(unit.value).padStart(2, '0') : '––'}

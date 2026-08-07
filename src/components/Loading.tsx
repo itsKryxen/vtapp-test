@@ -166,7 +166,7 @@ export function SkelRows({
   height?: string;
 }) {
   return (
-    <div className="grid gap-px border border-white/[0.08] bg-white/[0.08]">
+    <div className="grid gap-px border border-white/30 bg-white/[0.08]">
       {Array.from({ length: count }).map((_, i) => (
         <div key={i} className="flex items-center gap-5 bg-ink-950 p-5">
           <Skel delay={(i % 3) as 0 | 1 | 2} className={`w-14 shrink-0 ${height}`} />

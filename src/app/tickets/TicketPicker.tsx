@@ -126,7 +126,7 @@ export default function TicketPicker({ events }: Props) {
     <div className="grid gap-8 lg:grid-cols-[1fr_380px] lg:items-start">
       <div className="space-y-8">
         {/* product switch */}
-        <div className="grid gap-px border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2">
+        <div className="grid gap-px border border-white/30 bg-white/[0.08] sm:grid-cols-2">
           <ProductTile
             active={kind === 'combo'}
             onClick={() => setKind('combo')}
@@ -157,7 +157,7 @@ export default function TicketPicker({ events }: Props) {
               ))}
             </ul>
             {eventTotal > 0 && saving > 0 && (
-              <p className="mt-6 border-t border-white/[0.08] pt-5 font-mono text-[11px] uppercase tracking-label text-emerald-400">
+              <p className="mt-6 border-t border-white/30 pt-5 font-mono text-[11px] uppercase tracking-label text-emerald-400">
                 Buying every event separately costs {formatINR(eventTotal)}
               </p>
             )}
@@ -180,7 +180,7 @@ export default function TicketPicker({ events }: Props) {
                 </p>
               </div>
             ) : (
-              <div className="divide-y divide-white/[0.06] border border-white/[0.08]">
+              <div className="divide-y divide-white/20 border border-white/30">
                 {events.map((e) => {
                   const on = picked.has(e.id);
                   return (
@@ -296,11 +296,11 @@ export default function TicketPicker({ events }: Props) {
 
       {/* ---------------- summary ---------------- */}
       <aside className="panel brackets lg:sticky lg:top-24">
-        <div className="border-b border-white/[0.08] px-6 py-4">
+        <div className="border-b border-white/30 px-6 py-4">
           <p className="mono-label text-brand-500">ORDER SUMMARY</p>
         </div>
 
-        <dl className="divide-y divide-white/[0.06]">
+        <dl className="divide-y divide-white/20">
           <Row k="TYPE" v={kind === 'combo' ? 'Combo pass' : 'Per event'} />
           <Row
             k="ITEMS"
@@ -309,7 +309,7 @@ export default function TicketPicker({ events }: Props) {
           <Row k="CURRENCY" v="INR" />
         </dl>
 
-        <div className="flex items-baseline justify-between border-t border-white/[0.08] px-6 py-6">
+        <div className="flex items-baseline justify-between border-t border-white/30 px-6 py-6">
           <span className="mono-label">TOTAL</span>
           <span className="font-display text-4xl font-light tracking-tightest text-white">
             {formatINR(total)}
@@ -322,7 +322,7 @@ export default function TicketPicker({ events }: Props) {
           </p>
         )}
 
-        <div className="border-t border-white/[0.08] p-6">
+        <div className="border-t border-white/30 p-6">
           <button type="button" onClick={checkout} disabled={busy} className="btn-primary w-full">
             {busy ? 'Creating order…' : 'Proceed to payment'}
           </button>

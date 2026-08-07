@@ -260,7 +260,7 @@ export default function AndhraPradeshBinaryMap() {
   const capitalCount = EDITION_TIMELINE[activeEditionIndex].edition;
 
   return (
-    <section ref={sectionRef} className="vtapp-map-scroll border-y border-white/10" aria-label="Interactive Andhra Pradesh map">
+    <section ref={sectionRef} className="vtapp-map-scroll border-y border-white/30" aria-label="Interactive Andhra Pradesh map">
       <div className="vtapp-map-stage container-x">
         <div className="grid w-full gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
           <div className="vtapp-map-panel panel brackets scanlines">
@@ -358,7 +358,7 @@ export default function AndhraPradeshBinaryMap() {
           </div>
 
           <aside className="vtapp-timeline panel brackets flex min-h-[360px] flex-col p-6 sm:p-8" aria-label="V-TAPP edition timeline">
-            <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-5">
+            <div className="flex items-center justify-between gap-4 border-b border-white/30 pb-5">
               <div>
                 <p className="mono-label text-brand-500">V-TAPP HISTORY</p>
                 <h2 className="mt-2 font-display text-2xl font-light text-white">Edition timeline</h2>
@@ -379,7 +379,7 @@ export default function AndhraPradeshBinaryMap() {
                 style={scrollDriven ? undefined : { height: `${(activeEditionIndex / LAST_EDITION_INDEX) * 100}%` }}
                 aria-hidden="true"
               />
-              <ol className="vtapp-timeline-list border-l border-white/10 pl-5">
+              <ol className="vtapp-timeline-list border-l border-white/30 pl-5">
                 {EDITION_TIMELINE.map((item, index) => {
                   const active = index === activeEditionIndex;
                   const reached = index <= activeEditionIndex;
@@ -389,7 +389,7 @@ export default function AndhraPradeshBinaryMap() {
                         className={`absolute -left-[1.59rem] top-5 h-2.5 w-2.5 border transition-colors duration-300 ${
                           reached
                             ? 'border-brand-400 bg-brand-600 shadow-[0_0_16px_rgb(179_40_33/.8)]'
-                            : 'border-white/20 bg-ink-950'
+                            : 'border-white/40 bg-ink-950'
                         }`}
                         aria-hidden="true"
                       />
@@ -398,7 +398,7 @@ export default function AndhraPradeshBinaryMap() {
                         className={`vtapp-timeline-card w-full border px-4 py-3 text-left transition-colors ${
                           active
                             ? 'border-brand-500/60 bg-brand-600/10'
-                            : 'border-white/10 bg-ink-900/35 hover:border-white/20 hover:bg-white/[.025]'
+                            : 'border-white/30 bg-ink-900/35 hover:border-white/40 hover:bg-white/[.025]'
                         }`}
                         aria-pressed={active}
                         aria-current={active ? 'step' : undefined}

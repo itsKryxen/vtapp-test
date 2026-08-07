@@ -20,7 +20,7 @@ export default function CyberFrameCard({ event, clubName, priority = false, inde
   
   return (
     <div 
-      className="group relative flex flex-col h-full bg-ink-950 border border-white/10 hover:border-white/30 transition-all duration-300 overflow-hidden"
+      className="group relative flex flex-col h-full bg-ink-950 border border-white/30 hover:border-white/30 transition-all duration-300 overflow-hidden"
       style={{ 
          '--card-accent': accent,
          '--cyber-accent': secondaryAccent
@@ -36,7 +36,7 @@ export default function CyberFrameCard({ event, clubName, priority = false, inde
             <span className="font-mono text-[9px] uppercase tracking-widest text-[var(--cyber-accent)]">SEQ_NO</span>
             <span className="font-display text-4xl leading-none text-white opacity-80">{displayIndex}</span>
          </div>
-         <div className="border border-white/10 px-3 py-1 bg-white/5">
+         <div className="border border-white/30 px-3 py-1 bg-white/5">
             <span className="font-mono text-[9px] uppercase tracking-wider text-slate-300">
                {category?.label ?? event.category}
             </span>
@@ -77,10 +77,10 @@ export default function CyberFrameCard({ event, clubName, priority = false, inde
       </div>
 
       {/* Action Footer */}
-      <div className="flex border-t border-white/10">
+      <div className="flex border-t border-white/30">
         <Link 
           href={`/events/${event.slug}`}
-          className="flex-1 flex items-center justify-center py-3 font-mono text-[10px] uppercase tracking-widest text-slate-300 hover:bg-white/5 transition-colors duration-200 border-r border-white/10"
+          className="flex-1 flex items-center justify-center py-3 font-mono text-[10px] uppercase tracking-widest text-slate-300 hover:bg-white/5 transition-colors duration-200 border-r border-white/30"
         >
           Explore //
         </Link>

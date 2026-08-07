@@ -31,7 +31,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-ink-950">
+      <header className="sticky top-0 z-50 border-b border-white/30 bg-ink-950">
         <nav className="container-x relative flex h-20 items-center gap-3 !px-5 sm:h-[88px] sm:!px-8">
           <div className="flex h-full shrink-0 items-center gap-3 sm:gap-5">
             <Link href="/" className="group relative flex h-full items-center" aria-label="V-TAPP 2026 home">
@@ -108,7 +108,7 @@ export default function Navbar() {
         </nav>
 
         {open && (
-          <div className="border-t border-white/10 bg-ink-950 xl:hidden">
+          <div className="border-t border-white/30 bg-ink-950 xl:hidden">
             <div className="container-x flex flex-col py-2">
               {LINKS.map((l, i) => (
                 <Link

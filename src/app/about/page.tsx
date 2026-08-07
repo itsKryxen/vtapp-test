@@ -95,7 +95,7 @@ export default function AboutPage() {
 
       <section className="panel mt-16 p-8">
         <h2 className="text-xl font-bold">A Glimpse of Previous V-TAPP</h2>
-        <div className="mt-6 aspect-video w-full overflow-hidden rounded-lg border border-white/10 bg-black/50">
+        <div className="mt-6 aspect-video w-full overflow-hidden rounded-lg border border-white/30 bg-black/50">
           <iframe
             width="100%"
             height="100%"

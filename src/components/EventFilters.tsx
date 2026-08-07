@@ -31,7 +31,7 @@ export default function EventFilters({ total }: { total: number }) {
   return (
     <div className={`transition-opacity ${pending ? 'opacity-50' : ''}`}>
       {/* search row */}
-      <div className="flex flex-wrap items-stretch gap-px border border-white/[0.08] bg-white/[0.08]">
+      <div className="flex flex-wrap items-stretch gap-px border border-white/30 bg-white/[0.08]">
         <div className="flex flex-1 items-center gap-3 bg-ink-950 px-4">
           <span className="mono-label text-[var(--brand)]">SEARCH</span>
           <input
@@ -115,7 +115,7 @@ function Chip({
       className={`border px-3 py-1.5 font-mono text-[10px] uppercase tracking-label transition ${
         active
           ? 'border-[var(--brand)] bg-[var(--brand)] on-brand'
-          : 'border-white/10 text-slate-500 hover:border-white/40 hover:text-white'
+          : 'border-white/30 text-slate-500 hover:border-white/40 hover:text-white'
       }`}
     >
       {children}

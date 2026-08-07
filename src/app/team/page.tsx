@@ -27,6 +27,31 @@ export default async function TeamPage() {
         slug="TEAM"
         title={<>Team</>}
       />
+      <section className="mt-14 mb-16">
+        <div className="mb-6 flex items-center gap-4">
+          <h2 className="font-display display-md tracking-tight text-white">
+            Chief Patron
+          </h2>
+          <span className="h-px flex-1 bg-gradient-to-r from-brand-600/60 to-transparent" />
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <MemberCard member={{
+            id: 'founder',
+            name: 'Dr. G. Viswanathan',
+            role: 'Founder & Chancellor',
+            department: 'Chief Patron',
+            photo_url: 'https://vitap.ac.in/_next/image?url=https%3A%2F%2Fvitap-backend.s3.ap-south-1.amazonaws.com%2FDr_G_Viswanathan_bf3dd2d487.avif&w=640&q=75',
+            sort_order: 0,
+            is_active: true,
+            email: null,
+            linkedin: null,
+            instagram: null,
+            created_at: '',
+            updated_at: ''
+          }} />
+        </div>
+      </section>
 
       {team.length === 0 ? (
         <div className="panel mt-14 p-16 text-center">
@@ -135,9 +160,6 @@ function MemberCard({ member }: { member: TeamMember }) {
         {/* Leadership pill badge under the name */}
         <div className="team-member-badge-container">
           <span className="team-member-badge">
-            <svg className="w-3 h-3 text-current inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
             {member.department}
           </span>
         </div>

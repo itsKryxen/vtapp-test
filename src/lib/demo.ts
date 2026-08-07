@@ -152,15 +152,34 @@ function member(
 }
 
 export const DEMO_TEAM: TeamMember[] = [
-  member('demo-t-1', 'Dr. G. Viswanathan', 'Founder & Chancellor', 'Leadership', 10),
-  member('demo-t-2', 'Dr. Sankar Viswanathan', 'Vice President', 'Leadership', 20),
-  member('demo-t-3', 'Dr. Sekar Viswanathan', 'Vice President', 'Leadership', 30),
-  member('demo-t-4', 'Dr. G. V. Selvam', 'Vice President', 'Leadership', 40),
-  member('demo-t-5', 'Dr. Sandhya Pentareddy', 'Executive Director', 'Leadership', 50),
-  member('demo-t-6', 'Dr. P. Arulmozhivarman', 'Vice Chancellor', 'Leadership', 60),
-  member('demo-t-7', 'Dr. Jagadish Chandra Mudiganti', 'Registrar', 'Leadership', 70),
-
-  member('demo-t-8', 'Dr. Somya Ranjan Sahoo', 'Convenor, VTAPP 2026', 'Leadership', 80),
-  member('demo-t-9', 'Dr. Sambhu Dutta', 'Co-Convenor', 'Leadership', 90),
-  member('demo-t-10', 'Dr. Gokul Yenduri', 'Co-Convenor', 'Leadership', 100),
+  member('demo-t-2', 'Dr. Sankar Viswanathan', 'Vice President', 'Leadership', 20, {
+    photo_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxLfVD82nycVkvoowu3R2ZCW2btEDnp_bpjNrOFQZzWg&s=10'
+  }),
+  member('demo-t-3', 'Dr. Sekar Viswanathan', 'Vice President', 'Leadership', 30, {
+    photo_url: 'https://vitap.ac.in/_next/image?url=https%3A%2F%2Fvitap-backend.s3.ap-south-1.amazonaws.com%2FDr_Sekar_Viswanathan_15a68c464a.avif&w=640&q=75'
+  }),
+  member('demo-t-4', 'Dr. G.V.Selvam', 'Vice President', 'Leadership', 40, {
+    photo_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHEzradlkwKqKwR-_G9s1weqU6cU2j6GH3EGJkHXJUXg&s=10'
+  }),
+  member('demo-t-5', 'Dr. Sandhya Pentareddy', 'Executive Director', 'Leadership', 50, {
+    photo_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKaPigtv8h5xz-OGAbyIaJVjyuiAAl7Dw3o1FBLXNk0A&s=10'
+  }),
+  member('demo-t-new', 'Ms. Kadhambari S Viswanathan', 'Assistant Vice - President', 'Leadership', 55, {
+    photo_url: 'https://vit.ac.in/wp-content/uploads/2024/10/avp-new-1.jpg'
+  }),
+  member('demo-t-6', 'Dr. P. Arulmozhivarman', 'Vice Chancellor', 'Leadership', 60, {
+    photo_url: 'https://vitap.ac.in/_next/image?url=https%3A%2F%2Fvitap-backend.s3.ap-south-1.amazonaws.com%2FDr_P_Arulmozhivarman_VC_3e6b8e2db2.avif&w=640&q=75'
+  }),
+  member('demo-t-7', 'Dr. Jagadish Chandra Mudiganti', 'Registrar', 'Leadership', 70, {
+    photo_url: 'https://vitap.ac.in/_next/image?url=https%3A%2F%2Fvitap-backend.s3.ap-south-1.amazonaws.com%2FDr_JAGADISH_CHANDRAMUDIGANTI_7da6ac0c7d.avif&w=640&q=75'
+  }),
+  member('demo-t-8', 'Dr. Somya Ranjan Sahoo', 'Convenor, VTAPP 2026', 'Leadership', 80, {
+    photo_url: 'https://vitap.ac.in/_next/image?url=https%3A%2F%2Fvitap-backend.s3.ap-south-1.amazonaws.com%2F70167_Dr_Somya_Ranjan_Sahoo_SCOPE_1298_7d2cb16047.avif&w=1920&q=75'
+  }),
+  member('demo-t-9', 'Dr. Sambhudutta Nanda', 'Co-Convenor', 'Leadership', 90, {
+    photo_url: 'https://vitap.ac.in/_next/image?url=https%3A%2F%2Fvitap-backend.s3.ap-south-1.amazonaws.com%2F70514_Dr_Sambhudutta_Nanda_SENSE_1316_7515944399.avif&w=1920&q=75'
+  }),
+  member('demo-t-10', 'Dr. Gokul Yenduri', 'Co-Convenor', 'Leadership', 100, {
+    photo_url: 'https://vitap.ac.in/_next/image?url=https%3A%2F%2Fvitap-backend.s3.ap-south-1.amazonaws.com%2FMr_Gokul_Yenduri_70634_IMG_4973_SCOPE_504ea5823a.avif&w=1920&q=75'
+  }),
 ];

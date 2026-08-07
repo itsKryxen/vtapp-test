@@ -44,7 +44,7 @@ export default function Navbar() {
                 <LogoLockup width={142} priority className="h-auto w-full" />
               </motion.span>
               {pathname === '/' && (
-                <span className="absolute inset-x-0 bottom-0 h-[3px] bg-brand-600 shadow-[0_0_12px_rgb(179_40_33/.7)]" />
+                <span className="absolute inset-x-0 bottom-0 h-[3px] bg-[var(--brand)] shadow-[0_0_12px_var(--brand-glow)]" />
               )}
             </Link>
 
@@ -74,7 +74,7 @@ export default function Navbar() {
                 >
                   {link.label}
                   {active && (
-                    <span className="absolute inset-x-0 bottom-0 h-[3px] bg-brand-600 shadow-[0_0_12px_rgb(179_40_33/.7)]" />
+                    <span className="absolute inset-x-0 bottom-0 h-[3px] bg-[var(--brand)] shadow-[0_0_12px_var(--brand-glow)]" />
                   )}
                 </Link>
               );

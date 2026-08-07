@@ -58,7 +58,15 @@ function buildClearanceCard(details: ClearanceDetails) {
   const context = canvas.getContext('2d');
   if (!context) throw new Error('Canvas is unavailable.');
 
-  context.fillStyle = '#08090c';
+  const isLight = document.documentElement.classList.contains('light');
+  const cPrimary = isLight ? '#00e5ff' : '#b32821';
+  const cBright = isLight ? '#08c2d6' : '#e0685e';
+  const cLight = isLight ? '#00ff9d' : '#ee9c95';
+  const cBg = isLight ? '#f7f9fc' : '#08090c';
+  const cText = isLight ? '#141c24' : '#ffffff';
+  const cTextMuted = isLight ? '#506580' : '#8c929e';
+
+  context.fillStyle = cBg;
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   context.strokeStyle = 'rgba(255,255,255,.055)';
@@ -77,37 +85,38 @@ function buildClearanceCard(details: ClearanceDetails) {
   }
 
   const glow = context.createRadialGradient(1320, 160, 10, 1320, 160, 520);
-  glow.addColorStop(0, 'rgba(179,40,33,.42)');
-  glow.addColorStop(1, 'rgba(179,40,33,0)');
+  const glowRGB = isLight ? '0,229,255' : '179,40,33';
+  glow.addColorStop(0, `rgba(${glowRGB},.42)`);
+  glow.addColorStop(1, `rgba(${glowRGB},0)`);
   context.fillStyle = glow;
   context.fillRect(800, 0, 800, 700);
 
-  context.fillStyle = '#b32821';
+  context.fillStyle = cPrimary;
   context.fillRect(0, 0, 24, canvas.height);
   context.fillRect(96, 92, 86, 8);
 
-  context.fillStyle = '#e0685e';
+  context.fillStyle = cBright;
   context.font = '700 25px ui-monospace, monospace';
   context.letterSpacing = '5px';
   context.fillText('V-TAPP 2026 // SIGNAL BREACH', 210, 108);
 
-  context.fillStyle = '#ffffff';
+  context.fillStyle = cText;
   context.font = '300 70px Arial, sans-serif';
   context.letterSpacing = '0px';
   context.fillText('CLEARANCE VERIFIED', 96, 220);
 
-  context.fillStyle = '#8c929e';
+  context.fillStyle = cTextMuted;
   context.font = '500 21px ui-monospace, monospace';
   context.letterSpacing = '4px';
   context.fillText('THIS DIGITAL ACHIEVEMENT IS PRESENTED TO', 100, 305);
 
   const displayName = details.name.toUpperCase();
-  context.fillStyle = '#ffffff';
+  context.fillStyle = cText;
   fitCanvasText(context, displayName, 1370, 92);
   context.letterSpacing = '-2px';
   context.fillText(displayName, 96, 410);
 
-  context.strokeStyle = 'rgba(255,255,255,.16)';
+  context.strokeStyle = isLight ? 'rgba(0,0,0,.16)' : 'rgba(255,255,255,.16)';
   context.strokeRect(96, 478, 1408, 210);
   context.beginPath();
   context.moveTo(565, 478);
@@ -123,11 +132,11 @@ function buildClearanceCard(details: ClearanceDetails) {
   ];
   stats.forEach(([label, value], index) => {
     const x = 130 + index * 469;
-    context.fillStyle = '#8c929e';
+    context.fillStyle = cTextMuted;
     context.font = '600 18px ui-monospace, monospace';
     context.letterSpacing = '4px';
     context.fillText(label, x, 544);
-    context.fillStyle = index === 1 ? '#ee9c95' : '#ffffff';
+    context.fillStyle = index === 1 ? cLight : cText;
     context.font = '500 55px ui-monospace, monospace';
     context.letterSpacing = '1px';
     context.fillText(value, x, 625);
@@ -142,21 +151,21 @@ function buildClearanceCard(details: ClearanceDetails) {
     timeZone: 'Asia/Kolkata',
   }).format(new Date(details.completedAt));
 
-  context.fillStyle = '#e0685e';
+  context.fillStyle = cBright;
   context.font = '700 18px ui-monospace, monospace';
   context.letterSpacing = '3px';
   context.fillText(details.clearanceId, 96, 775);
-  context.fillStyle = '#8c929e';
+  context.fillStyle = cTextMuted;
   context.font = '500 18px ui-monospace, monospace';
   context.letterSpacing = '2px';
   context.fillText(`COMPLETED ${completed.toUpperCase()} IST`, 96, 814);
 
   context.textAlign = 'right';
-  context.fillStyle = '#ffffff';
+  context.fillStyle = cText;
   context.font = '700 28px Arial, sans-serif';
   context.letterSpacing = '1px';
   context.fillText('ACCESS GRANTED', 1504, 775);
-  context.fillStyle = '#8c929e';
+  context.fillStyle = cTextMuted;
   context.font = '500 16px ui-monospace, monospace';
   context.letterSpacing = '2px';
   context.fillText('DIGITAL MINI-GAME ACHIEVEMENT', 1504, 814);
@@ -451,8 +460,8 @@ export default function SignalBreachGame() {
   }
 
   return (
-    <section className="grid gap-5 xl:grid-cols-[minmax(0,1.45fr)_minmax(300px,.55fr)]">
-      <div className="panel brackets scanlines relative overflow-hidden p-4 sm:p-7 lg:p-10">
+    <section className="grid gap-3 lg:gap-5 xl:grid-cols-[minmax(0,1.45fr)_minmax(300px,.55fr)]">
+      <div className="panel brackets scanlines relative overflow-hidden p-3 sm:p-5 lg:p-6">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_48%,rgb(179_40_33/.12),transparent_48%)]" />
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-px bg-brand-400/70 shadow-[0_0_22px_rgb(224_104_94/.8)] motion-safe:animate-scan"
@@ -480,7 +489,7 @@ export default function SignalBreachGame() {
             </span>
           </div>
 
-          <div className="mx-auto grid w-full max-w-[620px] grid-cols-4 gap-2 sm:gap-3" aria-label="Signal node grid">
+          <div className="mx-auto grid w-full max-w-[min(100%,400px,40vh)] lg:max-w-[min(100%,480px,50vh)] grid-cols-4 gap-2 sm:gap-3" aria-label="Signal node grid">
             {nodeLabels.map((label, node) => {
               const isSignal = activeNode === node;
               const isCorrect = feedbackNode === node && feedback === 'correct';
@@ -602,8 +611,8 @@ export default function SignalBreachGame() {
         )}
       </div>
 
-      <aside className="space-y-5">
-        <div className="panel p-6">
+      <aside className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 lg:gap-5">
+        <div className="panel p-4 sm:p-5">
           <div className="flex items-center gap-3">
             <span className={`inline-block h-2 w-2 ${gameActive ? 'animate-pulse bg-emerald-400' : 'bg-slate-600'}`} />
             <span className="mono-label text-slate-400">Live terminal</span>
@@ -613,7 +622,7 @@ export default function SignalBreachGame() {
           </p>
         </div>
 
-        <div className="panel p-6">
+        <div className="panel p-4 sm:p-5">
           <div className="mono-label text-slate-400">Breach integrity</div>
           <div className="mt-5 flex gap-2" aria-label={`${MAX_ERRORS - errors} attempts remaining`}>
             {Array.from({ length: MAX_ERRORS }, (_, index) => (
@@ -629,7 +638,7 @@ export default function SignalBreachGame() {
           </div>
         </div>
 
-        <div className="panel p-6">
+        <div className="panel p-4 sm:p-5">
           <div className="mono-label text-slate-400">Layer progress</div>
           <div className="mt-5 grid grid-cols-6 gap-2">
             {Array.from({ length: MAX_ROUND }, (_, index) => {
@@ -648,7 +657,7 @@ export default function SignalBreachGame() {
           </div>
         </div>
 
-        <div className="panel p-6">
+        <div className="panel p-4 sm:p-5">
           <div className="mono-label text-slate-400">Protocol</div>
           <ol className="mt-5 space-y-4 text-sm leading-relaxed text-slate-400">
             <li className="flex gap-3"><span className="font-mono text-[10px] text-brand-400">01</span>Watch the full node sequence.</li>
@@ -672,9 +681,9 @@ export default function SignalBreachGame() {
 
 function Readout({ label, value }: { label: string; value: string }) {
   return (
-    <div className="bg-ink-900/90 px-4 py-3">
-      <div className="mono-label">{label}</div>
-      <div className="mt-2 font-mono text-sm text-white sm:text-base">{value}</div>
+    <div className="bg-ink-900/90 px-2 py-2 sm:px-4 sm:py-3 text-center sm:text-left">
+      <div className="mono-label text-[9px] sm:text-[10px]">{label}</div>
+      <div className="mt-1 sm:mt-2 font-mono text-xs sm:text-base text-white">{value}</div>
     </div>
   );
 }

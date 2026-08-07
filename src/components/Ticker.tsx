@@ -25,10 +25,10 @@ function Run({ 'aria-hidden': ariaHidden }: { 'aria-hidden'?: boolean }) {
     <div className="flex shrink-0 items-center" aria-hidden={ariaHidden}>
       {ITEMS.map((item, i) => (
         <span key={`${item}-${i}`} className="flex items-center">
-          <span className="whitespace-nowrap px-5 font-mono text-[10px] uppercase tracking-label text-ink-950">
+          <span className="whitespace-nowrap px-6 font-mono text-sm uppercase tracking-label text-ink-950 light:text-[#08080a] sm:text-base">
             {item}
           </span>
-          <span className="text-[9px] text-brand-600">◆</span>
+          <span className="text-[9px] text-brand-600 light:text-[#08080a]">◆</span>
         </span>
       ))}
     </div>
@@ -37,8 +37,8 @@ function Run({ 'aria-hidden': ariaHidden }: { 'aria-hidden'?: boolean }) {
 
 export default function Ticker() {
   return (
-    <div className="relative z-[60] overflow-hidden border-b border-black/20 bg-bone">
-      <div className="marquee-track py-2">
+    <div className="relative z-[60] overflow-hidden border-b border-black/20 bg-bone light:bg-[#00e5ff]">
+      <div className="marquee-track py-1.5">
         <Run />
         <Run aria-hidden />
       </div>

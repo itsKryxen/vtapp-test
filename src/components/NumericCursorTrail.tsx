@@ -14,6 +14,14 @@ export const CURSOR_TRAIL_HEAT_COLORS = {
   '1': '#b32821',
   '0': '#4f1512',
 } as const;
+
+export const CURSOR_TRAIL_HEAT_COLORS_LIGHT = {
+  '5': '#e0ffff',
+  '4': '#00ff9d',
+  '2': '#08c2d6',
+  '1': '#00e5ff',
+  '0': '#008291',
+} as const;
 export const CURSOR_TRAIL_LINE_WIDTH = 2.2;
 export const CURSOR_TRAIL_CLUSTER_PULL = 0.2;
 
@@ -58,6 +66,9 @@ export default function NumericCursorTrail() {
       const lifetime = CURSOR_TRAIL_STEP_MS * CURSOR_TRAIL_DIGITS.length;
       signals = signals.filter((signal) => time - signal.bornAt < lifetime);
 
+      const isLight = document.documentElement.classList.contains('light');
+      const activeColors = isLight ? CURSOR_TRAIL_HEAT_COLORS_LIGHT : CURSOR_TRAIL_HEAT_COLORS;
+
       const renderedSignals = signals.map((signal) => {
         const age = time - signal.bornAt;
         const stage = Math.max(
@@ -75,7 +86,7 @@ export default function NumericCursorTrail() {
 
         return {
           ...signal,
-          color: CURSOR_TRAIL_HEAT_COLORS[digit],
+          color: activeColors[digit as keyof typeof activeColors] || activeColors['1'],
           digit,
           lifeProgress,
           opacity,

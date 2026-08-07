@@ -33,7 +33,7 @@ export default function EventFilters({ total }: { total: number }) {
       {/* search row */}
       <div className="flex flex-wrap items-stretch gap-px border border-white/[0.08] bg-white/[0.08]">
         <div className="flex flex-1 items-center gap-3 bg-ink-950 px-4">
-          <span className="mono-label text-brand-500">SEARCH</span>
+          <span className="mono-label text-[var(--brand)]">SEARCH</span>
           <input
             type="search"
             defaultValue={q}
@@ -54,7 +54,7 @@ export default function EventFilters({ total }: { total: number }) {
             <button
               type="button"
               onClick={() => startTransition(() => router.push('/events', { scroll: false }))}
-              className="font-mono text-[10px] uppercase tracking-label text-brand-400 hover:text-brand-300"
+              className="font-mono text-[10px] uppercase tracking-label text-[var(--brand-bright)] hover:text-[var(--brand-light)]"
             >
               RESET
             </button>
@@ -68,10 +68,10 @@ export default function EventFilters({ total }: { total: number }) {
           type="button"
           onClick={() => set('school', null)}
           className="mt-3 inline-flex items-center gap-2 border px-3 py-1.5 font-mono text-[10px] uppercase tracking-label transition hover:border-white/40"
-          style={{ borderColor: `${getSchool(school)?.accent ?? '#b32821'}66` }}
+          style={{ borderColor: getSchool(school)?.accent ? `${getSchool(school)?.accent}66` : 'rgb(var(--brand-rgb) / 0.4)' }}
           aria-label={`Remove ${school} filter`}
         >
-          <span style={{ color: getSchool(school)?.accent }}>SCHOOL: {school}</span>
+          <span style={{ color: getSchool(school)?.accent ?? 'var(--brand)' }}>SCHOOL: {school}</span>
           <span className="text-slate-500">✕</span>
         </button>
       )}
@@ -114,7 +114,7 @@ function Chip({
       aria-pressed={active}
       className={`border px-3 py-1.5 font-mono text-[10px] uppercase tracking-label transition ${
         active
-          ? 'border-brand-600 bg-brand-600 on-brand'
+          ? 'border-[var(--brand)] bg-[var(--brand)] on-brand'
           : 'border-white/10 text-slate-500 hover:border-white/40 hover:text-white'
       }`}
     >

@@ -100,7 +100,7 @@ export function LoadPanel({ label = 'Resolving' }: { label?: string }) {
           cx="100"
           cy="100"
           r="66"
-          stroke="#b32821"
+          stroke="var(--brand)"
           strokeOpacity="0.35"
           strokeDasharray="2 8"
           className="bp-spin-rev"
@@ -109,7 +109,7 @@ export function LoadPanel({ label = 'Resolving' }: { label?: string }) {
         <path
           d="M28 56 L172 56 L100 178 Z"
           pathLength={1}
-          stroke="#b32821"
+          stroke="var(--brand)"
           strokeWidth="3"
           strokeLinejoin="round"
           className="bp-draw"

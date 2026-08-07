@@ -179,9 +179,9 @@ export default function Icon3D({ name, size = 24, className = '', accent, flat =
     >
       <defs>
         <linearGradient id={faceId} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={accent ?? '#ee9c95'} />
-          <stop offset="55%" stopColor={accent ?? '#e0685e'} />
-          <stop offset="100%" stopColor={accent ?? '#b32821'} />
+          <stop offset="0%" stopColor={accent ?? 'var(--brand-light)'} />
+          <stop offset="55%" stopColor={accent ?? 'var(--brand-bright)'} />
+          <stop offset="100%" stopColor={accent ?? 'var(--brand)'} />
         </linearGradient>
       </defs>
 

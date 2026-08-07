@@ -144,7 +144,7 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
               width={421}
               height={229}
               priority
-              className="hero-text-breathe h-10 w-auto shrink-0 sm:h-16 lg:h-14 xl:h-[72px]"
+              className="hero-text-breathe h-10 w-auto shrink-0 sm:h-16 lg:h-14 xl:h-[72px] light:[filter:hue-rotate(185deg)_saturate(2)_brightness(1.2)]"
             />
           </div>
         </div>
@@ -152,11 +152,11 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
         {/* Edition badge */}
         <div className="hero-enter-badge mt-7 flex justify-center">
           <p
-            className="hero-edition-badge inline-flex font-mono text-[clamp(1.05rem,2vw,1.7rem)] uppercase tracking-[0.2em] text-white sm:tracking-[0.27em]"
-            aria-label="3rd Edition"
+            className="hero-edition-badge inline-flex font-mono text-[clamp(1.05rem,2vw,1.7rem)] uppercase tracking-[0.2em] text-white light:text-[#08080a] sm:tracking-[0.27em]"
+            aria-label="4th Edition"
           >
             <span className="hero-edition-slot" aria-hidden="true">
-              <span className="hero-edition-typewriter">3rd Edition</span>
+              <span className="hero-edition-typewriter">4th Edition</span>
             </span>
           </p>
         </div>

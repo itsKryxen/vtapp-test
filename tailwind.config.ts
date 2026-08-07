@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
 
 /**
  * V-TAPP 2026 design tokens.
@@ -100,14 +101,18 @@ const config: Config = {
         scan: { from: { transform: 'translateY(-100%)' }, to: { transform: 'translateY(100%)' } },
       },
       animation: {
-        marquee: 'marquee 42s linear infinite',
+        marquee: 'marquee 80s linear infinite',
         fadeUp: 'fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both',
         blink: 'blink 1.1s step-end infinite',
         scan: 'scan 7s linear infinite',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant('light', '.light &');
+    }),
+  ],
 };
 
 export default config;

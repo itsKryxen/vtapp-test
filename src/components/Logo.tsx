@@ -1,26 +1,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import newLogo from '../../public/downloaded-logo.png';
 
 /**
  * The V-TAPP mark and wordmark.
- *
- * `variant="mark"` , just the crimson triangle (navbar, tight spaces)
- * `variant="full"` , the full logo lockup (hero, footer, login)
- *
- * Both use the background-knocked-out versions, so the logo sits on the page
- * gradient rather than carrying its own black box. The opaque originals
- * (vtapp-logo.png / vtapp-mark.png) are kept for the favicon and OG card,
- * where a solid background is wanted.
  */
 export function LogoMark({ size = 36, className = '' }: { size?: number; className?: string }) {
   return (
     <Image
-      src="/vtapp-mark-transparent.png"
+      src={newLogo}
       alt=""
-      width={size}
-      height={size}
+      style={{ width: size, height: 'auto' }}
       priority
-      className={className}
+      className={`object-contain ${className}`}
     />
   );
 }
@@ -35,14 +27,22 @@ export function LogoLockup({
   priority?: boolean;
 }) {
   return (
-    <Image
-      src="/vtapp-circuit-logo.svg"
-      alt="V-TAPP: Celebrate Technology!"
-      width={width}
-      height={Math.round((width * 256) / 974)}
-      priority={priority}
-      className={className}
-    />
+    <>
+      <Image
+        src={newLogo}
+        alt="V-TAPP: Celebrate Technology!"
+        style={{ width: width, height: 'auto' }}
+        priority={priority}
+        className={`${className} theme-image-on-dark object-contain`}
+      />
+      <Image
+        src={newLogo}
+        alt="V-TAPP: Celebrate Technology!"
+        style={{ width: width, height: 'auto' }}
+        priority={priority}
+        className={`${className} theme-image-on-light object-contain`}
+      />
+    </>
   );
 }
 

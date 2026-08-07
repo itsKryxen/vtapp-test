@@ -19,7 +19,7 @@ export default function HeroRings() {
       {/* Ring 1 – clockwise 35s */}
       <circle
         cx={cx} cy={cy} r={248}
-        stroke="rgba(179,40,33,0.12)"
+        stroke="rgba(var(--brand-rgb),0.12)"
         strokeWidth="1"
         className="hero-ring-cw-35"
       />
@@ -27,7 +27,7 @@ export default function HeroRings() {
       {/* Ring 2 – counter-clockwise 50s */}
       <circle
         cx={cx} cy={cy} r={220}
-        stroke="rgba(224,104,94,0.07)"
+        stroke="rgba(var(--brand-bright-rgb),0.07)"
         strokeWidth="0.8"
         strokeDasharray="4 10"
         className="hero-ring-ccw-50"
@@ -45,7 +45,7 @@ export default function HeroRings() {
       {/* Ring 4 – dashed counter-clockwise 45s */}
       <circle
         cx={cx} cy={cy} r={168}
-        stroke="rgba(179,40,33,0.18)"
+        stroke="rgba(var(--brand-rgb),0.18)"
         strokeWidth="0.6"
         strokeDasharray="6 6"
         className="hero-ring-ccw-45"
@@ -54,7 +54,7 @@ export default function HeroRings() {
       {/* Ring 5 – outer orbit, extremely slow 120s clockwise */}
       <circle
         cx={cx} cy={cy} r={245}
-        stroke="rgba(224,104,94,0.06)"
+        stroke="rgba(var(--brand-bright-rgb),0.06)"
         strokeWidth="0.5"
         strokeDasharray="1 18"
         className="hero-ring-cw-120"
@@ -72,7 +72,7 @@ export default function HeroRings() {
           <line
             key={i}
             x1={x} y1={y} x2={ix} y2={iy}
-            stroke="rgba(224,104,94,0.35)"
+            stroke="rgba(var(--brand-bright-rgb),0.35)"
             strokeWidth="1"
             className="hero-ring-cw-35"
           />

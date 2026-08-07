@@ -41,7 +41,7 @@ export default function Countdown({
   if (variant === 'timeline') {
     return (
       <div className="relative grid grid-cols-4 border border-white/10 bg-ink-950">
-        <div className="pointer-events-none absolute left-[12.5%] right-[12.5%] top-1/2 h-px bg-gradient-to-r from-transparent via-brand-600 to-transparent" />
+        <div className="pointer-events-none absolute left-[12.5%] right-[12.5%] top-1/2 h-px bg-gradient-to-r from-transparent via-[var(--brand)] to-transparent" />
         {units.map((unit, index) => (
           <div
             key={unit.label}
@@ -55,7 +55,7 @@ export default function Countdown({
             </span>
             <span
               className={`absolute left-1/2 top-1/2 hidden h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rotate-45 border sm:block ${
-                index === 0 ? 'border-brand-500 bg-brand-600' : 'border-white/25 bg-ink-950'
+                index === 0 ? 'border-[var(--brand)] bg-[var(--brand)] shadow-[0_0_10px_var(--brand)]' : 'border-white/25 bg-ink-950'
               }`}
             />
           </div>

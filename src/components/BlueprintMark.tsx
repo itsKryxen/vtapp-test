@@ -25,20 +25,20 @@ export default function BlueprintMark({ className = '' }: { className?: string }
     >
       <defs>
         <linearGradient id="bpStroke" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#e0685e" />
-          <stop offset="60%" stopColor="#b32821" />
-          <stop offset="100%" stopColor="#6b1713" />
+          <stop offset="0%" stopColor="var(--brand-bright)" />
+          <stop offset="60%" stopColor="var(--brand)" />
+          <stop offset="100%" stopColor="var(--brand-dark)" />
         </linearGradient>
 
         <pattern id="bpHalftone" width="9" height="9" patternUnits="userSpaceOnUse">
-          <circle cx="1.4" cy="1.4" r="1.1" fill="#b32821" opacity="0.5" />
+          <circle cx="1.4" cy="1.4" r="1.1" fill="var(--brand)" opacity="0.5" />
         </pattern>
 
         {/* the scan bar's soft edge */}
         <linearGradient id="bpScan" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#e0685e" stopOpacity="0" />
-          <stop offset="50%" stopColor="#e0685e" stopOpacity="0.85" />
-          <stop offset="100%" stopColor="#e0685e" stopOpacity="0" />
+          <stop offset="0%" stopColor="var(--brand-bright)" stopOpacity="0" />
+          <stop offset="50%" stopColor="var(--brand-bright)" stopOpacity="0.85" />
+          <stop offset="100%" stopColor="var(--brand-bright)" stopOpacity="0" />
         </linearGradient>
 
         {/* everything below the scan bar is clipped to the triangle */}
@@ -65,7 +65,7 @@ export default function BlueprintMark({ className = '' }: { className?: string }
             cx="260"
             cy="260"
             r="120"
-            stroke="#b32821"
+            stroke="var(--brand)"
             strokeOpacity="0.3"
             strokeDasharray="2 9"
           />
@@ -95,7 +95,7 @@ export default function BlueprintMark({ className = '' }: { className?: string }
         <path
           d="M62 130 L458 130 L260 462 Z"
           pathLength={1}
-          stroke="#ee9c95"
+          stroke="var(--brand-light)"
           strokeWidth="2.5"
           strokeLinejoin="round"
           strokeLinecap="round"
@@ -106,7 +106,7 @@ export default function BlueprintMark({ className = '' }: { className?: string }
         <path
           d="M112 163 L408 163 L260 411 Z"
           pathLength={1}
-          stroke="#e0685e"
+          stroke="var(--brand-bright)"
           strokeOpacity="0.55"
           strokeWidth="1.2"
           strokeLinejoin="round"
@@ -132,7 +132,7 @@ export default function BlueprintMark({ className = '' }: { className?: string }
           x2="324"
           y2="196"
           pathLength={1}
-          stroke="#e0685e"
+          stroke="var(--brand-bright)"
           strokeOpacity="0.85"
           strokeWidth="2"
           className="bp-draw"
@@ -143,7 +143,7 @@ export default function BlueprintMark({ className = '' }: { className?: string }
           y1="196"
           x2="260"
           y2="330"
-          stroke="#e0685e"
+          stroke="var(--brand-bright)"
           strokeOpacity="0.45"
           strokeWidth="1.2"
           strokeDasharray="4 4"
@@ -187,7 +187,7 @@ export default function BlueprintMark({ className = '' }: { className?: string }
           [458, 130],
           [260, 462],
         ].map(([x, y], i) => (
-          <g key={i} stroke="#e0685e" strokeWidth="1">
+          <g key={i} stroke="var(--brand-bright)" strokeWidth="1">
             <circle
               cx={x}
               cy={y}
@@ -211,7 +211,7 @@ export default function BlueprintMark({ className = '' }: { className?: string }
             key={i}
             d={`M${x + 26 * sx} ${y} L${x} ${y} L${x} ${y + 26 * sy}`}
             pathLength={1}
-            stroke="#b32821"
+            stroke="var(--brand)"
             strokeWidth="1.5"
             strokeOpacity="0.75"
             className="bp-draw"

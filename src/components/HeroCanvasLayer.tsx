@@ -163,6 +163,11 @@ export default function HeroCanvasLayer() {
       const cx = w / 2, cy = h / 2;
       const scanning = !!(canvas?.closest('.hero--scanning'));
       const brightMult = scanning ? 1.6 : 1;
+      
+      const isLight = document.documentElement.classList.contains('light');
+      const cPrimary = isLight ? '0,229,255' : '179,40,33';
+      const cBright = isLight ? '8,194,214' : '224,104,94';
+      const cLight = isLight ? '0,255,157' : '238,156,149';
 
       ctx.clearRect(0, 0, w, h);
 
@@ -201,8 +206,8 @@ export default function HeroCanvasLayer() {
 
         const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.sz * 2.8);
         const alpha = (p.a * brightMult).toFixed(3);
-        grd.addColorStop(0, `rgba(224,104,94,${alpha})`);
-        grd.addColorStop(1, 'rgba(224,104,94,0)');
+        grd.addColorStop(0, `rgba(${cBright},${alpha})`);
+        grd.addColorStop(1, `rgba(${cBright},0)`);
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.sz * 2.8, 0, Math.PI * 2);
         ctx.fillStyle = grd;
@@ -210,7 +215,7 @@ export default function HeroCanvasLayer() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.sz * 0.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(238,156,149,${Math.min(1, parseFloat(alpha) * 1.5).toFixed(3)})`;
+        ctx.fillStyle = `rgba(${cLight},${Math.min(1, parseFloat(alpha) * 1.5).toFixed(3)})`;
         ctx.fill();
       }
 
@@ -229,13 +234,13 @@ export default function HeroCanvasLayer() {
         const alpha = Math.sin(lifePct * Math.PI) * 0.85 * brightMult;
         ctx.beginPath();
         ctx.arc(sp.x, sp.y, sp.sz, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(238,156,149,${alpha.toFixed(3)})`;
+        ctx.fillStyle = `rgba(${cLight},${alpha.toFixed(3)})`;
         ctx.fill();
         // trailing tail
         ctx.beginPath();
         ctx.moveTo(sp.x, sp.y);
         ctx.lineTo(sp.x - sp.vx * 5, sp.y - sp.vy * 5);
-        ctx.strokeStyle = `rgba(224,104,94,${(alpha * 0.4).toFixed(3)})`;
+        ctx.strokeStyle = `rgba(${cBright},${(alpha * 0.4).toFixed(3)})`;
         ctx.lineWidth = sp.sz * 0.5;
         ctx.stroke();
       }
@@ -264,7 +269,7 @@ export default function HeroCanvasLayer() {
             ctx.beginPath();
             ctx.moveTo(ni.x, ni.y);
             ctx.lineTo(nj.x, nj.y);
-            ctx.strokeStyle = `rgba(179,40,33,${(NET_OPACITY * fade).toFixed(4)})`;
+            ctx.strokeStyle = `rgba(${cPrimary},${(NET_OPACITY * fade).toFixed(4)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -275,7 +280,7 @@ export default function HeroCanvasLayer() {
       for (const nd of s.nodes) {
         ctx.beginPath();
         ctx.arc(nd.x, nd.y, 1.8, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(224,104,94,${(nd.a * brightMult).toFixed(3)})`;
+        ctx.fillStyle = `rgba(${cBright},${(nd.a * brightMult).toFixed(3)})`;
         ctx.fill();
       }
 
@@ -298,8 +303,8 @@ export default function HeroCanvasLayer() {
 
         // pulse glow
         const grd = ctx.createRadialGradient(px, py, 0, px, py, 5);
-        grd.addColorStop(0, `rgba(224,104,94,${alpha.toFixed(3)})`);
-        grd.addColorStop(1, 'rgba(224,104,94,0)');
+        grd.addColorStop(0, `rgba(${cBright},${alpha.toFixed(3)})`);
+        grd.addColorStop(1, `rgba(${cBright},0)`);
         ctx.beginPath();
         ctx.arc(px, py, 5, 0, Math.PI * 2);
         ctx.fillStyle = grd;
@@ -307,7 +312,7 @@ export default function HeroCanvasLayer() {
         // core
         ctx.beginPath();
         ctx.arc(px, py, 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,200,190,${Math.min(1, alpha * 1.4).toFixed(3)})`;
+        ctx.fillStyle = `rgba(${cLight},${Math.min(1, alpha * 1.4).toFixed(3)})`;
         ctx.fill();
       }
 
@@ -325,14 +330,14 @@ export default function HeroCanvasLayer() {
       ctx.arc(0, 0, radarR, -sweepArc, 0);
       ctx.closePath();
       const wg = ctx.createLinearGradient(-radarR * 0.3, 0, radarR, 0);
-      wg.addColorStop(0, 'rgba(224,104,94,0)');
-      wg.addColorStop(1, `rgba(224,104,94,${scanning ? 0.14 : 0.07})`);
+      wg.addColorStop(0, `rgba(${cBright},0)`);
+      wg.addColorStop(1, `rgba(${cBright},${scanning ? 0.14 : 0.07})`);
       ctx.fillStyle = wg;
       ctx.fill();
       ctx.beginPath();
       ctx.moveTo(0, 0);
       ctx.lineTo(radarR, 0);
-      ctx.strokeStyle = `rgba(224,104,94,${scanning ? 0.35 : 0.18})`;
+      ctx.strokeStyle = `rgba(${cBright},${scanning ? 0.35 : 0.18})`;
       ctx.lineWidth = 0.8;
       ctx.stroke();
       ctx.restore();

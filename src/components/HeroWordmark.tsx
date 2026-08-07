@@ -17,8 +17,9 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
  */
 
 /** The run of spaces is deliberate: it opens the gap between the name and the
- *  year. Both the canvas sample and the ghost type keep whitespace as-is. */
+ * year. Both the canvas sample and the ghost type keep whitespace as-is. */
 const TEXT = 'V-TAPP  26';
+const TEXT_BEFORE_TWO = 'V-TAPP  ';
 
 /** Seconds between the first tile leaving and the last one starting. */
 const BUILD_SPREAD = 3;
@@ -88,6 +89,24 @@ function buildMosaic(fontStyle: {
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#fff';
   ctx.fillText(TEXT, 0, ascent);
+
+  // Orbitron's sampled 2 can resemble a lowercase b once it is reduced to
+  // miniature marks. Redraw only that glyph as an angular five-stroke numeral,
+  // keeping it inside the original character slot so the 26 spacing is intact.
+  const twoX = ctx.measureText(TEXT_BEFORE_TWO).width;
+  const twoWidth = ctx.measureText('2').width;
+  const glyphLeft = twoX + twoWidth * 0.08;
+  const glyphWidth = twoWidth * 0.82;
+  const glyphHeight = ascent;
+  const stroke = Math.max(2, Math.min(glyphWidth * 0.2, glyphHeight * 0.16));
+  const middleY = (glyphHeight - stroke) / 2;
+
+  ctx.clearRect(twoX - 1, 0, twoWidth + 2, height);
+  ctx.fillRect(glyphLeft, 0, glyphWidth, stroke);
+  ctx.fillRect(glyphLeft + glyphWidth - stroke, 0, stroke, middleY + stroke);
+  ctx.fillRect(glyphLeft, middleY, glyphWidth, stroke);
+  ctx.fillRect(glyphLeft, middleY, stroke, glyphHeight - middleY);
+  ctx.fillRect(glyphLeft, glyphHeight - stroke, glyphWidth, stroke);
 
   const { data } = ctx.getImageData(0, 0, width, height);
   const maxTiles = window.innerWidth < 640 ? 140 : 280;

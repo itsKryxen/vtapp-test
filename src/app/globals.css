@@ -409,12 +409,12 @@ html[data-vtapp-splash] .marquee-track {
   animation: dotCursorBlink 0.9s step-end infinite;
 }
 
-/* The companion owns a blue signal colour independent of the site's crimson
-   dark-mode brand, so its shell, thruster, bubble and shadow stay blue. */
+/* The companion follows the page identity: crimson in dark mode and electric
+   blue in light mode, including its shell accents, thruster, bubble and glow. */
 .cute-robot-companion {
-  --robot-accent: #38bdf8;
-  --robot-accent-bright: #7dd3fc;
-  --robot-glow-rgb: 56, 189, 248;
+  --robot-accent: #b32821;
+  --robot-accent-bright: #e0685e;
+  --robot-glow-rgb: 179, 40, 33;
 }
 
 .cute-robot-bubble,
@@ -649,10 +649,13 @@ html[data-vtapp-splash] .marquee-track {
      bar should read as permanent navigation, not translucent page content. */
   :root:not(.light) .navigation-rail {
     border-top-color: rgb(var(--fg) / 0.28);
-    background: rgb(var(--ink-950));
+    background:
+      linear-gradient(90deg, rgba(var(--brand-rgb), 0.14), rgba(var(--brand-rgb), 0.05)),
+      rgb(var(--ink-950));
     box-shadow:
       0 -14px 34px rgb(0 0 0 / 0.55),
-      0 -1px 0 rgba(var(--brand-rgb), 0.16);
+      0 -1px 0 rgba(var(--brand-rgb), 0.3),
+      inset 0 8px 24px rgba(var(--brand-rgb), 0.04);
     backdrop-filter: none;
   }
 

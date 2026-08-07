@@ -75,7 +75,7 @@ export default function MinimalTechCard({ event, clubName, index = 0 }: EventCar
         </Link>
         <Link 
           href={`/events/${event.slug}`}
-          className="flex items-center justify-center py-3 font-mono text-[10px] uppercase tracking-widest bg-brand-500 text-white hover:bg-brand-400 transition-colors duration-200 group/reg"
+          className="flex items-center justify-center py-3 font-mono text-[10px] uppercase tracking-widest bg-brand-500 text-black hover:bg-brand-400 transition-colors duration-200 group/reg"
         >
           Register <span className="ml-1 opacity-0 translate-y-1 group-hover/reg:opacity-100 group-hover/reg:translate-y-0 transition-all duration-300">↗</span>
         </Link>

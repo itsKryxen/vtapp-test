@@ -69,7 +69,7 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
             />
           </div>
           <div className="min-w-0 text-left">
-            <p className="font-mono text-[clamp(2.15rem,12vw,3rem)] font-black uppercase leading-[0.82] tracking-[-0.075em] text-white lg:text-[clamp(3rem,5.6vw,7rem)]">
+            <p className="font-logo text-[clamp(2.15rem,12vw,3rem)] font-black uppercase leading-[0.82] tracking-[-0.075em] text-white lg:text-[clamp(3rem,5.6vw,7rem)]">
               V-TAPP<span className="text-brand-500">26</span>
             </p>
           </div>

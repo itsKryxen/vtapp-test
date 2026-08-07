@@ -1,3 +1,4 @@
+@import url('https://fonts.cdnfonts.com/css/ethnocentric');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -314,7 +315,7 @@ html[data-vtapp-splash] .marquee-track {
   }
 
   ::selection {
-    @apply bg-brand-600 text-white;
+    @apply bg-brand-600 text-black;
   }
   .light ::selection {
     color: #000;
@@ -867,7 +868,7 @@ html[data-vtapp-splash] .marquee-track {
     @apply btn border-bone bg-bone text-ink-950 hover:border-brand-600 hover:bg-brand-600;
   }
   .btn-primary:hover:not(:disabled) {
-    color: #fff;
+    color: #000;
   }
 
   .btn-ghost {
@@ -906,7 +907,7 @@ html[data-vtapp-splash] .marquee-track {
   /* Text sitting on a crimson fill. `text-white` is themed and would flip to
      near-black in light mode, so anything on the brand colour uses this. */
   .on-brand {
-    color: #fff;
+    color: #000;
   }
 
   /* ---------------- rules ---------------- */

@@ -134,6 +134,7 @@ export default function HeroCanvasLayer() {
       }
     }
 
+    const reduced = typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
     resize();
     stateRef.current = {
       s1: Array.from({ length: 30 }, () => sys1(w, h)),

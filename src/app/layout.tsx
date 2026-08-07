@@ -14,26 +14,11 @@ import { SocialRail } from '@/components/SocialLinks';
 import { FEST } from '@/lib/fest';
 import SiteReveal from '@/components/SiteReveal';
 
-/**
- * Two families only.
- *
- * Inter carries both body and display: at 200 and 300 weights, set large and
- * tight, a neutral grotesque reads as engineered rather than loud. JetBrains
- * Mono carries every label, tag, nav item, button and readout, which is where
- * the technical character actually comes from.
- */
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-body',
-  display: 'swap',
-  weight: ['200', '300', '400', '500', '600'],
-});
-
 const mono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-mono',
+  variable: '--font-original-mono',
   display: 'swap',
-  weight: ['400', '500', '700'],
+  weight: ['400', '500', '700', '800'],
 });
 
 export const metadata: Metadata = {
@@ -87,7 +72,7 @@ const THEME_SCRIPT = `
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${mono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>

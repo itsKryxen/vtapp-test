@@ -85,7 +85,7 @@ export default function PremiumGlowCard({ event, clubName, priority = false, ind
           </Link>
           <Link 
             href={`/events/${event.slug}`}
-            className="flex-1 flex items-center justify-center py-2.5 rounded bg-brand-500 font-mono text-[10px] uppercase tracking-widest text-white shadow-[0_0_15px_rgba(var(--brand-500-rgb),0.5)] hover:shadow-[0_0_20px_rgba(var(--brand-500-rgb),0.8)] transition-all duration-300"
+            className="flex-1 flex items-center justify-center py-2.5 rounded bg-brand-500 font-mono text-[10px] uppercase tracking-widest text-black shadow-[0_0_15px_rgba(var(--brand-500-rgb),0.5)] hover:shadow-[0_0_20px_rgba(var(--brand-500-rgb),0.8)] transition-all duration-300"
           >
             Register
           </Link>

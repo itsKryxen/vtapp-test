@@ -409,6 +409,58 @@ html[data-vtapp-splash] .marquee-track {
   animation: dotCursorBlink 0.9s step-end infinite;
 }
 
+/* The companion owns a blue signal colour independent of the site's crimson
+   dark-mode brand, so its shell, thruster, bubble and shadow stay blue. */
+.cute-robot-companion {
+  --robot-accent: #38bdf8;
+  --robot-accent-bright: #7dd3fc;
+  --robot-glow-rgb: 56, 189, 248;
+}
+
+.cute-robot-bubble,
+.cute-robot-bubble-tail {
+  border-color: rgba(var(--robot-glow-rgb), 0.65);
+}
+
+.cute-robot-bubble {
+  box-shadow: 0 0 20px rgba(var(--robot-glow-rgb), 0.5);
+}
+
+.cute-robot-thruster {
+  background: rgba(var(--robot-glow-rgb), 0.65);
+  box-shadow: 0 0 12px rgba(var(--robot-glow-rgb), 0.55);
+}
+
+.cute-robot-svg {
+  --robot-shell: #1a1d24;
+  --robot-body: #111318;
+  --robot-joint: #718096;
+  --robot-visor: #090a0f;
+  --robot-visor-border: #2d3748;
+  --robot-eye: #38bdf8;
+  filter:
+    drop-shadow(0 8px 16px rgba(var(--robot-glow-rgb), 0.52))
+    drop-shadow(0 0 7px rgba(var(--robot-glow-rgb), 0.3));
+}
+
+.light .cute-robot-companion {
+  --robot-accent: #00e5ff;
+  --robot-accent-bright: #67e8f9;
+  --robot-glow-rgb: 0, 229, 255;
+}
+
+.light .cute-robot-svg {
+  --robot-shell: #d9f8fc;
+  --robot-body: #bdeff6;
+  --robot-joint: #287f94;
+  --robot-visor: #083344;
+  --robot-visor-border: #0891b2;
+  --robot-eye: #67e8f9;
+  filter:
+    drop-shadow(0 8px 14px rgba(var(--robot-glow-rgb), 0.4))
+    drop-shadow(0 0 9px rgba(var(--robot-glow-rgb), 0.34));
+}
+
 /* Fixed social dock inspired by the event artwork. Kept off narrow screens so
  * it never masks page content or competes with the mobile navigation. */
 .social-rail {
@@ -591,6 +643,32 @@ html[data-vtapp-splash] .marquee-track {
 @media (max-width: 1279px) {
   body {
     padding-bottom: calc(60px + env(safe-area-inset-bottom));
+  }
+
+  /* Match the mobile menu panel's opaque treatment in dark mode. The bottom
+     bar should read as permanent navigation, not translucent page content. */
+  :root:not(.light) .navigation-rail {
+    border-top-color: rgb(var(--fg) / 0.28);
+    background: rgb(var(--ink-950));
+    box-shadow:
+      0 -14px 34px rgb(0 0 0 / 0.55),
+      0 -1px 0 rgba(var(--brand-rgb), 0.16);
+    backdrop-filter: none;
+  }
+
+  :root:not(.light) .navigation-rail-link {
+    border-left-color: rgb(var(--fg) / 0.12);
+    color: rgb(var(--fg) / 0.82);
+  }
+
+  :root:not(.light) .navigation-rail-link > span {
+    color: rgb(var(--slate-400));
+  }
+
+  :root:not(.light) .navigation-rail-link:hover,
+  :root:not(.light) .navigation-rail-link:focus-visible,
+  :root:not(.light) .navigation-rail-link.is-active {
+    background: rgba(var(--brand-rgb), 0.22);
   }
 }
 

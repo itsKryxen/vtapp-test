@@ -118,7 +118,7 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
         {/* w-fit keeps the group as wide as the logo + wordmark, so the edition
          * badge below can centre on the lockup rather than on the column. */}
         <div className="mx-auto w-fit max-w-full xl:mx-0">
-          <div className="hero-identity-lockup hero-enter-lockup flex items-center gap-5 sm:gap-6 2xl:gap-8">
+          <div className="hero-identity-lockup hero-enter-lockup flex items-center gap-5 lg:gap-6 2xl:gap-8">
             <div className="hero-identity-logo shrink-0">
               <Image
                 src={heroMark}
@@ -126,11 +126,11 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
                 width={144}
                 height={144}
                 priority
-                className="h-14 w-14 object-contain sm:h-32 sm:w-32 2xl:h-36 2xl:w-36"
+                className="h-12 w-12 object-contain sm:h-24 sm:w-24 lg:h-28 lg:w-28 xl:h-32 xl:w-32 2xl:h-36 2xl:w-36"
               />
             </div>
             <div className="min-w-0 text-left">
-              <HeroWordmark className="font-wordmark text-[clamp(1.6rem,7.6vw,3.1rem)] font-black uppercase leading-[0.9] tracking-[-0.01em] text-white xl:text-[clamp(2.85rem,3.6vw,4.25rem)]" />
+              <HeroWordmark className="font-wordmark text-[clamp(1.4rem,6.8vw,2.65rem)] font-black uppercase leading-[0.9] tracking-[-0.01em] text-white xl:text-[clamp(2.85rem,3.6vw,4.25rem)]" />
             </div>
           </div>
 

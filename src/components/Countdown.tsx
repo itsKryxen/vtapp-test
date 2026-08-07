@@ -1,6 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+
+const STATUS_PHRASES = [
+  'Initializing Innovation...',
+  'Preparing Workshops...',
+  'Loading Hackathons...',
+  'Synchronizing Event Modules...',
+  'Launching VTAPP 2026...',
+];
 
 function diff(target: Date) {
   const ms = Math.max(0, target.getTime() - Date.now());
@@ -10,7 +18,33 @@ function diff(target: Date) {
     minutes: Math.floor((ms / 60000) % 60),
     seconds: Math.floor((ms / 1000) % 60),
     done: ms === 0,
+    totalMs: ms,
   };
+}
+
+// Separate component for individual digit cell to enable smooth digit change transition
+function DigitCell({ value, label, mounted }: { value: number; label: string; mounted: boolean }) {
+  const formattedVal = mounted ? String(value).padStart(2, '0') : '00';
+  const prevValRef = useRef(formattedVal);
+  const [isFlipping, setIsFlipping] = useState(false);
+
+  useEffect(() => {
+    if (prevValRef.current !== formattedVal) {
+      prevValRef.current = formattedVal;
+      setIsFlipping(true);
+      const timer = setTimeout(() => setIsFlipping(false), 250);
+      return () => clearTimeout(timer);
+    }
+  }, [formattedVal]);
+
+  return (
+    <div className="vtapp-countdown-cell">
+      <span className={`vtapp-countdown-number ${isFlipping ? 'vtapp-countdown-digit-flip' : ''}`}>
+        {formattedVal}
+      </span>
+      <span className="vtapp-countdown-label">{label}</span>
+    </div>
+  );
 }
 
 export default function Countdown({
@@ -23,13 +57,37 @@ export default function Countdown({
   const target = new Date(to);
   const [t, setT] = useState(() => diff(target));
   const [mounted, setMounted] = useState(false);
+  const [statusIndex, setStatusIndex] = useState(0);
+  const [statusFade, setStatusFade] = useState(true);
 
+  // Timer interval
   useEffect(() => {
     setMounted(true);
     const id = setInterval(() => setT(diff(target)), 1000);
     return () => clearInterval(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [to]);
+
+  // Cycling status phrases with fade transition
+  useEffect(() => {
+    const statusInterval = setInterval(() => {
+      setStatusFade(false); // Fade out
+      setTimeout(() => {
+        setStatusIndex((prev) => (prev + 1) % STATUS_PHRASES.length);
+        setStatusFade(true); // Fade in
+      }, 300);
+    }, 5000);
+
+    return () => clearInterval(statusInterval);
+  }, []);
+
+  // Calculate mission progress percentage
+  // Assuming a total campaign timeframe of ~240 days leading to launch
+  const totalDaysSpan = 240;
+  const daysLeft = t.days;
+  const progressPercent = Math.min(
+    98,
+    Math.max(12, Math.round(((totalDaysSpan - daysLeft) / totalDaysSpan) * 100))
+  );
 
   const units = [
     { label: 'Days', value: t.days },
@@ -38,48 +96,55 @@ export default function Countdown({
     { label: 'Seconds', value: t.seconds },
   ];
 
-  if (variant === 'timeline') {
-    return (
-      <div className="relative grid grid-cols-4 border border-white/30 bg-ink-950">
-        <div className="pointer-events-none absolute left-[12.5%] right-[12.5%] top-1/2 h-px bg-gradient-to-r from-transparent via-[var(--brand)] to-transparent" />
-        {units.map((unit, index) => (
-          <div
-            key={unit.label}
-            className="relative flex min-h-24 flex-col items-center justify-center border-r border-white/30 px-1 py-4 last:border-r-0 sm:min-h-36 sm:px-3 sm:py-5"
-          >
-            <span className="relative z-10 bg-ink-950 px-1 font-display text-[clamp(1.5rem,8vw,2.25rem)] tabular-nums text-white sm:px-3 sm:text-5xl lg:text-6xl">
-              {mounted ? String(unit.value).padStart(2, '0') : '––'}
-            </span>
-            <span className="relative z-10 mt-2 bg-ink-950 px-0.5 font-mono text-[7px] font-semibold uppercase tracking-[0.08em] text-slate-500 min-[400px]:text-[8px] sm:mt-3 sm:px-2 sm:text-[9px] sm:tracking-label">
-              {unit.label}
-            </span>
-            <span
-              className={`absolute left-1/2 top-1/2 hidden h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rotate-45 border sm:block ${
-                index === 0 ? 'border-[var(--brand)] bg-[var(--brand)] shadow-[0_0_10px_var(--brand)]' : 'border-white/25 bg-ink-950'
-              }`}
-            />
-          </div>
-        ))}
-      </div>
-    );
-  }
-
   return (
-    <div className="flex gap-2.5 sm:gap-4">
-      {units.map((u, i) => (
-        <div
-          key={u.label}
-          className="panel flex min-w-[68px] flex-col items-center px-3 py-3 sm:min-w-[86px] sm:px-4 sm:py-4"
-          style={{ transform: `rotateY(${(i - 1.5) * 4}deg)` }}
+    <div className="vtapp-countdown-container">
+      {/* Dynamic Status Text Above Timer */}
+      <div className="mb-3 flex items-center justify-center gap-2">
+        <span className="h-1.5 w-1.5 rounded-full bg-[var(--cd-status-text)] animate-pulse" aria-hidden="true" />
+        <span
+          className="font-mono text-xs uppercase tracking-widest font-semibold text-[var(--cd-status-text)] transition-opacity duration-300 min-h-[1.25rem] flex items-center"
+          style={{ opacity: statusFade ? 1 : 0 }}
         >
-          <span className="font-display display-md tabular-nums text-white sm:text-4xl">
-            {mounted ? String(u.value).padStart(2, '0') : '––'}
-          </span>
-          <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-            {u.label}
-          </span>
+          {STATUS_PHRASES[statusIndex]}
+        </span>
+      </div>
+
+      {/* Countdown Panel Box */}
+      <div className="vtapp-countdown-panel">
+        {/* Micro scan line sweep */}
+        <div className="vtapp-countdown-scanline" aria-hidden="true" />
+
+        {/* 4-Column Grid with Internal Separators */}
+        <div className="vtapp-countdown-grid">
+          {units.map((unit) => (
+            <DigitCell
+              key={unit.label}
+              value={unit.value}
+              label={unit.label}
+              mounted={mounted}
+            />
+          ))}
         </div>
-      ))}
+      </div>
+
+      {/* Mission Progress Bar Directly Below */}
+      <div className="vtapp-countdown-progress-wrapper">
+        <div className="vtapp-countdown-progress-header">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px]" aria-hidden="true">❖</span>
+            <span>Mission Progress</span>
+          </div>
+          <span>{mounted ? `${progressPercent}%` : '82%'}</span>
+        </div>
+        <div className="vtapp-countdown-progress-track">
+          <div
+            className="vtapp-countdown-progress-bar"
+            style={{ width: mounted ? `${progressPercent}%` : '82%' }}
+          >
+            <div className="vtapp-countdown-progress-shine" aria-hidden="true" />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

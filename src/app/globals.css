@@ -2906,6 +2906,201 @@ html[data-vtapp-splash] .marquee-track {
   font-family: var(--font-mono, monospace);
   font-size: 0.65rem;
   font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.event-card-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.event-card-status-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ec-accent);
+  opacity: 0.75;
+  transition: opacity 200ms ease;
+}
+
+.event-card:hover .event-card-status-dot {
+  opacity: 1;
+}
+
+.event-card-status-label {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ec-muted);
+}
+
+/* ── Category badge row ── */
+.event-card-badge-row {
+  position: relative;
+  z-index: 2;
+  padding: 8px 14px 0;
+}
+
+.event-card-category-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: var(--ec-accent);
+  /* Slight chamfer on badge */
+  clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+
+/* ── Main body: content left + image right ── */
+.event-card-body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 10px;
+  padding: 10px 14px 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+.event-card-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.event-card-title {
+  font-family: var(--font-display, sans-serif);
+  font-size: clamp(1rem, 2.4vw, 1.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--ec-text);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin: 0;
+  transition: color 220ms ease;
+  /* Clamp to 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.event-card:hover .event-card-title {
+  color: var(--ec-accent-bright);
+}
+
+.event-card-tagline {
+  margin: 6px 0 0;
+  font-size: 0.73rem;
+  line-height: 1.45;
+  color: var(--ec-text-secondary);
+  /* Clamp to 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Image panel ── */
+.event-card-image-panel {
+  position: relative;
+  flex-shrink: 0;
+  width: 88px;
+  height: 88px;
+  overflow: hidden;
+  /* Slight chamfer */
+  clip-path: polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px);
+  border: 1px solid var(--ec-border-inner);
+  background: var(--ec-surface);
+}
+
+.event-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  transition:
+    opacity 280ms ease,
+    transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.event-card:hover .event-card-image {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+.event-card-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, var(--ec-accent-glow) 100%);
+  pointer-events: none;
+  transition: opacity 280ms ease;
+  opacity: 0;
+}
+
+.event-card:hover .event-card-image-overlay {
+  opacity: 1;
+}
+
+.event-card-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.5rem;
+  letter-spacing: 0.05em;
+  color: var(--ec-muted);
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* ── Metadata strip ── */
+.event-card-meta {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 0;
+  border-top: 1px solid var(--ec-border-inner);
+  border-bottom: 1px solid var(--ec-border-inner);
+  background: var(--ec-surface);
+}
+
+.event-card-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  padding: 8px 10px;
+  border-right: 1px solid var(--ec-border-inner);
+}
+
+.event-card-meta-item:last-child {
+  border-right: none;
+}
+
+.event-card-meta-icon {
+  font-size: 0.7rem;
+  color: var(--ec-accent);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.event-card-meta-value {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.65rem;
+  font-weight: 600;
   color: var(--ec-text);
   line-height: 1.2;
   white-space: nowrap;
@@ -3041,5 +3236,216 @@ html[data-vtapp-splash] .marquee-track {
 
   .event-card-meta-item {
     min-width: 100%;
+  }
+}
+
+/* ==========================================================================
+   VTAPP 2026 MASTER COUNTDOWN COMPONENT
+   ========================================================================== */
+
+:root {
+  --cd-bg: rgba(13, 13, 13, 0.85);
+  --cd-border: rgba(214, 40, 40, 0.45);
+  --cd-border-hover: rgba(229, 57, 53, 0.85);
+  --cd-glow: rgba(214, 40, 40, 0.22);
+  --cd-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), inset 0 0 30px rgba(214, 40, 40, 0.08);
+  --cd-number: #E53935;
+  --cd-number-glow: 0 0 16px rgba(229, 57, 53, 0.35);
+  --cd-label: #E2E8F0;
+  --cd-separator: rgba(214, 40, 40, 0.3);
+  --cd-status-text: #F87171;
+  --cd-bar-bg: rgba(255, 255, 255, 0.07);
+  --cd-bar-fill: linear-gradient(90deg, #9E1B1B 0%, #D62828 60%, #E53935 100%);
+  --cd-bar-glow: rgba(229, 57, 53, 0.5);
+  --cd-scan: linear-gradient(90deg, transparent, rgba(229, 57, 53, 0.45), transparent);
+}
+
+.light {
+  --cd-bg: rgba(255, 255, 255, 0.85);
+  --cd-border: rgba(21, 155, 215, 0.35);
+  --cd-border-hover: rgba(21, 155, 215, 0.75);
+  --cd-glow: rgba(21, 155, 215, 0.18);
+  --cd-shadow: 0 16px 45px rgba(20, 35, 60, 0.09), inset 0 0 25px rgba(21, 155, 215, 0.06);
+  --cd-number: #159BD7;
+  --cd-number-glow: 0 0 16px rgba(21, 155, 215, 0.35);
+  --cd-label: #0F172A;
+  --cd-separator: rgba(21, 155, 215, 0.22);
+  --cd-status-text: #0878B5;
+  --cd-bar-bg: rgba(21, 155, 215, 0.12);
+  --cd-bar-fill: linear-gradient(90deg, #0878B5 0%, #159BD7 60%, #00E5FF 100%);
+  --cd-bar-glow: rgba(0, 229, 255, 0.5);
+  --cd-scan: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.45), transparent);
+}
+
+/* Panel container */
+.vtapp-countdown-container {
+  width: 100%;
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vtapp-countdown-panel {
+  position: relative;
+  width: 100%;
+  background: var(--cd-bg);
+  border: 1px solid var(--cd-border);
+  border-radius: 1rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--cd-shadow);
+  transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color 300ms ease, box-shadow 300ms ease;
+  overflow: hidden;
+}
+
+.vtapp-countdown-panel:hover {
+  transform: translateY(-3px);
+  border-color: var(--cd-border-hover);
+  box-shadow: var(--cd-shadow), 0 0 30px var(--cd-glow);
+}
+
+/* Micro scan line sweep */
+.vtapp-countdown-scanline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  background: var(--cd-scan);
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.6;
+  animation: countdownScan 7s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes countdownScan {
+  0% { transform: translateX(-150px); opacity: 0; }
+  15% { opacity: 0.7; }
+  85% { opacity: 0.7; }
+  100% { transform: translateX(850px); opacity: 0; }
+}
+
+/* Panel grid internal layout */
+.vtapp-countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  position: relative;
+  z-index: 2;
+}
+
+.vtapp-countdown-cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 0.5rem;
+  border-right: 1px solid var(--cd-separator);
+}
+
+.vtapp-countdown-cell:last-child {
+  border-right: none;
+}
+
+/* Numbers */
+.vtapp-countdown-number {
+  font-family: var(--font-display, var(--font-mono, monospace));
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--cd-number);
+  text-shadow: var(--cd-number-glow);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  transition: transform 150ms ease, opacity 150ms ease;
+}
+
+/* Number flip animation trigger */
+.vtapp-countdown-digit-flip {
+  animation: digitFlip 0.25s ease-out;
+}
+
+@keyframes digitFlip {
+  0% { transform: translateY(-4px) scale(0.96); opacity: 0.7; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Labels */
+.vtapp-countdown-label {
+  margin-top: 0.5rem;
+  font-family: var(--font-mono, monospace);
+  font-size: clamp(0.65rem, 1.5vw, 0.8rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--cd-label);
+  opacity: 0.9;
+}
+
+/* Progress bar section below panel */
+.vtapp-countdown-progress-wrapper {
+  width: 100%;
+  margin-top: 1.25rem;
+}
+
+.vtapp-countdown-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.725rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cd-status-text);
+}
+
+.vtapp-countdown-progress-track {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background: var(--cd-bar-bg);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--cd-border);
+}
+
+.vtapp-countdown-progress-bar {
+  height: 100%;
+  background: var(--cd-bar-fill);
+  border-radius: 999px;
+  transition: width 1s ease-in-out;
+  position: relative;
+  box-shadow: 0 0 12px var(--cd-bar-glow);
+}
+
+.vtapp-countdown-progress-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  animation: progressShine 3s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@media (max-width: 480px) {
+  .vtapp-countdown-cell {
+    padding: 1rem 0.25rem;
+  }
+  .vtapp-countdown-number {
+    font-size: 1.75rem;
+  }
+  .vtapp-countdown-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
   }
 }

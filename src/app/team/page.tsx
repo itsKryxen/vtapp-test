@@ -35,21 +35,23 @@ export default async function TeamPage() {
           <span className="h-px flex-1 bg-gradient-to-r from-brand-600/60 to-transparent" />
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <MemberCard member={{
-            id: 'founder',
-            name: 'Dr. G. Viswanathan',
-            role: 'Founder & Chancellor',
-            department: 'Chief Patron',
-            photo_url: 'https://vitap.ac.in/_next/image?url=https%3A%2F%2Fvitap-backend.s3.ap-south-1.amazonaws.com%2FDr_G_Viswanathan_bf3dd2d487.avif&w=640&q=75',
-            sort_order: 0,
-            is_active: true,
-            email: null,
-            linkedin: null,
-            instagram: null,
-            created_at: '',
-            updated_at: ''
-          }} />
+        <div className="flex flex-wrap justify-center gap-4">
+          <div className="w-full max-w-[280px] sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-0.75rem)]">
+            <MemberCard member={{
+              id: 'founder',
+              name: 'Dr. G. Viswanathan',
+              role: 'Founder & Chancellor',
+              department: 'Chief Patron',
+              photo_url: 'https://vitap.ac.in/_next/image?url=https%3A%2F%2Fvitap-backend.s3.ap-south-1.amazonaws.com%2FDr_G_Viswanathan_bf3dd2d487.avif&w=640&q=75',
+              sort_order: 0,
+              is_active: true,
+              email: null,
+              linkedin: null,
+              instagram: null,
+              created_at: '',
+              updated_at: ''
+            }} />
+          </div>
         </div>
       </section>
 
@@ -74,9 +76,11 @@ export default async function TeamPage() {
                 </span>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="flex flex-wrap justify-center gap-4">
                 {members.map((m) => (
-                  <MemberCard key={m.id} member={m} />
+                  <div key={m.id} className="w-full max-w-[280px] sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-0.75rem)]">
+                    <MemberCard member={m} />
+                  </div>
                 ))}
               </div>
             </section>

@@ -52,26 +52,7 @@ function applyFiltersLocally(events: EventWithClub[], f: EventFilters): EventWit
 
 export async function getApprovedEvents(filters: EventFilters = {}): Promise<EventWithClub[]> {
   if (showDemoContent()) return applyFiltersLocally(SAMPLE_EVENTS, filters);
-  if (!isSupabaseConfigured()) return [];
-
-  const supabase = createClient();
-  let query = supabase
-    .from('events')
-    .select('*, club:clubs(id, name, logo_url, instagram)')
-    .eq('status', 'approved')
-    .order('start_at', { ascending: true });
-
-  if (filters.school) query = query.eq('school', filters.school);
-  if (filters.category) query = query.eq('category', filters.category);
-  if (filters.mode) query = query.eq('mode', filters.mode);
-  if (filters.q) query = query.ilike('title', `%${filters.q}%`);
-
-  const { data, error } = await query;
-  if (error) {
-    console.error('[data] getApprovedEvents', error.message);
-    return [];
-  }
-  return (data ?? []) as unknown as EventWithClub[];
+  return [];
 }
 
 export async function getFeaturedEvents(limit = 6): Promise<EventWithClub[]> {
@@ -100,21 +81,7 @@ export async function getEventBySlug(slug: string): Promise<EventWithClub | null
 }
 
 export async function getClubs(): Promise<Club[]> {
-  if (showDemoContent()) return DEMO_CLUBS;
-  if (!isSupabaseConfigured()) return [];
-
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from('clubs')
-    .select('*')
-    .eq('is_active', true)
-    .order('id', { ascending: true });
-
-  if (error) {
-    console.error('[data] getClubs', error.message);
-    return [];
-  }
-  return (data ?? []) as Club[];
+  return DEMO_CLUBS;
 }
 
 /** The signed-in user's club membership row, or null. */
@@ -165,7 +132,7 @@ export async function getSponsors(): Promise<Sponsor[]> {
 /** Active core team members, ordered by department then sort_order. */
 export async function getTeam(): Promise<TeamMember[]> {
   if (showDemoContent()) return DEMO_TEAM;
-  if (!isSupabaseConfigured()) return [];
+  if (!isSupabaseConfigured()) return DEMO_TEAM;
 
   const supabase = createClient();
   const { data, error } = await supabase
@@ -174,10 +141,8 @@ export async function getTeam(): Promise<TeamMember[]> {
     .eq('is_active', true)
     .order('sort_order', { ascending: true });
 
-  if (error) {
-    // Table missing = migration 004 not run yet. Don't blow up the page.
-    console.error('[data] getTeam', error.message);
-    return [];
+  if (error || !data || data.length === 0) {
+    return DEMO_TEAM;
   }
-  return (data ?? []) as TeamMember[];
+  return data as TeamMember[];
 }

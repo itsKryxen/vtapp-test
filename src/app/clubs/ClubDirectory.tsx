@@ -23,7 +23,7 @@ export default function ClubDirectory({ clubs }: { clubs: Club[] }) {
     const needle = q.trim().toLowerCase();
     if (!needle) return clubs;
     return clubs.filter((c) =>
-      `${c.name} ${c.tagline ?? ''} ${c.id}`.toLowerCase().includes(needle)
+      `${c.name} ${c.tagline ?? ''} ${c.id} ${c.school}`.toLowerCase().includes(needle)
     );
   }, [clubs, q]);
 
@@ -43,7 +43,7 @@ export default function ClubDirectory({ clubs }: { clubs: Club[] }) {
             ⌕
           </span>
         </div>
-        <span className="text-xs text-slate-500">
+        <span className="text-xs text-slate-500 font-mono">
           {filtered.length} of {clubs.length} club{clubs.length === 1 ? '' : 's'}
         </span>
         {q && (
@@ -63,15 +63,15 @@ export default function ClubDirectory({ clubs }: { clubs: Club[] }) {
           <p className="mt-2 text-sm text-slate-400">Try a shorter search term.</p>
         </div>
       ) : (
-        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((club, index) => {
             const accent = schoolAccent(club.school);
             const displayIndex = String(index + 1).padStart(2, '0');
             return (
               <Link
                 key={club.id}
-                href={`/events?school=${club.school}`}
-                className="event-frame group flex min-h-[168px] flex-col"
+                href={`/clubs/${club.id}`}
+                className="event-frame group flex min-h-[168px] flex-col transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:shadow-lg"
               >
                 <div className="event-card-header">
                   <span className="event-card-index">{displayIndex}</span>
@@ -82,40 +82,49 @@ export default function ClubDirectory({ clubs }: { clubs: Club[] }) {
                 </div>
 
                 <div className="flex flex-1 items-center gap-4 p-4">
+                  {/* Unified Themed Club Logo Badge for all clubs */}
                   <div
-                    className="relative grid h-[72px] w-[72px] shrink-0 place-items-center overflow-hidden border bg-[var(--ec-surface)]"
-                    style={{ borderColor: `${accent}66`, boxShadow: `0 0 18px ${accent}18` }}
+                    className="relative grid h-[72px] w-[72px] shrink-0 place-items-center overflow-hidden rounded-xl border-2 bg-gradient-to-br from-ink-950 via-ink-900 to-black p-1 shadow-lg transition-transform duration-300 group-hover:scale-105"
+                    style={{
+                      borderColor: `${accent}99`,
+                      boxShadow: `0 0 20px ${accent}25`,
+                    }}
                   >
-                    {club.logo_url ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={club.logo_url}
-                        alt=""
-                        width={72}
-                        height={72}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    ) : (
-                      <span className="font-mono text-sm tracking-label" style={{ color: accent }}>
+                    <div className="flex flex-col items-center justify-center text-center">
+                      <span
+                        className="font-display font-black text-base sm:text-lg tracking-wider drop-shadow-md"
+                        style={{ color: accent }}
+                      >
                         {initials(club.name)}
                       </span>
-                    )}
+                      <span className="font-mono text-[8px] font-bold tracking-widest text-slate-400 uppercase opacity-80 mt-0.5">
+                        VIT-AP
+                      </span>
+                    </div>
+                    <span
+                      className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full"
+                      style={{ backgroundColor: accent, boxShadow: `0 0 6px ${accent}` }}
+                    />
                   </div>
 
-                  <div className="min-w-0">
-                    <span className="event-card-category-badge">{club.school}</span>
-                    <h2 className="event-card-title mt-2">{club.name}</h2>
+                  <div className="min-w-0 flex-1">
+                    <span className="event-card-category-badge">VIT-AP</span>
+                    <h2 className="event-card-title mt-1 text-base sm:text-lg font-bold line-clamp-1 group-hover:text-brand-300 transition-colors">
+                      {club.name}
+                    </h2>
                     {club.tagline && (
-                      <p className="event-card-tagline">{club.tagline}</p>
+                      <p className="event-card-tagline mt-1 line-clamp-2 text-xs text-slate-400">
+                        {club.tagline}
+                      </p>
                     )}
                   </div>
                 </div>
 
-                <div className="event-frame-action">
-                  <span>View events</span>
-                  <span className="event-card-btn-arrow" aria-hidden="true">→</span>
+                <div className="event-frame-action group-hover:bg-white/5 transition-colors flex items-center justify-between px-4 py-3 border-t border-white/10 text-xs font-mono text-slate-300">
+                  <span className="group-hover:text-white transition-colors">View events</span>
+                  <span className="event-card-btn-arrow transition-transform duration-300 group-hover:translate-x-1.5 text-brand-400" aria-hidden="true">
+                    →
+                  </span>
                 </div>
               </Link>
             );
@@ -125,3 +134,4 @@ export default function ClubDirectory({ clubs }: { clubs: Club[] }) {
     </>
   );
 }
+

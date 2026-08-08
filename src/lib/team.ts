@@ -23,6 +23,11 @@ export interface TeamMember {
 }
 
 export const DEFAULT_DEPARTMENTS = [
+  'Vice Presidents',
+  'Executive Director',
+  'Vice Chancellor & Registrar',
+  'Convenor',
+  'Co-Convenors',
   'Leadership',
   'Core',
   'Technical',

@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence, useInView, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useInView, useScroll, useTransform, type Variants } from 'framer-motion';
 
 interface PhotoItem {
   id: string;
@@ -88,7 +88,7 @@ export default function PureCinematicGallery() {
         const ref = useRef<HTMLDivElement>(null);
         const inView = useInView(ref, { once: true, margin: '-20%' });
         // Choose a reveal based on index
-        const revealVariants = (() => {
+        const revealVariants = ((): Variants => {
           switch (idx % 6) {
             case 0: // mask reveal
               return {

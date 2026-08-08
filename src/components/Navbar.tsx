@@ -3,177 +3,147 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import { LogoLockup } from './Logo';
 import ThemeToggle from './ThemeToggle';
 
-const LINKS = [
+const PRIMARY_LINKS = [
   { href: '/events', label: 'Events' },
   { href: '/schedule', label: 'Schedule' },
+  { href: '/about', label: 'About' },
   { href: '/clubs', label: 'Clubs' },
   { href: '/sponsors', label: 'Sponsors' },
-  { href: '/team', label: 'Team' },
-  { href: '/merch', label: 'Merch' },
-  // { href: '/signal-breach', label: 'Play' },
-  { href: '/about', label: 'About' },
-  // { href: '/tickets', label: 'Tickets' },
 ];
 
-const TOP_LINKS = LINKS.slice(0, 2);
-const SIDE_LINKS = LINKS.slice(2);
+const SECONDARY_LINKS = [
+  { href: '/team', label: 'Team' },
+  { href: '/merch', label: 'Merch' },
+  { href: '/signal-breach', label: 'Signal Breach' },
+];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => setOpen(false), [pathname]);
 
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const firstLink = menuRef.current?.querySelector<HTMLElement>('a');
+    firstLink?.focus();
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [open]);
+
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+
   return (
-    <>
-      <header className="sticky top-0 z-50 border-b border-white/30 bg-ink-950">
-        <nav className="container-x relative flex h-16 items-center gap-2 !px-3 sm:h-[88px] sm:gap-3 sm:!px-8">
-          <div className="flex min-w-0 flex-1 items-center gap-2 sm:h-full sm:flex-none sm:gap-5">
-            <Link href="/" className="group relative flex h-full items-center" aria-label="V-TAPP 2026 home">
-              <motion.span
-                layoutId="vtapp-navigation-wordmark"
-                data-navbar-logo-target
-                className="block w-[96px] min-[360px]:w-[108px] sm:w-[142px]"
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <LogoLockup width={142} priority className="h-auto w-full" />
-              </motion.span>
-              {pathname === '/' && (
-                <span className="absolute bottom-[2px] left-[7%] h-[2px] w-[40%] bg-[var(--brand)] shadow-[0_0_8px_var(--brand-glow)] sm:bottom-auto sm:top-[calc(50%+14px)]" />
-              )}
-            </Link>
+    <header className="site-header sticky top-0 z-50 border-b border-white/15 bg-ink-950/95 backdrop-blur-xl">
+      <nav className="container-x flex h-[72px] items-center gap-4 !px-4 sm:h-20 sm:!px-8" aria-label="Primary navigation">
+        <Link href="/" className="flex min-w-0 items-center gap-3" aria-label="V-TAPP 2026 home">
+          <span data-navbar-logo-target className="block w-[104px] sm:w-[132px]">
+            <LogoLockup width={142} priority className="h-auto w-full" />
+          </span>
+          <span className="h-7 w-px bg-white/15" aria-hidden="true" />
+          <Image
+            src="/vit-ap-university-logo.png"
+            alt="VIT-AP University"
+            width={740}
+            height={197}
+            priority
+            className="h-auto w-[88px] sm:w-[118px]"
+          />
+        </Link>
 
-            <span className="h-7 w-px shrink-0 bg-white/10 sm:h-8" aria-hidden="true" />
-            <Image
-              src="/vit-ap-university-logo.png"
-              alt="VIT-AP University"
-              width={740}
-              height={197}
-              priority
-              className="h-auto min-w-0 w-[82px] min-[360px]:w-[94px] sm:w-36"
-            />
-          </div>
-
-          {/* Events and Schedule are the two destinations the fest actually runs
-           * on, so they get a HUD chip instead of the plain rail treatment. */}
-          <div className="absolute left-1/2 hidden h-full -translate-x-1/2 items-center gap-3 xl:flex">
-            {TOP_LINKS.map((link, index) => {
-              const active = pathname.startsWith(link.href);
-
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  aria-current={active ? 'page' : undefined}
-                  className={`nav-feature-link${active ? ' is-active' : ''}`}
-                >
-                  <span className="nav-feature-link-index" aria-hidden="true">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <span className="nav-feature-link-label">{link.label}</span>
-                  <span className="nav-feature-link-bar" aria-hidden="true" />
-                </Link>
-              );
-            })}
-          </div>
-
-          <div className="ml-auto flex shrink-0 items-center gap-2 sm:gap-3">
-            <div className="hidden items-center gap-3 xl:flex">
-              <ThemeToggle />
-              <Link href="/tickets" className="btn-primary !px-5 !py-2.5">
-                Buy tickets
-              </Link>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setOpen((v) => !v)}
-              aria-label="Toggle menu"
-              aria-expanded={open}
-              className="flex h-10 w-10 shrink-0 flex-col items-center justify-center gap-[5px] border border-white/15 transition hover:border-white/40 xl:hidden"
+        <div className="ml-auto hidden items-center gap-1 xl:flex">
+          {PRIMARY_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              aria-current={isActive(link.href) ? 'page' : undefined}
+              className={`site-nav-link ${isActive(link.href) ? 'is-active' : ''}`}
             >
-              <span
-                className={`h-px w-4 bg-white transition-transform ${open ? 'translate-y-[6px] rotate-45' : ''}`}
-              />
-              <span className={`h-px w-4 bg-white transition-opacity ${open ? 'opacity-0' : ''}`} />
-              <span
-                className={`h-px w-4 bg-white transition-transform ${open ? '-translate-y-[6px] -rotate-45' : ''}`}
-              />
-            </button>
-          </div>
-        </nav>
+              {link.label}
+            </Link>
+          ))}
+          <ThemeToggle />
+          <Link href="/tickets" className="btn-primary ml-2 !px-5 !py-3">
+            Get tickets
+          </Link>
+        </div>
 
-        {open && (
-          <div className="border-t border-white/30 bg-ink-950 xl:hidden">
-            <div className="container-x flex flex-col py-3">
-              {pathname !== '/' && (
-                <div className="grid grid-cols-3 gap-2 border-b border-white/[0.08] pb-3">
-                  {TOP_LINKS.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      aria-current={pathname.startsWith(link.href) ? 'page' : undefined}
-                      className={`nav-feature-link min-w-0 !justify-center !px-1 !text-[9px] !tracking-[0.08em] ${
-                        pathname.startsWith(link.href) ? 'is-active' : ''
-                      }`}
-                    >
-                      <span className="nav-feature-link-label">{link.label}</span>
-                      <span className="nav-feature-link-bar" aria-hidden="true" />
-                    </Link>
-                  ))}
-                  <Link href="/tickets" className="btn-primary flex !min-h-0 !px-2 !py-2.5">
-                    Buy
-                  </Link>
-                </div>
-              )}
+        <button
+          type="button"
+          onClick={() => setOpen((value) => !value)}
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
+          aria-controls="mobile-navigation"
+          className="menu-trigger ml-auto grid h-11 w-11 shrink-0 place-items-center border border-white/20 xl:hidden"
+        >
+          <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span>
+          <span className="relative block h-4 w-5" aria-hidden="true">
+            <span className={`absolute left-0 top-0 h-px w-5 bg-white transition-transform duration-200 ${open ? 'translate-y-[7px] rotate-45' : ''}`} />
+            <span className={`absolute left-0 top-[7px] h-px w-5 bg-white transition-opacity duration-200 ${open ? 'opacity-0' : ''}`} />
+            <span className={`absolute left-0 top-[14px] h-px w-5 bg-white transition-transform duration-200 ${open ? '-translate-y-[7px] -rotate-45' : ''}`} />
+          </span>
+        </button>
+      </nav>
 
-              <div className="flex items-center justify-between border-b border-white/[0.08] py-3">
-                <span className="font-mono text-[10px] uppercase tracking-label text-slate-400">Theme</span>
-                <ThemeToggle />
-              </div>
-
-              {SIDE_LINKS.map((l, i) => (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  className={`relative flex items-center gap-4 border-b border-white/[0.06] py-4 font-mono text-xs uppercase tracking-label transition hover:text-white ${
-                    pathname.startsWith(l.href) ? 'bg-brand-600/10 text-white' : 'text-slate-400'
-                  }`}
-                >
-                  {pathname.startsWith(l.href) && <span className="absolute inset-y-0 left-0 w-[3px] bg-brand-600" />}
-                  <span className="text-brand-500">[{String(i + 3).padStart(2, '0')}]</span>
-                  {l.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-      </header>
-
-      <aside className="navigation-rail" aria-label="Primary navigation">
-        <nav className="navigation-rail-links">
-          {SIDE_LINKS.map((link, index) => {
-            const active = pathname.startsWith(link.href);
-
-            return (
+      <div
+        id="mobile-navigation"
+        ref={menuRef}
+        aria-hidden={!open}
+        className={`mobile-navigation fixed inset-x-0 top-[72px] h-[calc(100dvh-72px)] overflow-y-auto border-t border-white/15 bg-ink-950 transition-[opacity,transform] duration-200 sm:top-20 sm:h-[calc(100dvh-80px)] xl:hidden ${
+          open ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-3 opacity-0'
+        }`}
+      >
+        <div className="container-x flex min-h-full flex-col py-6">
+          <p className="mono-label mb-3 text-brand-400">Navigate V-TAPP</p>
+          <div className="grid gap-px border-y border-white/10 bg-white/10">
+            {PRIMARY_LINKS.map((link, index) => (
               <Link
                 key={link.href}
                 href={link.href}
-                aria-current={active ? 'page' : undefined}
-                className={`navigation-rail-link ${active ? 'is-active' : ''}`}
+                tabIndex={open ? 0 : -1}
+                aria-current={isActive(link.href) ? 'page' : undefined}
+                className={`mobile-nav-link ${isActive(link.href) ? 'is-active' : ''}`}
               >
-                <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                {link.label}
+                <span aria-hidden="true">↗</span>
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-5 grid grid-cols-2 gap-2">
+            {SECONDARY_LINKS.map((link) => (
+              <Link key={link.href} href={link.href} tabIndex={open ? 0 : -1} className="mobile-nav-secondary">
                 {link.label}
               </Link>
-            );
-          })}
-        </nav>
-      </aside>
-    </>
+            ))}
+          </div>
+
+          <div className="mt-auto grid gap-3 pt-8 sm:grid-cols-[1fr_auto] sm:items-center">
+            <Link href="/tickets" tabIndex={open ? 0 : -1} className="btn-primary w-full">
+              Get tickets <span aria-hidden="true">→</span>
+            </Link>
+            <div className="flex min-h-11 items-center justify-between border border-white/15 px-4 sm:gap-4">
+              <span className="mono-label">Theme</span>
+              <ThemeToggle />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 }

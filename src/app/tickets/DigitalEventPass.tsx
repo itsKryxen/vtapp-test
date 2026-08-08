@@ -1,126 +1,26 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 
 export default function DigitalEventPass() {
-  const [isLight, setIsLight] = useState(false);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      setIsLight(document.documentElement.classList.contains('light'));
-    };
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div className="w-full flex flex-col items-center justify-center py-4 sm:py-8">
-      {/* Dynamic Scoped Theme Styles for 100% High-Contrast Rendering */}
+      {/* Scoped styles draw from the site-wide semantic theme tokens. */}
       <style jsx global>{`
-        /* LIGHT MODE ENFORCEMENT STYLES */
-        html.light .pass-bg-card {
-          background-color: #ffffff !important;
-          border-color: #cbd5e1 !important;
-          box-shadow: 0 20px 50px rgba(21, 155, 215, 0.16) !important;
-          color: #0f172a !important;
-        }
-        html.light .pass-bg-header {
-          background-color: #f8fafc !important;
-          border-color: #e2e8f0 !important;
-          color: #475569 !important;
-        }
-        html.light .pass-bg-strip {
-          background-color: #f8fafc !important;
-          border-color: #e2e8f0 !important;
-          color: #0f172a !important;
-        }
-        html.light .pass-bg-[#159BD7] {
-          background-color: #ffffff !important;
-          border-color: #e2e8f0 !important;
-        }
-        html.light .pass-accent-color {
-          color: #0284c7 !important;
-        }
-        html.light .pass-accent-border {
-          border-color: #0284c7 !important;
-        }
-        html.light .pass-text-primary {
-          color: #0f172a !important;
-        }
-        html.light .pass-text-secondary {
-          color: #334155 !important;
-        }
-        html.light .pass-text-muted {
-          color: #64748b !important;
-        }
-        html.light .pass-qr-frame {
-          background-color: #f8fafc !important;
-          border-color: rgba(2, 132, 199, 0.4) !important;
-        }
-        html.light .pass-qr-box {
-          background-color: #ffffff !important;
-          border-color: #cbd5e1 !important;
-          color: #0f172a !important;
-        }
-        html.light .pass-tba-capsule {
-          background-color: #0284c7 !important;
-          border-color: #0284c7 !important;
-          color: #ffffff !important;
-          box-shadow: 0 0 25px rgba(2, 132, 199, 0.45) !important;
-        }
-
-        /* DARK MODE STYLES */
-        html:not(.light) .pass-bg-card {
-          background-color: #0a0a0a !important;
-          border-color: rgba(255, 255, 255, 0.12) !important;
-          box-shadow: 0 20px 50px rgba(214, 40, 40, 0.18) !important;
-          color: #f8fafc !important;
-        }
-        html:not(.light) .pass-bg-header {
-          background-color: #050505 !important;
-          border-color: rgba(255, 255, 255, 0.1) !important;
-          color: #a7a7a7 !important;
-        }
-        html:not(.light) .pass-bg-strip {
-          background-color: #050505 !important;
-          border-color: rgba(255, 255, 255, 0.1) !important;
-          color: #f8fafc !important;
-        }
-        html:not(.light) .pass-accent-color {
-          color: #ef4444 !important;
-        }
-        html:not(.light) .pass-accent-border {
-          border-color: #d62828 !important;
-        }
-        html:not(.light) .pass-text-primary {
-          color: #ffffff !important;
-        }
-        html:not(.light) .pass-text-secondary {
-          color: #cbd5e1 !important;
-        }
-        html:not(.light) .pass-text-muted {
-          color: #94a3b8 !important;
-        }
-        html:not(.light) .pass-qr-frame {
-          background-color: #0d0d0d !important;
-          border-color: rgba(214, 40, 40, 0.4) !important;
-        }
-        html:not(.light) .pass-qr-box {
-          background-color: #000000 !important;
-          border-color: rgba(255, 255, 255, 0.15) !important;
-          color: #ffffff !important;
-        }
-        html:not(.light) .pass-tba-capsule {
-          background-color: #d62828 !important;
-          border-color: #ff3b30 !important;
-          color: #ffffff !important;
-          box-shadow: 0 0 25px rgba(214, 40, 40, 0.5) !important;
-        }
+        .pass-bg-card { background: rgb(var(--surface)) !important; border-color: var(--border) !important; box-shadow: var(--shadow-elevated) !important; color: rgb(var(--text-primary)) !important; }
+        .pass-bg-header, .pass-bg-strip { background: rgb(var(--surface-elevated)) !important; border-color: var(--border) !important; color: rgb(var(--text-secondary)) !important; }
+        .pass-accent-color { color: var(--brand) !important; }
+        .pass-accent-border { border-color: var(--brand) !important; }
+        .pass-text-primary { color: rgb(var(--text-primary)) !important; }
+        .pass-text-secondary { color: rgb(var(--text-secondary)) !important; }
+        .pass-text-muted { color: rgb(var(--text-muted)) !important; }
+        .pass-qr-frame { background: rgb(var(--background-secondary)) !important; border-color: rgb(var(--brand-rgb) / 0.34) !important; }
+        .pass-qr-box { background: rgb(var(--surface)) !important; border-color: var(--border-strong) !important; color: rgb(var(--text-primary)) !important; }
+        .pass-tba-capsule { background: var(--brand) !important; border-color: var(--brand) !important; color: rgb(var(--button-primary-text)) !important; box-shadow: none !important; }
+        .pass-grid { background-image: radial-gradient(rgb(var(--brand-rgb) / 0.42) 1px, transparent 1px); background-size: 16px 16px; }
+        .pass-scan { background: linear-gradient(90deg, transparent, rgb(var(--brand-rgb) / 0.72), transparent); }
+        .pass-status-dot { background: var(--brand-bright); }
       `}</style>
 
       {/* Page Subtitle & Tagline */}
@@ -152,22 +52,10 @@ export default function DigitalEventPass() {
         <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 pass-accent-border" />
 
         {/* Ambient Grid Overlay */}
-        <div
-          className={`pointer-events-none absolute inset-0 opacity-25 ${
-            isLight
-              ? 'bg-[radial-gradient(#0284c7_1px,transparent_1px)] [background-size:16px_16px]'
-              : 'bg-[radial-gradient(#ef4444_1px,transparent_1px)] [background-size:16px_16px]'
-          }`}
-        />
+        <div className="pass-grid pointer-events-none absolute inset-0 opacity-25" />
 
         {/* Scanning Light Pulse Line */}
-        <div
-          className={`pointer-events-none absolute inset-x-0 h-px animate-pulse ${
-            isLight
-              ? 'top-0 bg-gradient-to-r from-transparent via-[#0284c7] to-transparent shadow-[0_0_12px_#0284c7]'
-              : 'top-0 bg-gradient-to-r from-transparent via-[#ef4444] to-transparent shadow-[0_0_12px_#ef4444]'
-          }`}
-        />
+        <div className="pass-scan pointer-events-none absolute inset-x-0 top-0 h-px" />
 
         {/* PASS HEADER BAR */}
         <div className="flex items-center justify-between px-6 py-4 border-b text-xs font-mono tracking-widest pass-bg-header">
@@ -179,7 +67,7 @@ export default function DigitalEventPass() {
           </div>
 
           <div className="flex items-center gap-2 font-semibold">
-            <span className={`w-2 h-2 rounded-full animate-ping ${isLight ? 'bg-[#0284c7]' : 'bg-[#ef4444]'}`} />
+            <span className="pass-status-dot h-2 w-2 rounded-full" />
             <span className="pass-text-primary">● INDIVIDUAL EVENT ACCESS</span>
           </div>
         </div>
@@ -255,7 +143,7 @@ export default function DigitalEventPass() {
             </div>
 
             <div className="font-mono text-[9px] tracking-widest uppercase flex items-center gap-1.5 pass-text-muted font-bold">
-              <span className={`w-1.5 h-1.5 rounded-full ${isLight ? 'bg-[#0284c7]' : 'bg-[#ef4444]'}`} />
+              <span className="pass-status-dot h-1.5 w-1.5 rounded-full" />
               <span>V-TAPP 2026 VERIFIED</span>
             </div>
           </div>
@@ -308,7 +196,7 @@ export default function DigitalEventPass() {
 
           {/* HIGHLIGHTED NON-CLICKABLE TBA CAPSULE (STRICT RULE: pointer-events-none, cursor-default) */}
           <div className="pointer-events-none cursor-default select-none inline-flex items-center gap-3 px-6 py-3 rounded-xl font-mono text-sm font-extrabold tracking-widest pass-tba-capsule">
-            <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+            <span className="h-2 w-2 rounded-full bg-current" />
             <span>TBA</span>
           </div>
         </div>

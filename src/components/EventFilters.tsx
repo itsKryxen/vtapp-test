@@ -31,22 +31,30 @@ export default function EventFilters({ total }: { total: number }) {
   return (
     <div className={`transition-opacity ${pending ? 'opacity-50' : ''}`}>
       {/* search row */}
-      <div className="flex flex-wrap items-stretch gap-px border border-white/30 bg-white/[0.08]">
+      <form
+        className="flex flex-wrap items-stretch gap-px border border-white/20 bg-white/[0.08]"
+        onSubmit={(event) => {
+          event.preventDefault();
+          const form = new FormData(event.currentTarget);
+          set('q', String(form.get('q') ?? '') || null);
+        }}
+      >
         <div className="flex flex-1 items-center gap-3 bg-ink-950 px-4">
           <span className="mono-label text-[var(--brand)]">SEARCH</span>
           <input
             type="search"
+            name="q"
             defaultValue={q}
             placeholder="query…"
             aria-label="Search events"
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') set('q', (e.target as HTMLInputElement).value || null);
-            }}
             className="w-full min-w-0 bg-transparent py-3.5 font-mono text-sm text-white placeholder:text-slate-700 focus:outline-none"
           />
         </div>
 
-        <div className="flex items-center gap-4 bg-ink-950 px-4 py-3.5">
+        <div className="flex items-center gap-4 bg-ink-950 px-3 py-2.5 sm:px-4 sm:py-3.5">
+          <button type="submit" className="font-mono text-[10px] uppercase tracking-label text-brand-400 transition hover:text-brand-300">
+            Search
+          </button>
           <span className="font-mono text-[11px] tracking-label text-slate-400">
             {String(total).padStart(2, '0')} RESULT{total === 1 ? '' : 'S'}
           </span>
@@ -60,7 +68,7 @@ export default function EventFilters({ total }: { total: number }) {
             </button>
           )}
         </div>
-      </div>
+      </form>
 
       {/* active school pill, only when arriving from a club link */}
       {school && (
@@ -77,7 +85,7 @@ export default function EventFilters({ total }: { total: number }) {
       )}
 
       {/* category row */}
-      <div className="mt-4 flex flex-wrap items-center gap-2">
+      <div className="filter-chip-row mt-4 flex items-center gap-2 overflow-x-auto pb-1">
         <span className="mono-label mr-2 shrink-0">CATEGORY</span>
 
         <Chip active={!category} onClick={() => set('category', null)}>

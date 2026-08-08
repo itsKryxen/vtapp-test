@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import EventCircuitField from '@/components/EventCircuitField';
 import { PageHeader } from '@/components/SectionHeader';
 import { FEST, STATS } from '@/lib/fest';
 import { SCHOOLS } from '@/lib/schools';
@@ -11,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="container-x pb-24 pt-28 sm:pt-36">
+    <div className="container-x pb-20 pt-24 sm:pb-24 sm:pt-28">
       <PageHeader
         index="08"
         slug="ABOUT"
@@ -19,28 +18,23 @@ export default function AboutPage() {
         description={<>{FEST.tagline}</>}
       />
 
-      <p className="mt-3 max-w-2xl text-lg leading-relaxed text-slate-300">{FEST.blurb}</p>
+      <p className="mt-3 max-w-3xl text-lg leading-8 text-slate-300">{FEST.blurb}</p>
 
-      <EventCircuitField>
-        <div className="mt-12 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="mt-12 grid grid-cols-2 border-y border-white/10 lg:grid-cols-4">
           {STATS.map((s, index) => (
-            <div key={s.label} className="event-frame px-4 py-6 text-center">
-              <span className="event-frame-index" aria-hidden="true">
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <p className="font-display display-md text-white">{s.value}</p>
-              <p className="mt-1 text-xs uppercase tracking-[0.16em] text-slate-400">{s.label}</p>
+            <div key={s.label} className="border-white/10 px-4 py-7 first:border-l-0 max-lg:even:border-l lg:border-l">
+              <span className="mono-label text-brand-400" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <p className="mt-3 font-display text-3xl font-semibold text-white sm:text-4xl">{s.value}</p>
+              <p className="mono-label mt-2 text-slate-400">{s.label}</p>
             </div>
           ))}
-        </div>
-      </EventCircuitField>
+      </div>
 
-      <EventCircuitField>
-        <div className="mt-16 grid gap-10 lg:grid-cols-2">
-          <section className="event-frame p-6 sm:p-8">
-          <span className="event-card-category-badge">ABOUT</span>
-          <h2 className="text-2xl font-bold">What V-TAPP is</h2>
-          <div className="mt-4 space-y-4 text-sm leading-relaxed text-slate-300">
+      <div className="mt-16 grid gap-px border border-white/10 bg-white/10 lg:grid-cols-2">
+        <section className="bg-ink-950 p-6 sm:p-9">
+          <p className="mono-label text-brand-400">About</p>
+          <h2 className="mt-4 text-2xl font-semibold">What V-TAPP is</h2>
+          <div className="mt-5 space-y-4 text-sm leading-7 text-slate-300">
             <p>
               V-TAPP is the annual international techfest of {FEST.university}. Across two days the
               entire campus turns into a working floor, with hackathons in the labs, combat robotics in
@@ -53,12 +47,12 @@ export default function AboutPage() {
               is published here.
             </p>
           </div>
-          </section>
+        </section>
 
-          <section className="event-frame p-6 sm:p-8">
-          <span className="event-card-category-badge">CAMPUS</span>
-          <h2 className="text-2xl font-bold">Participating schools</h2>
-          <ul className="mt-4 space-y-2.5">
+        <section className="bg-ink-950 p-6 sm:p-9">
+          <p className="mono-label text-brand-400">Campus</p>
+          <h2 className="mt-4 text-2xl font-semibold">Participating schools</h2>
+          <ul className="mt-5 space-y-3">
             {SCHOOLS.filter((s) => s.code !== 'CENTRAL').map((s) => (
               <li key={s.code} className="flex items-baseline gap-3 text-sm">
                 <span
@@ -71,15 +65,13 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
-          </section>
-        </div>
-      </EventCircuitField>
+        </section>
+      </div>
 
-      <EventCircuitField>
-        <section className="event-frame mt-16 p-8">
-          <span className="event-card-category-badge">CONTACT</span>
-          <h2 className="text-xl font-bold">Reach the core team</h2>
-          <div className="mt-4 flex flex-wrap gap-x-10 gap-y-4 text-sm">
+      <section className="mt-16 border-y border-white/10 py-8 sm:py-10">
+          <p className="mono-label text-brand-400">Contact</p>
+          <h2 className="mt-4 text-xl font-semibold">Reach the core team</h2>
+          <div className="mt-6 grid gap-6 text-sm sm:grid-cols-2 lg:grid-cols-4">
             <div>
               <p className="text-xs text-slate-500">Email</p>
               <a href={`mailto:${FEST.email}`} className="text-brand-400 hover:underline">
@@ -103,25 +95,7 @@ export default function AboutPage() {
               </a>
             </div>
           </div>
-        </section>
-      </EventCircuitField>
-
-      <EventCircuitField>
-        <section className="event-frame mt-16 p-8">
-          <span className="event-card-category-badge">ARCHIVE</span>
-          <h2 className="text-xl font-bold">A Glimpse of Previous V-TAPP</h2>
-          <div className="mt-4 aspect-video w-full overflow-hidden rounded-lg">
-            <iframe
-              className="h-full w-full"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-              title="A Glimpse of Previous V-TAPP"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </section>
-      </EventCircuitField>
+      </section>
     </div>
   );
 }

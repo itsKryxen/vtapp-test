@@ -1,16 +1,11 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, JetBrains_Mono, Orbitron } from 'next/font/google';
+import { JetBrains_Mono, Orbitron } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import Ticker from '@/components/Ticker';
 import Preloader from '@/components/Preloader';
 import PageLogoIntroAnimation from '@/components/PageLogoIntroAnimation';
-import ButtonEffects from '@/components/ButtonEffects';
-import BlinkingDotCursor from '@/components/BlinkingDotCursor';
-import NumericCursorTrail from '@/components/NumericCursorTrail';
-import CuteRobotCompanion from '@/components/CuteRobotCompanion';
-import { SocialRail } from '@/components/SocialLinks';
+import PointerBackground from '@/components/PointerBackground';
 import { FEST } from '@/lib/fest';
 import SiteReveal from '@/components/SiteReveal';
 
@@ -73,9 +68,11 @@ const THEME_SCRIPT = `
 (function(){
   try {
     var s = localStorage.getItem('vtapp-theme');
+    if (s !== 'light' && s !== 'dark') s = 'system';
     var light = s === 'light' ||
-      (!s && window.matchMedia('(prefers-color-scheme: light)').matches);
+      (s === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
     if (light) document.documentElement.classList.add('light');
+    document.documentElement.dataset.theme = s;
     var favicon = light ? '/favicon-light.svg' : '/favicon-dark.svg';
     document.querySelectorAll('link[rel~="icon"]').forEach(function(link) {
       link.setAttribute('href', favicon);
@@ -93,10 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>
       <body className="min-h-screen">
-        <ButtonEffects />
-        <BlinkingDotCursor />
-        <NumericCursorTrail />
-        <CuteRobotCompanion />
+        <PointerBackground />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-bone focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-label focus:text-ink-950"
@@ -106,12 +100,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <Preloader />
         <PageLogoIntroAnimation />
-
         <SiteReveal>
-          <Ticker />
           <Navbar />
-          <SocialRail />
-
           <main id="main" className="relative z-10">
             {children}
           </main>

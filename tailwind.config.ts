@@ -69,9 +69,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['Ethnocentric', 'sans-serif'],
-        body: ['Ethnocentric', 'sans-serif'],
-        mono: ['Ethnocentric', 'sans-serif'],
+        display: ['var(--font-wordmark)', 'sans-serif'],
+        body: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-original-mono)', 'monospace'],
         logo: ['var(--font-original-mono)', 'monospace'],
         wordmark: ['var(--font-wordmark)', 'Ethnocentric', 'sans-serif'],
       },

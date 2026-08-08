@@ -14,6 +14,11 @@ export interface EventCardProps {
     | 'thumbnail_url'
     | 'poster_url'
     | 'registration_fee'
+    | 'registration_url'
+    | 'registration_deadline'
+    | 'team_type'
+    | 'team_min'
+    | 'team_max'
     | 'prize_pool'
   >;
   clubName?: string | null;

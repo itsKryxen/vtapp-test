@@ -57,24 +57,24 @@ export default function TicketPicker({ events }: Props) {
   /* ---------------- Handoff Screen ---------------- */
   if (handoff) {
     return (
-      <div className="mx-auto max-w-xl p-8 text-center rounded-2xl border border-white/20 bg-[#0A0A0A] text-white shadow-2xl space-y-6">
-        <p className="font-mono text-xs text-[#D62828] font-bold tracking-widest uppercase">
+      <div className="panel mx-auto max-w-xl space-y-6 p-8 text-center">
+        <p className="font-mono text-xs font-bold uppercase tracking-widest text-[var(--brand)]">
           ORDER CREATED // V-TAPP 2026
         </p>
-        <p className="font-mono text-3xl tracking-widest text-white">
+        <p className="font-mono text-3xl tracking-widest text-[rgb(var(--text-primary))]">
           {handoff.order.reference}
         </p>
         <p className="font-mono text-xs text-slate-400 uppercase tracking-widest">
           EVENT PASS · PRICE TBA
         </p>
 
-        <p className="mx-auto max-w-sm text-sm leading-relaxed text-slate-300">
+        <p className="mx-auto max-w-sm text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
           Write this reference down. You will need it on the VIT-AP payment portal.
         </p>
 
         <a
           href={handoff.url}
-          className="inline-block w-full py-3 rounded-xl bg-[#D62828] text-white font-mono text-xs font-bold uppercase tracking-widest hover:bg-[#B91C1C] transition-colors"
+          className="btn-primary w-full justify-center"
         >
           Continue to payment
         </a>
@@ -89,9 +89,9 @@ export default function TicketPicker({ events }: Props) {
       <DigitalEventPass />
 
       {/* Technical Order Summary Panel (Visual Adaptation) */}
-      <div className="max-w-[1000px] mx-auto rounded-2xl border border-white/10 bg-[#0A0A0A] light:bg-[#FFFFFF] light:border-[#D7E4EC] p-6 sm:p-8 shadow-xl space-y-6">
-        <div className="flex items-center justify-between border-b border-white/10 light:border-[#D7E4EC] pb-4">
-          <span className="font-mono text-xs font-bold tracking-widest text-[#D62828] light:text-[#159BD7] uppercase">
+      <div className="panel mx-auto max-w-[1000px] space-y-6 p-6 sm:p-8">
+        <div className="flex items-center justify-between border-b border-[var(--border)] pb-4">
+          <span className="font-mono text-xs font-bold uppercase tracking-widest text-[var(--brand)]">
             // ORDER SUMMARY SPECIFICATION
           </span>
           <span className="font-mono text-[10px] text-slate-500 uppercase tracking-widest">
@@ -114,17 +114,17 @@ export default function TicketPicker({ events }: Props) {
           </div>
           <div className="space-y-1">
             <span className="text-slate-500 text-[10px] uppercase tracking-widest block">REGISTRATION FEE</span>
-            <span className="font-bold text-[#D62828] light:text-[#159BD7]">TBA</span>
+            <span className="font-bold text-[var(--brand)]">TBA</span>
           </div>
         </div>
 
         {error && (
-          <p className="border border-red-500/30 bg-red-500/10 p-3 rounded-lg font-mono text-xs text-red-400">
+          <p className="rounded-lg border border-[color:var(--error)] bg-transparent p-3 font-mono text-xs text-[color:var(--error)]">
             {error}
           </p>
         )}
 
-        <div className="pt-4 border-t border-white/10 light:border-[#D7E4EC] flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-slate-500">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border)] pt-4 font-mono text-xs text-[rgb(var(--text-muted))]">
           <span>Official VIT-AP University Event Registration Portal</span>
           <span className="text-slate-400">Ticket pricing & event selection will open upon official announcement.</span>
         </div>

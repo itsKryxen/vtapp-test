@@ -51,9 +51,6 @@ export default function PageLogoIntroAnimation() {
     if (!overlay || !logo || !logoShell || !pulse || !ambient) return;
 
     document.documentElement.dataset.vtappSplash = 'active';
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
     const context = gsap.context(() => {
       const letters = gsap.utils.toArray<SVGGElement>('.vtapp-letter', logo);
       const maskRoutes = gsap.utils.toArray<SVGPathElement>('.vtapp-mask-trace', logo);
@@ -71,27 +68,19 @@ export default function PageLogoIntroAnimation() {
 
       const timeline = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
-      // 0.00–0.30: an intentionally untouched theme-matched field.
       timeline.to(pulse, { opacity: 1, scale: 1, duration: 0.3, ease: 'power3.out' }, 0.3);
       timeline.to(pulse, { opacity: 0.55, scale: 0.72, duration: 0.24, ease: 'sine.inOut' }, 0.52);
       timeline.to(ambient, { opacity: 0.72, scale: 1, duration: 0.72, ease: 'sine.out' }, 0.42);
 
-      // 0.60–1.50: the activation signal travels across the PCB network.
       energyRoutes.forEach((route, index) => {
         const segment = Number(route.dataset.segmentIndex ?? 0);
         timeline.to(
           route,
-          {
-            strokeDashoffset: 0,
-            opacity: 0.92,
-            duration: 0.42,
-            ease: 'power1.inOut',
-          },
+          { strokeDashoffset: 0, opacity: 0.92, duration: 0.42, ease: 'power1.inOut' },
           0.58 + segment * 0.16 + (index % 2) * 0.035,
         );
       });
 
-      // Each character starts when the previous draw is about 80% complete.
       letters.forEach((letter, index) => {
         const start = 0.62 + index * 0.216;
         const segmentName = letter.dataset.letter;
@@ -103,17 +92,12 @@ export default function PageLogoIntroAnimation() {
           start,
         );
         timeline.to(letter, { opacity: 1, scale: 1, duration: 0.27, ease: 'power2.out' }, start);
-
-        if (nodes[index]) {
-          timeline.to(nodes[index], { opacity: 1, scale: 1, duration: 0.16 }, start);
-        }
+        if (nodes[index]) timeline.to(nodes[index], { opacity: 1, scale: 1, duration: 0.16 }, start);
       });
 
       timeline.to(pulse, { opacity: 0, scale: 0.2, duration: 0.2 }, 1.45);
       timeline.to(energyRoutes, { opacity: 0.18, duration: 0.22 }, 1.82);
       timeline.to(ambient, { opacity: 0.28, scale: 1.03, duration: 0.4, ease: 'sine.inOut' }, 1.55);
-
-      // A restrained, simultaneous power-on wave through every route.
       timeline.set(energyRoutes, { strokeDashoffset: 1, opacity: 0.28 }, 1.9);
       timeline.to(
         energyRoutes,
@@ -124,10 +108,7 @@ export default function PageLogoIntroAnimation() {
       timeline.to(nodes, { opacity: 0.25, duration: 0.18 }, 2.2);
       timeline.to(ambient, { opacity: 0.55, scale: 1.05, duration: 0.26, ease: 'sine.out' }, 1.9);
       timeline.to(ambient, { opacity: 0.18, scale: 1.08, duration: 0.42, ease: 'sine.inOut' }, 2.18);
-
       timeline.to(tagline, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 1.95);
-
-      // Almost-imperceptible hold/breath before the logo finds its permanent home.
       timeline.to(logo, { scale: 1.01, duration: 0.18, ease: 'sine.inOut' }, 2.18);
       timeline.to(logo, { scale: 1, duration: 0.18, ease: 'sine.inOut' }, 2.36);
 
@@ -149,7 +130,6 @@ export default function PageLogoIntroAnimation() {
         setExiting(true);
       }, undefined, 2.52);
 
-      // Crossfade only once both logos are effectively occupying the same box.
       timeline.call(() => {
         document.documentElement.dataset.vtappSplash = 'arrived';
       }, undefined, 3.03);
@@ -157,7 +137,6 @@ export default function PageLogoIntroAnimation() {
 
       timeline.call(() => {
         delete document.documentElement.dataset.vtappSplash;
-        document.body.style.overflow = previousOverflow;
         window.dispatchEvent(new CustomEvent('vtapp:splash-complete'));
         setVisible(false);
       }, undefined, INTRO_DURATION_SECONDS);
@@ -166,7 +145,6 @@ export default function PageLogoIntroAnimation() {
     return () => {
       context.revert();
       delete document.documentElement.dataset.vtappSplash;
-      document.body.style.overflow = previousOverflow;
     };
   }, [excluded, pathname]);
 
@@ -178,7 +156,7 @@ export default function PageLogoIntroAnimation() {
       aria-label="V-TAPP is powering on"
       role="status"
       className="vtapp-splash"
-      style={{ pointerEvents: exiting ? 'none' : 'auto' }}
+      style={{ pointerEvents: 'none' }}
     >
       <motion.div
         aria-hidden="true"

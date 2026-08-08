@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { LogoLockup } from './Logo';
-import { HudClock, HudDots } from './Hud';
 import { FEST } from '@/lib/fest';
 import { SocialLinks } from './SocialLinks';
 
@@ -18,39 +17,30 @@ const EXPLORE = [
 
 export default function Footer() {
   return (
-    <footer className="relative z-10 mt-32 border-t border-white/30 bg-ink-950">
-      {/* index strip */}
-      <div className="container-x flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-white/[0.06] py-3">
-        <span className="mono-label text-brand-500">V-TAPP / 2026</span>
-        <span className="mono-label">{FEST.dateLabel.toUpperCase()}</span>
-        <span className="mono-label hidden sm:inline">LAT 16.5062 · LON 80.6480</span>
-        <span className="ml-auto">
-          <HudClock />
-        </span>
-      </div>
-
-      <div className="container-x grid gap-12 py-16 lg:grid-cols-[1.5fr_1fr]">
-        {/* brand */}
+    <footer className="relative z-10 border-t border-white/10 bg-ink-950">
+      <div className="container-x grid gap-12 py-14 md:grid-cols-[1.2fr_.8fr_.8fr] sm:py-16">
         <div>
-          <LogoLockup width={340} className="h-auto w-[240px] sm:w-[300px]" />
+          <LogoLockup width={300} className="h-auto w-[220px] sm:w-[260px]" />
 
-          <p className="mt-7 max-w-sm text-sm leading-relaxed text-slate-400">
+          <p className="mt-6 max-w-sm text-sm leading-7 text-slate-400">
             The international techfest of {FEST.university}. Two days, every school, one campus in
             Amaravati, Andhra Pradesh.
           </p>
-
-          <div className="mt-8">
-            <HudDots count={10} />
-          </div>
         </div>
 
-        {/* contact */}
         <div>
-          <div className="mb-5 flex items-center gap-3">
-            <span className="tag-index">[02]</span>
-            <span className="mono-label text-slate-400">CONTACT</span>
-            <span className="h-px flex-1 bg-white/10" />
-          </div>
+          <p className="mono-label mb-5 text-slate-400">Explore</p>
+          <nav className="grid grid-cols-2 gap-x-4 gap-y-3" aria-label="Footer navigation">
+            {EXPLORE.slice(0, 8).map((link) => (
+              <Link key={link.href} href={link.href} className="text-sm text-slate-400 transition hover:text-white">
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        <div>
+          <p className="mono-label mb-5 text-slate-400">Contact</p>
 
           <dl className="space-y-5 text-sm">
             <div>
@@ -81,8 +71,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* bottom bar */}
-      <div className="border-t border-white/30">
+      <div className="border-t border-white/10">
         <div className="container-x grid gap-4 py-5 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
           <p className="mono-label">
             © {new Date().getFullYear()} {FEST.university.toUpperCase()}

@@ -73,9 +73,13 @@ export default async function EventDetailPage({ params }: Props) {
         }]
       : []),
   ];
+  const registrationOpen = Boolean(
+    event.registration_url &&
+    (!event.registration_deadline || new Date(event.registration_deadline).getTime() > Date.now()),
+  );
 
   return (
-    <div className="container-x pb-24 pt-28 sm:pt-36">
+    <div className="container-x pb-28 pt-24 sm:pb-24 sm:pt-32">
       <Link href="/events" className="text-xs text-slate-400 hover:text-white">
         ← All events
       </Link>
@@ -106,9 +110,7 @@ export default async function EventDetailPage({ params }: Props) {
             </div>
           </div>
 
-          <Link href="/tickets" className="btn-primary mt-4 w-full">
-            Get a ticket
-          </Link>
+          <Link href="/tickets" className="btn-primary mt-4 w-full">Get a fest pass</Link>
 
           {event.registration_url && (
             <a
@@ -155,6 +157,16 @@ export default async function EventDetailPage({ params }: Props) {
             {school && <> · {school.name}</>}
           </p>
 
+          <div className={`mt-7 flex items-center gap-3 border px-4 py-3 ${registrationOpen ? 'border-emerald-400/35 bg-emerald-400/[0.06]' : 'border-white/15 bg-white/[0.025]'}`}>
+            <span className={`h-2 w-2 rounded-full ${registrationOpen ? 'bg-emerald-400' : 'bg-slate-500'}`} aria-hidden="true" />
+            <p className="font-mono text-[10px] uppercase tracking-label text-white">
+              {registrationOpen ? 'Registration is open' : 'Event details published'}
+            </p>
+            {event.registration_deadline && (
+              <span className="ml-auto hidden text-xs text-slate-500 sm:block">Closes {fmtDate(event.registration_deadline)}</span>
+            )}
+          </div>
+
           {/* fact grid */}
           <dl className="panel mt-8 grid grid-cols-2 gap-px overflow-hidden bg-white/[0.06] sm:grid-cols-4">
             {facts.map((f) => (
@@ -199,6 +211,15 @@ export default async function EventDetailPage({ params }: Props) {
           )}
 
           <section className="mt-10">
+            <h2 className="text-xl font-bold">Before you register</h2>
+            <ul className="mt-4 grid gap-px border border-white/15 bg-white/15 sm:grid-cols-3">
+              <li className="bg-ink-900 p-4"><span className="mono-label">Format</span><strong className="mt-2 block text-sm text-white">On campus</strong></li>
+              <li className="bg-ink-900 p-4"><span className="mono-label">Participation</span><strong className="mt-2 block text-sm text-white">{teamLabel}</strong></li>
+              <li className="bg-ink-900 p-4"><span className="mono-label">Fest access</span><strong className="mt-2 block text-sm text-white">Pass required</strong></li>
+            </ul>
+          </section>
+
+          <section className="mt-10">
             <h2 className="text-xl font-bold">Contact</h2>
             <div className="panel mt-3 flex flex-wrap items-center gap-x-8 gap-y-2 p-5 text-sm">
               <div>
@@ -214,6 +235,18 @@ export default async function EventDetailPage({ params }: Props) {
             </div>
           </section>
         </div>
+      </div>
+
+      <div className="mobile-registration-bar lg:hidden">
+        <div>
+          <span className="mono-label">{registrationOpen ? 'Registration open' : 'Event access'}</span>
+          <strong className="mt-1 block text-sm text-white">{Number(event.registration_fee) === 0 ? 'Free entry' : `₹${Number(event.registration_fee).toLocaleString('en-IN')}`}</strong>
+        </div>
+        {event.registration_url ? (
+          <a href={event.registration_url} target="_blank" rel="noopener noreferrer" className="btn-primary !px-5 !py-3">Register <span aria-hidden="true">↗</span></a>
+        ) : (
+          <Link href="/tickets" className="btn-primary !px-5 !py-3">Get pass</Link>
+        )}
       </div>
     </div>
   );

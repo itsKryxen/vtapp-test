@@ -32,7 +32,7 @@ export default function SectionHeader({
   action,
 }: Props) {
   return (
-    <header className="mb-10">
+    <header className="section-header mb-10">
       <div className="flex items-center gap-4">
         <span className="tag-index shrink-0">[{index}]</span>
         <span className="mono-label shrink-0 text-slate-400">{slug}</span>
@@ -62,7 +62,7 @@ export function PageHeader({
   meta,
 }: Omit<Props, 'action'>) {
   return (
-    <header className="mb-12">
+    <header className="page-header mb-12">
       <div className="flex items-center gap-4">
         <span className="tag-index shrink-0">[{index}]</span>
         <span className="mono-label shrink-0 text-slate-400">{slug}</span>

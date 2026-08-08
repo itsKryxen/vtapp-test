@@ -11,12 +11,10 @@ interface StampComingSoonModalProps {
 }
 
 export default function StampComingSoonModal({ club, onClose }: StampComingSoonModalProps) {
-  const [stampLanded, setStampLanded] = useState(false);
   const [isLight, setIsLight] = useState(false);
 
   useEffect(() => {
     if (!club) {
-      setStampLanded(false);
       return;
     }
 
@@ -28,11 +26,6 @@ export default function StampComingSoonModal({ club, onClose }: StampComingSoonM
     const observer = new MutationObserver(checkTheme);
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
-    // Set stamp landed trigger after short impact delay
-    const timer = setTimeout(() => {
-      setStampLanded(true);
-    }, 280);
-
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onClose();
@@ -41,7 +34,6 @@ export default function StampComingSoonModal({ club, onClose }: StampComingSoonM
 
     window.addEventListener('keydown', handleKeyDown);
     return () => {
-      clearTimeout(timer);
       observer.disconnect();
       window.removeEventListener('keydown', handleKeyDown);
     };
@@ -88,18 +80,10 @@ export default function StampComingSoonModal({ club, onClose }: StampComingSoonM
       >
         {/* Main Modal Box with Impact Shake */}
         <motion.div
-          initial={{ scale: 0.9, opacity: 0, y: 20 }}
-          animate={{
-            scale: 1,
-            opacity: 1,
-            y: 0,
-            x: stampLanded ? [0, -3, 3, -2, 2, 0] : 0,
-          }}
-          exit={{ scale: 0.9, opacity: 0, y: 20 }}
-          transition={{
-            duration: 0.3,
-            x: { duration: 0.25, ease: 'easeInOut' },
-          }}
+          initial={{ scale: 0.985, opacity: 0, y: 8 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          exit={{ scale: 0.985, opacity: 0, y: 6 }}
+          transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
           className="relative max-w-lg w-full rounded-2xl border border-white/20 bg-ink-950 p-6 sm:p-8 shadow-2xl overflow-hidden space-y-6 text-center"
           onClick={(e) => e.stopPropagation()}
         >
@@ -143,26 +127,11 @@ export default function StampComingSoonModal({ club, onClose }: StampComingSoonM
 
           {/* GRAPHICAL PHYSICAL RUBBER STAMP CONTAINER */}
           <div className="relative py-4 my-2 flex justify-center items-center">
-            {/* Impact Shockwave Ring */}
-            {stampLanded && (
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0.8 }}
-                animate={{ scale: 1.4, opacity: 0 }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
-                className={`absolute inset-0 m-auto w-48 h-24 rounded-xl border-2 ${stampStyles.ripple} pointer-events-none`}
-              />
-            )}
-
             {/* Rubber Stamp graphic */}
             <motion.div
-              initial={{ scale: 2.4, y: -100, opacity: 0, rotate: -15 }}
-              animate={{ scale: 1, y: 0, opacity: 1, rotate: -7 }}
-              transition={{
-                type: 'spring',
-                stiffness: 420,
-                damping: 20,
-                mass: 1.1,
-              }}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
               className={`relative select-none inline-block px-6 py-4 rounded-xl border-4 border-double ${stampStyles.border} ${stampStyles.text} ${stampStyles.bg} ${stampStyles.glow} backdrop-blur-sm transform -rotate-6 transition-colors duration-300`}
             >
               {/* Stamp Inner Border */}
@@ -191,8 +160,8 @@ export default function StampComingSoonModal({ club, onClose }: StampComingSoonM
             {/* Delayed Fading Tagline */}
             <motion.p
               initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: stampLanded ? 1 : 0, y: stampLanded ? 0 : 5 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.24, delay: 0.06 }}
               className={`text-xs font-mono ${stampStyles.tagline}`}
             >
               ✦ Stay tuned — exciting events are on the way.

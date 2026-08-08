@@ -111,7 +111,7 @@ export default function BlueprintMark({ className = '' }: { className?: string }
           strokeWidth="1.2"
           strokeLinejoin="round"
           strokeDasharray="6 5"
-          style={{ animation: 'bpDraw 2.6s ease-out 0.25s backwards' }}
+          style={{ animation: 'bpDraw 700ms cubic-bezier(0.22, 1, 0.36, 1) 80ms backwards' }}
         />
 
         {/* ---- the V stroke ---- */}

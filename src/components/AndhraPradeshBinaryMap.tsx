@@ -235,10 +235,10 @@ export default function AndhraPradeshBinaryMap() {
       );
 
       if (mapTransformRef.current) {
-        mapTransformRef.current.style.transform = `scale(${1 + next * 0.38})`;
+        mapTransformRef.current.style.transform = `scale(${1 + next * 0.08})`;
       }
       if (scanlineRef.current) {
-        scanlineRef.current.style.transform = `translateY(${next * 520}px)`;
+        scanlineRef.current.style.transform = `translateY(${next * 80}px)`;
       }
       if (markerRef.current) {
         markerRef.current.style.opacity = String(0.5 + next * 0.5);
@@ -257,14 +257,6 @@ export default function AndhraPradeshBinaryMap() {
       window.removeEventListener('resize', onScroll);
     };
   }, [isDesktopStory, reducedMotion]);
-
-  useEffect(() => {
-    if (reducedMotion) return;
-    const interval = window.setInterval(() => {
-      setPhotoPairIndex((current) => (current + 1) % PHOTO_PAIRS.length);
-    }, 3000);
-    return () => window.clearInterval(interval);
-  }, [reducedMotion]);
 
   const scrollDriven = isDesktopStory && !reducedMotion;
   const activeEditionIndex = scrollDriven ? scrollEditionIndex : LAST_EDITION_INDEX;

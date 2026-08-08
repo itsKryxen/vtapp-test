@@ -19,7 +19,7 @@ export default async function TicketsPage() {
 
       <p className="mt-12 text-center font-mono text-[10px] uppercase tracking-widest text-slate-500">
         Already have an order reference?{' '}
-        <Link href="/tickets/status" className="text-[#D62828] light:text-[#159BD7] hover:underline font-bold">
+        <Link href="/tickets/status" className="font-bold text-[var(--brand)] hover:underline">
           Check order status
         </Link>
       </p>

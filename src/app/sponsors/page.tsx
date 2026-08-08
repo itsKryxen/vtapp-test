@@ -21,7 +21,7 @@ export default async function SponsorsPage() {
   })).filter((g) => g.list.length > 0);
 
   return (
-    <div className="container-x pb-24 pt-28 sm:pt-36">
+    <div className="container-x pb-20 pt-24 sm:pb-24 sm:pt-28">
       <PageHeader
         index="06"
         slug="SPONSORS"

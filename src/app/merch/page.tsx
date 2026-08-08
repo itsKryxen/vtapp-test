@@ -13,7 +13,7 @@ export const revalidate = 300;
 
 export default function MerchPage() {
   return (
-    <div className="container-x pb-24 pt-28 sm:pt-36">
+    <div className="container-x pb-20 pt-24 sm:pb-24 sm:pt-28">
       <PageHeader
         index="09"
         slug={"merchandise".toUpperCase()}

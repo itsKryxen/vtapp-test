@@ -16,131 +16,56 @@ export default function MasterEventCard({ event, priority = false, index = 0 }: 
   const displayIndex = String(index + 1).padStart(2, '0');
   const prizePool = Number(event.prize_pool ?? 0);
   const fee = Number(event.registration_fee ?? 0);
+  const deadline = event.registration_deadline ? new Date(event.registration_deadline) : null;
+  const registrationOpen = Boolean(event.registration_url && (!deadline || deadline.getTime() > Date.now()));
+  const teamLabel = event.team_type === 'solo' ? 'Solo' : `${event.team_min}–${event.team_max} people`;
 
   const dateLabel = date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
 
   return (
-    <div className="event-card group relative flex flex-col">
-
-      {/* ── Corner brackets (decorative) ── */}
-      <div className="event-card-bracket event-card-bracket-tl" aria-hidden="true" />
-      <div className="event-card-bracket event-card-bracket-tr" aria-hidden="true" />
-      <div className="event-card-bracket event-card-bracket-bl" aria-hidden="true" />
-      <div className="event-card-bracket event-card-bracket-br" aria-hidden="true" />
-
-      {/* ── Technical background grid ── */}
-      <div className="event-card-grid" aria-hidden="true" />
-
-      {/* ── Top header row: index + status ── */}
-      <div className="event-card-header">
-        <span className="event-card-index" aria-label={`Event ${displayIndex}`}>
-          {displayIndex}
-        </span>
-        <div className="event-card-status">
-          <span className="event-card-status-dot" aria-hidden="true" />
-          <span className="event-card-status-label">INDEXED</span>
+    <article className="event-card event-card-simple group" style={{ animationDelay: `${Math.min(index, 5) * 35}ms` }}>
+      <header className="event-card-simple-header">
+        <div className="flex items-center gap-3">
+          <span className="event-card-index" aria-label={`Event ${displayIndex}`}>{displayIndex}</span>
+          <span className="event-card-category-simple">{category?.label ?? event.category}</span>
         </div>
-      </div>
-
-      {/* ── Category badge ── */}
-      <div className="event-card-badge-row">
-        <span className="event-card-category-badge">
-          {category?.label ?? event.category}
+        <span className={`event-card-availability ${registrationOpen ? 'is-open' : ''}`}>
+          {registrationOpen ? 'Registration open' : 'Details live'}
         </span>
-      </div>
+      </header>
 
-      {/* ── Main content: title + image ── */}
-      <div className="event-card-body">
-        {/* Left: title + description */}
-        <div className="event-card-content">
-          <h3 className="event-card-title">
-            {event.title}
-          </h3>
-          {event.tagline && (
-            <p className="event-card-tagline">
-              {event.tagline}
-            </p>
-          )}
+      <div className="event-card-simple-body">
+        <div className="min-w-0 flex-1">
+          <h3 className="event-card-simple-title">{event.title}</h3>
+          {event.tagline && <p className="event-card-simple-tagline">{event.tagline}</p>}
         </div>
 
-        {/* Right: image panel */}
-        <div className="event-card-image-panel">
-          {event.thumbnail_url || event.poster_url ? (
-            // eslint-disable-next-line @next/next/no-img-element
+        {(event.thumbnail_url || event.poster_url) && (
+          <div className="event-card-simple-image-wrap">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={event.thumbnail_url ?? event.poster_url ?? ''}
               alt={`${event.title} artwork`}
               loading={priority ? 'eager' : 'lazy'}
-              className="event-card-image"
+              className="event-card-simple-image"
             />
-          ) : (
-            <div className="event-card-image-placeholder">
-              <span aria-hidden="true">NO<br/>IMG</span>
-            </div>
-          )}
-          {/* Subtle radial overlay over image */}
-          <div className="event-card-image-overlay" aria-hidden="true" />
-        </div>
-      </div>
-
-      {/* ── Metadata strip ── */}
-      <div className="event-card-meta">
-        {/* Date */}
-        <div className="event-card-meta-item">
-          <span className="event-card-meta-icon" aria-hidden="true">▣</span>
-          <div>
-            <div className="event-card-meta-value">
-              {dateLabel}
-            </div>
-            <div className="event-card-meta-label">Date</div>
-          </div>
-        </div>
-
-        {/* Prize pool — only if > 0 */}
-        {prizePool > 0 && (
-          <div className="event-card-meta-item">
-            <span className="event-card-meta-icon" aria-hidden="true">🏆</span>
-            <div>
-              <div className="event-card-meta-value event-card-meta-prize">
-                ₹{prizePool.toLocaleString('en-IN')}
-              </div>
-              <div className="event-card-meta-label">Prize Pool</div>
-            </div>
           </div>
         )}
-
-        {/* Registration fee */}
-        <div className="event-card-meta-item">
-          <span className="event-card-meta-icon" aria-hidden="true">◈</span>
-          <div>
-            <div className="event-card-meta-value">
-              {fee === 0 ? 'Free' : `₹${fee}`}
-            </div>
-            <div className="event-card-meta-label">Entry</div>
-          </div>
-        </div>
       </div>
 
-      {/* ── Action strip ── */}
-      <div className="event-card-actions">
-        <Link
-          href={`/events/${event.slug}`}
-          className="event-card-btn-explore"
-          aria-label={`Explore ${event.title}`}
-        >
-          <span>Explore</span>
-          <span className="event-card-btn-arrow" aria-hidden="true">→</span>
-        </Link>
-        <Link
-          href={`/events/${event.slug}`}
-          className="event-card-btn-register"
-          aria-label={`Register for ${event.title}`}
-        >
-          <span>Register</span>
-          <span className="event-card-btn-arrow" aria-hidden="true">↗</span>
-        </Link>
-      </div>
+      <dl className="event-card-simple-facts">
+        <div><dt>Date</dt><dd>{dateLabel}</dd></div>
+        <div><dt>Time</dt><dd>{date.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })}</dd></div>
+        <div><dt>Venue</dt><dd>{event.venue}</dd></div>
+        <div><dt>Entry</dt><dd>{fee === 0 ? 'Free' : `₹${fee}`}</dd></div>
+      </dl>
 
-    </div>
+      <footer className="event-card-simple-footer">
+        <span>{teamLabel}{prizePool > 0 ? ` · ₹${prizePool.toLocaleString('en-IN')} prize pool` : ''}</span>
+        <Link href={`/events/${event.slug}`} aria-label={`View details for ${event.title}`}>
+          View details <span aria-hidden="true">→</span>
+        </Link>
+      </footer>
+    </article>
   );
 }

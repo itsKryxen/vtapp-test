@@ -4,6 +4,7 @@ import EventCircuitField from '@/components/EventCircuitField';
 import EventCard from '@/components/EventCard';
 import { getApprovedEvents } from '@/lib/data';
 import EventsComingSoonSection from '@/components/EventsComingSoonSection';
+import EventFilters from '@/components/EventFilters';
 
 export const metadata: Metadata = {
   title: 'All events',
@@ -26,13 +27,19 @@ export default async function EventsPage({ searchParams }: Props) {
   });
 
   return (
-    <div className="container-x pb-24 pt-28 sm:pt-36">
+    <div className="container-x pb-20 pt-24 sm:pb-24 sm:pt-28">
       <div className="mb-10">
         <PageHeader
           index="03"
           slug="EVENTS"
           title={<>All events</>}
+          description="Search the full V-TAPP programme, filter by discipline, and compare the details that matter before registering."
+          meta={`${events.length} INDEXED`}
         />
+      </div>
+
+      <div className="sticky top-[72px] z-30 -mx-5 mb-10 border-y border-white/15 bg-ink-950/95 px-5 py-4 backdrop-blur-xl sm:top-20 sm:mx-0 sm:border sm:px-4">
+        <EventFilters total={events.length} />
       </div>
 
       {events.length === 0 ? (
@@ -50,7 +57,7 @@ export default async function EventsPage({ searchParams }: Props) {
         )
       ) : (
         <EventCircuitField>
-          <div className="grid items-stretch gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">
             {events.map((e, i) => (
               <EventCard
                 key={e.id}

@@ -1146,8 +1146,8 @@ footer,
   }
 }
 
-/* Cursor-reactive background. The layer only moves in response to a fine
-   pointer and uses compositor-friendly transform/opacity updates. */
+/* Motion.dev-inspired ASCII flow field. A low-frequency canvas layer bends
+   around the pointer while the aurora remains soft enough to sit behind copy. */
 .vtapp-site-reveal {
   position: relative;
   z-index: 2;
@@ -1155,66 +1155,71 @@ footer,
 
 .pointer-background {
   position: fixed;
-  left: 0;
-  top: 0;
+  inset: 0;
   z-index: 1;
-  width: 0;
-  height: 0;
+  overflow: hidden;
   pointer-events: none;
-  opacity: 0;
-  transform: translate3d(50vw, 35vh, 0);
-  transition: opacity 240ms ease-out;
-  will-change: transform, opacity;
+  opacity: 0.92;
+  --pointer-x: 66vw;
+  --pointer-y: 38vh;
 }
 
-.pointer-background[data-visible='true'] {
-  opacity: 1;
-}
-
-.pointer-background__glow,
-.pointer-background__grid {
+.pointer-background__flow,
+.pointer-background__aurora,
+.pointer-background__glow {
   position: absolute;
-  left: 0;
-  top: 0;
   display: block;
-  border-radius: 999px;
-  transform: translate3d(-50%, -50%, 0);
+}
+
+.pointer-background__flow {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  mask-image: linear-gradient(to bottom, transparent, black 10%, black 82%, transparent);
+}
+
+.pointer-background__aurora {
+  inset: -18%;
+  background:
+    radial-gradient(circle at 70% 25%, rgb(var(--brand-light-rgb) / 0.11), transparent 24%),
+    radial-gradient(circle at 42% 66%, rgb(37 99 235 / 0.075), transparent 29%),
+    radial-gradient(circle at 86% 72%, rgb(var(--brand-rgb) / 0.09), transparent 26%);
+  filter: blur(28px) saturate(1.12);
 }
 
 .pointer-background__glow {
-  width: min(46rem, 72vw);
+  left: var(--pointer-x);
+  top: var(--pointer-y);
+  width: min(34rem, 62vw);
   aspect-ratio: 1;
+  border-radius: 999px;
   background: radial-gradient(
     circle,
-    rgba(var(--brand-rgb), 0.12) 0%,
-    rgba(var(--brand-rgb), 0.055) 32%,
-    transparent 69%
+    rgb(var(--brand-light-rgb) / 0.15),
+    rgb(var(--brand-rgb) / 0.07) 36%,
+    rgb(37 99 235 / 0.025) 54%,
+    transparent 72%
   );
-  filter: saturate(1.08);
+  opacity: 0.35;
+  transform: translate3d(-50%, -50%, 0);
+  transition: opacity 240ms ease;
+  will-change: left, top;
 }
 
-.pointer-background__grid {
-  width: min(28rem, 54vw);
-  aspect-ratio: 1;
-  color: rgb(var(--brand-400) / 0.22);
-  background-image: radial-gradient(circle, currentColor 1px, transparent 1.35px);
-  background-size: 18px 18px;
-  mask-image: radial-gradient(circle, black 0%, rgb(0 0 0 / 0.66) 42%, transparent 72%);
-  opacity: 0.52;
+.pointer-background[data-active='true'] .pointer-background__glow {
+  opacity: 1;
 }
 
-.light .pointer-background__glow {
-  background: radial-gradient(
-    circle,
-    rgba(var(--brand-rgb), 0.105) 0%,
-    rgba(var(--brand-rgb), 0.04) 34%,
-    transparent 70%
-  );
+.light .pointer-background {
+  opacity: 0.58;
+  mix-blend-mode: multiply;
 }
 
-.light .pointer-background__grid {
-  color: rgb(var(--brand-600) / 0.16);
-  opacity: 0.45;
+.light .pointer-background__aurora {
+  background:
+    radial-gradient(circle at 70% 25%, rgb(var(--brand-rgb) / 0.09), transparent 24%),
+    radial-gradient(circle at 42% 66%, rgb(37 99 235 / 0.045), transparent 29%),
+    radial-gradient(circle at 86% 72%, rgb(var(--brand-rgb) / 0.06), transparent 26%);
 }
 
 html[data-vtapp-splash] .pointer-background {
@@ -1222,7 +1227,8 @@ html[data-vtapp-splash] .pointer-background {
 }
 
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .pointer-background {
+  .pointer-background__flow,
+  .pointer-background__glow {
     display: none;
   }
 }
@@ -1578,10 +1584,6 @@ html[data-vtapp-splash] .marquee-track {
   .vtapp-splash-logo-shell {
     width: min(88vw, 560px);
   }
-}
-
-@media (max-width: 767px) {
-  .pointer-background { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { PageHeader } from '@/components/SectionHeader';
 import { FEST, STATS } from '@/lib/fest';
 import { SCHOOLS } from '@/lib/schools';
+import PureCinematicGallery from '@/components/PureCinematicGallery';
 
 export const metadata: Metadata = {
   title: 'About',
@@ -99,21 +100,15 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="event-frame mt-16 p-8">
-        <span className="event-card-category-badge">ARCHIVE</span>
-        <h2 className="text-xl font-bold">A Glimpse of Previous V-TAPP</h2>
-        <div className="mt-6 aspect-video w-full overflow-hidden rounded-lg border border-white/30 bg-black/50">
-          <iframe
-            width="100%"
-            height="100%"
-            src="https://www.youtube.com/embed/luVIty6bBIA"
-            title="Glimpse of V-TAPP"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          ></iframe>
+      <section className="mt-16">
+        <div className="event-frame p-6 sm:p-8 mb-8">
+          <span className="event-card-category-badge">ARCHIVE</span>
+          <h2 className="text-2xl font-bold">A Glimpse of Previous V-TAPP</h2>
+          <p className="mt-2 text-sm text-slate-400">
+            Scroll through moments from past editions — click any photo to view full screen.
+          </p>
         </div>
+        <PureCinematicGallery />
       </section>
     </div>
   );

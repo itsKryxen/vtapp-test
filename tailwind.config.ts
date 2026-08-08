@@ -4,10 +4,10 @@ import plugin from 'tailwindcss/plugin';
 /**
  * V-TAPP 2026 design tokens.
  *
- * The dark palette comes from the logo: crimson #B32821, black, white. The
- * system is technical rather than decorative: near-zero radii, hairline
- * borders, monospace labels, light weights at display sizes. Light mode swaps
- * the crimson scale for its electric-blue identity palette.
+ * The dark palette is Tokyo Night-inspired: blue-black surfaces, periwinkle
+ * text and electric blue/cyan accents. The system is technical rather than
+ * decorative: near-zero radii, hairline borders, monospace labels and light
+ * weights at display sizes. Light mode keeps its high-contrast cyan identity.
  *
  * THEMING
  * Surfaces, foreground and greys are CSS variables rather than fixed hexes, so
@@ -53,7 +53,7 @@ const config: Config = {
         emerald: { 200: v('--em-200'), 300: v('--em-300'), 400: v('--em-400'), 500: v('--em-500') },
         rose: { 200: v('--ro-200'), 300: v('--ro-300'), 400: v('--ro-400'), 500: v('--ro-500') },
         amber: { 300: v('--am-300'), 400: v('--am-400'), 500: v('--am-500') },
-        // Theme-aware brand ramp: crimson in dark mode, blue in light mode.
+        // Theme-aware brand ramp: Tokyo blue in dark mode, cyan in light mode.
         brand: {
           50: v('--brand-50'),
           100: v('--brand-100'),

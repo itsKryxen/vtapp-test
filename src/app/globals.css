@@ -1615,83 +1615,83 @@ html[data-vtapp-splash] .marquee-track {
    ========================================================================== */
 
 :root {
-  /* ---- dark (default) ---- */
-  --ink-950: 13 17 23;
-  --ink-900: 17 22 30;
-  --ink-800: 20 27 36;
-  --ink-700: 25 33 44;
-  --ink-600: 31 41 54;
+  /* ---- Tokyo Night-inspired dark theme (default) ---- */
+  --ink-950: 22 22 30;
+  --ink-900: 26 27 38;
+  --ink-800: 31 35 53;
+  --ink-700: 36 40 59;
+  --ink-600: 41 46 66;
 
-  --fg: 235 240 246;
-  --inv: 8 13 19;
-  --bone: 235 240 246;
+  --fg: 192 202 245;
+  --inv: 22 22 30;
+  --bone: 192 202 245;
 
-  --slate-100: 235 240 246;
-  --slate-200: 209 218 228;
-  --slate-300: 177 188 201;
-  --slate-400: 143 156 172;
-  --slate-500: 111 125 143;
-  --slate-600: 82 96 113;
-  --slate-700: 58 70 85;
+  --slate-100: 192 202 245;
+  --slate-200: 169 177 214;
+  --slate-300: 154 165 206;
+  --slate-400: 122 132 177;
+  --slate-500: 86 95 137;
+  --slate-600: 65 72 104;
+  --slate-700: 52 59 85;
 
-  --em-200: 167 243 208;
-  --em-300: 110 231 183;
-  --em-400: 52 211 153;
-  --em-500: 16 185 129;
-  --ro-200: 254 205 211;
-  --ro-300: 253 164 175;
-  --ro-400: 251 113 133;
-  --ro-500: 244 63 94;
-  --am-300: 252 211 77;
-  --am-400: 251 191 36;
-  --am-500: 245 158 11;
+  --em-200: 197 232 167;
+  --em-300: 176 219 132;
+  --em-400: 158 206 106;
+  --em-500: 115 176 73;
+  --ro-200: 255 188 199;
+  --ro-300: 250 155 174;
+  --ro-400: 247 118 142;
+  --ro-500: 214 82 110;
+  --am-300: 239 199 128;
+  --am-400: 224 175 104;
+  --am-500: 192 139 73;
 
-  --grid-strong: rgba(235, 240, 246, 0.045);
-  --grid-faint: rgba(235, 240, 246, 0.018);
+  --grid-strong: rgba(122, 162, 247, 0.065);
+  --grid-faint: rgba(122, 162, 247, 0.026);
   --wash: rgba(var(--brand-rgb), 0.08);
-  --scanline: rgba(235, 240, 246, 0.02);
+  --scanline: rgba(192, 202, 245, 0.022);
 
-  /* Shared V-TAPP cyan ramp; dark mode uses the brighter middle tones. */
-  --brand-50: 235 250 253;
-  --brand-100: 207 243 248;
-  --brand-200: 159 226 237;
-  --brand-300: 103 205 223;
-  --brand-400: 75 183 210;
-  --brand-500: 48 157 188;
-  --brand-600: 39 139 170;
-  --brand-700: 32 111 139;
-  --brand-800: 31 89 110;
-  --brand-900: 29 74 92;
-  --brand-950: 15 45 58;
-  --brand-rgb: 39, 139, 170;
-  --brand-bright-rgb: 75, 183, 210;
-  --brand-light-rgb: 159, 226, 237;
-  --brand: #278baa;
-  --brand-hover: #35a2c0;
-  --brand-bright: #4bb7d2;
-  --brand-light: #9fe2ed;
-  --brand-dark: #1f596e;
-  --brand-glow: rgba(var(--brand-rgb), 0.18);
+  /* Tokyo Night blue-to-cyan accent ramp. */
+  --brand-50: 240 246 255;
+  --brand-100: 219 231 255;
+  --brand-200: 188 211 255;
+  --brand-300: 157 190 251;
+  --brand-400: 122 162 247;
+  --brand-500: 92 138 229;
+  --brand-600: 65 112 207;
+  --brand-700: 54 89 167;
+  --brand-800: 44 69 125;
+  --brand-900: 35 52 91;
+  --brand-950: 25 34 59;
+  --brand-rgb: 122, 162, 247;
+  --brand-bright-rgb: 125, 207, 255;
+  --brand-light-rgb: 187, 154, 247;
+  --brand: #7aa2f7;
+  --brand-hover: #89b4fa;
+  --brand-bright: #7dcfff;
+  --brand-light: #bb9af7;
+  --brand-dark: #3d59a1;
+  --brand-glow: rgba(var(--brand-rgb), 0.24);
 
   /* Semantic theme tokens. */
-  --background: 13 17 23;
-  --background-secondary: 17 22 30;
-  --surface: 20 27 36;
-  --surface-elevated: 25 33 44;
-  --surface-hover: 31 41 54;
-  --text-primary: 235 240 246;
-  --text-secondary: 177 188 201;
-  --text-muted: 111 125 143;
-  --text-disabled: 82 96 113;
-  --border: rgb(235 240 246 / 0.09);
-  --border-strong: rgb(235 240 246 / 0.17);
-  --focus-ring: #67cde2;
-  --accent: #d3635b;
-  --success: #55b98b;
-  --warning: #d8a84d;
-  --error: #df6b68;
-  --button-primary-text: #071319;
-  --shadow-elevated: 0 16px 42px rgb(0 0 0 / 0.24);
+  --background: 22 22 30;
+  --background-secondary: 26 27 38;
+  --surface: 31 35 53;
+  --surface-elevated: 36 40 59;
+  --surface-hover: 41 46 66;
+  --text-primary: 192 202 245;
+  --text-secondary: 154 165 206;
+  --text-muted: 86 95 137;
+  --text-disabled: 65 72 104;
+  --border: rgb(122 162 247 / 0.13);
+  --border-strong: rgb(122 162 247 / 0.24);
+  --focus-ring: #7dcfff;
+  --accent: #bb9af7;
+  --success: #9ece6a;
+  --warning: #e0af68;
+  --error: #f7768e;
+  --button-primary-text: #16161e;
+  --shadow-elevated: 0 18px 48px rgb(8 9 15 / 0.34);
 
   color-scheme: dark;
 }

@@ -102,15 +102,15 @@ export default function TicketPicker({ events }: Props) {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-left font-mono text-xs">
           <div className="space-y-1">
             <span className="text-slate-500 text-[10px] uppercase tracking-widest block">PASS TYPE</span>
-            <span className="font-bold text-slate-900 dark:text-white">EVENT PASS</span>
+            <span className="font-bold text-white">EVENT PASS</span>
           </div>
           <div className="space-y-1">
             <span className="text-slate-500 text-[10px] uppercase tracking-widest block">EVENT ACCESS</span>
-            <span className="font-bold text-slate-900 dark:text-white">SINGLE EVENT</span>
+            <span className="font-bold text-white">SINGLE EVENT</span>
           </div>
           <div className="space-y-1">
             <span className="text-slate-500 text-[10px] uppercase tracking-widest block">CURRENCY</span>
-            <span className="font-bold text-slate-900 dark:text-white">INR (₹)</span>
+            <span className="font-bold text-white">INR (₹)</span>
           </div>
           <div className="space-y-1">
             <span className="text-slate-500 text-[10px] uppercase tracking-widest block">REGISTRATION FEE</span>

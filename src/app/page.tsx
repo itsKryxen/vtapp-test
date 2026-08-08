@@ -1,5 +1,5 @@
 import EventCard from '@/components/EventCard';
-import HeroIdentity from '@/components/HeroIdentity';
+import FestivalWorld from '@/components/FestivalWorld';
 import ScrollReveal from '@/components/ScrollReveal';
 import SectionHeader from '@/components/SectionHeader';
 import SponsorStrip from '@/components/SponsorStrip';
@@ -7,8 +7,6 @@ import { getApprovedEvents, getFeaturedEvents, getSponsors } from '@/lib/data';
 import { STATS } from '@/lib/fest';
 import { CATEGORIES } from '@/lib/types';
 import Link from 'next/link';
-
-const COUNTDOWN_TARGET = '2026-09-11T00:00:00+05:30';
 
 const time = (iso: string) =>
   new Date(iso).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' });
@@ -26,12 +24,14 @@ export default async function HomePage() {
   const nextEvents = [...events]
     .sort((a, b) => new Date(a.start_at).getTime() - new Date(b.start_at).getTime())
     .slice(0, 4);
+  const categoryCounts = events.reduce<Record<string, number>>((counts, event) => {
+    counts[event.category] = (counts[event.category] ?? 0) + 1;
+    return counts;
+  }, {});
 
   return (
     <>
-      <section className="relative overflow-hidden border-b border-white/10">
-        <HeroIdentity countdownTo={COUNTDOWN_TARGET} />
-      </section>
+      <FestivalWorld counts={categoryCounts} />
 
       <section className="border-b border-white/10 bg-ink-900/35">
         <div className="container-x grid grid-cols-2 md:grid-cols-4">

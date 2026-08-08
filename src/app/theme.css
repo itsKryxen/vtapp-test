@@ -1,0 +1,373 @@
+/* Final site-wide authority for the V-TAPP 2026 Festival Network identity.
+   Imported after globals.css so legacy component themes cannot override it. */
+
+:root {
+  --ink-950: 3 7 10;
+  --ink-900: 6 14 19;
+  --ink-800: 10 23 29;
+  --ink-700: 14 31 39;
+  --ink-600: 20 42 51;
+  --fg: 235 251 254;
+  --inv: 3 7 10;
+  --bone: 235 251 254;
+  --slate-100: 225 246 250;
+  --slate-200: 191 220 227;
+  --slate-300: 151 184 193;
+  --slate-400: 112 148 158;
+  --slate-500: 76 111 121;
+  --slate-600: 51 82 91;
+  --slate-700: 33 59 67;
+  --brand-50: 235 254 255;
+  --brand-100: 207 250 254;
+  --brand-200: 165 243 252;
+  --brand-300: 103 232 249;
+  --brand-400: 72 214 233;
+  --brand-500: 39 187 209;
+  --brand-600: 19 151 174;
+  --brand-700: 16 116 137;
+  --brand-800: 17 83 99;
+  --brand-900: 18 62 73;
+  --brand-950: 7 36 44;
+  --brand-rgb: 72, 214, 233;
+  --brand-bright-rgb: 143, 243, 255;
+  --brand-light-rgb: 103, 232, 249;
+  --brand: #48d6e9;
+  --brand-hover: #8ff3ff;
+  --brand-bright: #8ff3ff;
+  --brand-light: #67e8f9;
+  --brand-dark: #117589;
+  --background: 3 7 10;
+  --background-secondary: 6 14 19;
+  --surface: 8 20 26;
+  --surface-elevated: 11 28 35;
+  --surface-hover: 15 37 45;
+  --text-primary: 235 251 254;
+  --text-secondary: 151 184 193;
+  --text-muted: 76 111 121;
+  --text-disabled: 51 82 91;
+  --border: rgb(72 214 233 / .14);
+  --border-strong: rgb(72 214 233 / .34);
+  --focus-ring: #8ff3ff;
+  --accent: #48d6e9;
+  --button-primary-text: #031014;
+  --shadow-elevated: 0 22px 60px rgb(0 0 0 / .38);
+  --ec-bg: rgb(8 20 26);
+  --ec-surface: rgb(11 28 35);
+  --ec-border: rgb(72 214 233 / .15);
+  --ec-border-inner: rgb(72 214 233 / .12);
+  --ec-text: #effdff;
+  --ec-text-secondary: rgb(151 184 193);
+  --ec-muted: rgb(76 111 121);
+  --ec-accent: #48d6e9;
+  --ec-accent-bright: #8ff3ff;
+  --cd-bg: rgb(8 20 26);
+  --cd-border: rgb(72 214 233 / .15);
+  --cd-border-hover: rgb(72 214 233 / .34);
+  --cd-number: #8ff3ff;
+  --cd-status-text: #8ff3ff;
+  --cd-bar-fill: #48d6e9;
+  color-scheme: dark;
+}
+
+html,
+body { background-color: #03070a !important; }
+
+body {
+  background-image:
+    linear-gradient(rgb(72 214 233 / .021) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(72 214 233 / .021) 1px, transparent 1px),
+    radial-gradient(ellipse at 76% -8%, rgb(72 214 233 / .095), transparent 38%),
+    radial-gradient(ellipse at 12% 38%, rgb(72 214 233 / .035), transparent 30%) !important;
+  background-size: 52px 52px, 52px 52px, auto, auto !important;
+  background-attachment: fixed !important;
+}
+
+.site-header { border-color: rgb(72 214 233 / .16) !important; background: rgb(3 7 10 / .91) !important; box-shadow: 0 12px 40px rgb(0 0 0 / .22) !important; }
+.mobile-navigation { background-color: #03070a !important; }
+
+.btn-primary,
+.light .btn-primary { border-color: #48d6e9 !important; background: #48d6e9 !important; color: #031014 !important; box-shadow: none !important; }
+.btn-primary:hover:not(:disabled),
+.light .btn-primary:hover:not(:disabled) { border-color: #8ff3ff !important; background: #8ff3ff !important; color: #031014 !important; }
+.btn-ghost,
+.light .btn-ghost { border-color: rgb(72 214 233 / .28) !important; background: rgb(5 16 21 / .72) !important; color: #bdeff5 !important; box-shadow: none !important; }
+.btn-ghost:hover:not(:disabled),
+.light .btn-ghost:hover:not(:disabled) { border-color: #48d6e9 !important; background: rgb(72 214 233 / .08) !important; color: #effdff !important; }
+
+.panel,
+.event-frame,
+.event-card-simple,
+.vtapp-countdown-panel,
+.light .panel,
+.light .event-frame,
+.light .event-card-simple {
+  border-color: rgb(72 214 233 / .15) !important;
+  background-color: rgb(6 16 21 / .88) !important;
+  background-image: linear-gradient(rgb(72 214 233 / .022) 1px, transparent 1px), linear-gradient(90deg, rgb(72 214 233 / .022) 1px, transparent 1px) !important;
+  background-size: 24px 24px !important;
+  box-shadow: inset 0 1px rgb(255 255 255 / .018) !important;
+}
+.panel:hover,
+.event-frame:hover,
+.event-card-simple:hover { border-color: rgb(72 214 233 / .4) !important; background-color: rgb(8 23 29 / .96) !important; }
+.event-frame::before,
+.event-frame::after { display: none !important; }
+.event-card-simple-header,
+.event-card-simple-facts,
+.event-card-simple-facts > div,
+.event-card-simple-image-wrap,
+.event-frame-action,
+.registration-cta-inner,
+.category-link,
+.schedule-preview li { border-color: rgb(72 214 233 / .12) !important; }
+
+.field,
+.light .field,
+select.field,
+textarea.field { border-color: rgb(72 214 233 / .18) !important; background: rgb(3 10 14 / .9) !important; color: #eafdff !important; box-shadow: none !important; }
+.field:focus { border-color: #48d6e9 !important; box-shadow: 0 0 0 3px rgb(72 214 233 / .08) !important; }
+.field::placeholder { color: rgb(76 111 121) !important; }
+.chip,
+.light .chip { border-color: rgb(72 214 233 / .18) !important; background: rgb(72 214 233 / .035) !important; color: rgb(151 184 193) !important; }
+
+.page-header { border-color: rgb(72 214 233 / .18) !important; background-color: rgb(4 11 15 / .58) !important; }
+.page-header .display-lg,
+.section-header .display-md,
+.event-card-title,
+.event-card-simple-title { color: #effdff !important; }
+.category-link { border-color: rgb(72 214 233 / .13) !important; background: rgb(6 16 21 / .84) !important; }
+.registration-cta { background: linear-gradient(90deg, rgb(72 214 233 / .055), transparent), rgb(4 12 16 / .86) !important; }
+.team-member-card { border-color: rgb(72 214 233 / .18) !important; background-color: rgb(6 16 21 / .92) !important; }
+footer { border-color: rgb(72 214 233 / .16) !important; background: #03070a !important; }
+
+/* Light mode keeps the engineering language while changing the material,
+   not merely inverting the page. The world itself remains a dark simulator. */
+.light {
+  --ink-950: 244 247 250;
+  --ink-900: 237 242 246;
+  --ink-800: 255 255 255;
+  --ink-700: 248 250 252;
+  --ink-600: 230 237 243;
+  --fg: 23 32 43;
+  --inv: 255 255 255;
+  --bone: 23 32 43;
+  --slate-100: 23 32 43;
+  --slate-200: 47 61 77;
+  --slate-300: 77 93 112;
+  --slate-400: 102 120 140;
+  --slate-500: 127 143 160;
+  --slate-600: 159 173 187;
+  --slate-700: 193 203 213;
+  --brand-50: 236 254 255;
+  --brand-100: 207 250 254;
+  --brand-200: 165 243 252;
+  --brand-300: 103 232 249;
+  --brand-400: 25 145 171;
+  --brand-500: 12 135 163;
+  --brand-600: 8 127 155;
+  --brand-700: 7 103 128;
+  --brand-800: 15 83 102;
+  --brand-900: 20 69 84;
+  --brand-950: 8 43 54;
+  --brand-rgb: 8, 127, 155;
+  --brand-bright-rgb: 12, 135, 163;
+  --brand-light-rgb: 103, 205, 223;
+  --brand: #087f9b;
+  --brand-hover: #076780;
+  --brand-bright: #0c87a3;
+  --brand-light: #67cddf;
+  --brand-dark: #0f5366;
+  --background: 244 247 250;
+  --background-secondary: 237 242 246;
+  --surface: 255 255 255;
+  --surface-elevated: 248 250 252;
+  --surface-hover: 230 237 243;
+  --text-primary: 23 32 43;
+  --text-secondary: 77 93 112;
+  --text-muted: 102 120 140;
+  --text-disabled: 159 173 187;
+  --border: rgb(8 127 155 / .13);
+  --border-strong: rgb(8 127 155 / .27);
+  --focus-ring: #087f9b;
+  --accent: #087f9b;
+  --button-primary-text: #fff;
+  --shadow-elevated: 0 14px 34px rgb(31 49 68 / .09);
+  --ec-bg: #fff;
+  --ec-surface: #f8fafc;
+  --ec-border: rgb(8 127 155 / .16);
+  --ec-border-inner: rgb(8 127 155 / .12);
+  --ec-text: rgb(23 32 43);
+  --ec-text-secondary: rgb(77 93 112);
+  --ec-muted: rgb(102 120 140);
+  --ec-accent: #087f9b;
+  --ec-accent-bright: #087f9b;
+  --cd-bg: #fff;
+  --cd-border: rgb(8 127 155 / .16);
+  --cd-border-hover: rgb(8 127 155 / .3);
+  --cd-number: #087f9b;
+  --cd-status-text: #087f9b;
+  --cd-bar-fill: #087f9b;
+  color-scheme: light;
+}
+
+.light,
+.light body {
+  background-color: #f4f7fa !important;
+}
+
+.light body {
+  background-image:
+    linear-gradient(rgb(8 127 155 / .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(8 127 155 / .035) 1px, transparent 1px),
+    radial-gradient(ellipse at 76% -8%, rgb(8 127 155 / .1), transparent 38%),
+    radial-gradient(ellipse at 12% 38%, rgb(8 127 155 / .04), transparent 30%) !important;
+}
+
+.light #main::before {
+  background: linear-gradient(90deg, rgb(244 247 250 / .62), transparent 15%, transparent 85%, rgb(244 247 250 / .62)), linear-gradient(180deg, transparent 65%, rgb(244 247 250 / .7));
+}
+
+.light .site-header {
+  border-color: rgb(8 127 155 / .18) !important;
+  background: rgb(244 247 250 / .92) !important;
+  box-shadow: 0 12px 34px rgb(31 49 68 / .08) !important;
+}
+.light .mobile-navigation { background-color: #f4f7fa !important; }
+.light .site-nav-link { color: rgb(77 93 112); }
+.light .site-nav-link:hover,
+.light .site-nav-link:focus-visible,
+.light .site-nav-link.is-active { color: rgb(23 32 43); }
+.light .nav-system-status,
+.light .mobile-system-status { color: rgb(77 93 112); }
+
+.light .btn-ghost { border-color: rgb(8 127 155 / .28) !important; background: rgb(255 255 255 / .76) !important; color: #075f74 !important; }
+.light .btn-ghost:hover:not(:disabled) { border-color: #087f9b !important; background: rgb(8 127 155 / .07) !important; color: #17302f !important; }
+
+.light .panel,
+.light .event-frame,
+.light .event-card-simple,
+.light .vtapp-countdown-panel {
+  border-color: rgb(8 127 155 / .16) !important;
+  background-color: rgb(255 255 255 / .88) !important;
+  background-image: linear-gradient(rgb(8 127 155 / .026) 1px, transparent 1px), linear-gradient(90deg, rgb(8 127 155 / .026) 1px, transparent 1px) !important;
+  box-shadow: 0 14px 34px rgb(31 49 68 / .07) !important;
+}
+.light .panel:hover,
+.light .event-frame:hover,
+.light .event-card-simple:hover { border-color: rgb(8 127 155 / .36) !important; background-color: #fff !important; }
+.light .event-card-simple-header,
+.light .event-card-simple-facts,
+.light .event-card-simple-facts > div,
+.light .event-card-simple-image-wrap,
+.light .event-frame-action,
+.light .registration-cta-inner,
+.light .category-link,
+.light .schedule-preview li { border-color: rgb(8 127 155 / .13) !important; }
+
+.light .field,
+.light select.field,
+.light textarea.field { border-color: rgb(8 127 155 / .2) !important; background: rgb(255 255 255 / .9) !important; color: rgb(23 32 43) !important; }
+.light .field::placeholder { color: rgb(102 120 140) !important; }
+.light .chip { border-color: rgb(8 127 155 / .2) !important; background: rgb(8 127 155 / .04) !important; color: rgb(77 93 112) !important; }
+
+.light .page-header { border-color: rgb(8 127 155 / .2) !important; background-color: rgb(255 255 255 / .62) !important; }
+.light .page-header .display-lg,
+.light .section-header .display-md,
+.light .event-card-title,
+.light .event-card-simple-title,
+.light .team-member-name { color: rgb(23 32 43) !important; }
+.light .category-link { border-color: rgb(8 127 155 / .14) !important; background: rgb(255 255 255 / .78) !important; }
+.light .registration-cta { background: linear-gradient(90deg, rgb(8 127 155 / .06), transparent), rgb(237 242 246 / .86) !important; }
+.light .team-member-card { border-color: rgb(8 127 155 / .18) !important; background-color: rgb(255 255 255 / .9) !important; }
+.light footer { border-color: rgb(8 127 155 / .18) !important; background: #eef3f6 !important; }
+.light .festival-world-hero { color-scheme: dark; }
+.light .festival-world-hero .world-inspector,
+.light .festival-world-hero .core-feedback { border-color: rgb(72 214 233 / .32) !important; background: rgb(3 10 14 / .94) !important; color: #effdff !important; }
+.light .festival-world-hero .world-inspector h2,
+.light .festival-world-hero .world-inspector button { color: #effdff !important; }
+.light .festival-world-hero .vtapp-countdown-panel { border-color: rgb(72 214 233 / .24) !important; background: rgb(3 10 14 / .9) !important; box-shadow: none !important; }
+.light .festival-world-hero .vtapp-countdown-number { color: #8ff3ff !important; }
+.light .festival-world-hero .vtapp-countdown-label { color: #70949d !important; }
+
+.mobile-theme-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: .5rem; }
+
+/* Complete light rendering for the interactive campus. */
+.light .festival-world-hero {
+  background:
+    linear-gradient(rgb(8 127 155 / .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(8 127 155 / .035) 1px, transparent 1px),
+    radial-gradient(ellipse at 50% 40%, #ffffff 0%, #eef5f7 48%, #e5eef2 100%) !important;
+  border-color: rgb(8 127 155 / .22);
+  color: rgb(23 32 43);
+  color-scheme: light;
+}
+.light .festival-world-hero::before { background: linear-gradient(90deg, rgb(229 238 242 / .75), transparent 18%, transparent 82%, rgb(229 238 242 / .75)); }
+.light .festival-world-hero::after { border-color: rgb(8 127 155 / .16); }
+.light .world-topline { color: rgb(77 93 112 / .82); }
+.light .world-status { color: #087f9b; }
+.light .world-title-lockup > p { color: #087f9b; }
+.light .world-title-lockup h1 { color: #17202b; text-shadow: 0 18px 50px rgb(50 80 90 / .12); }
+.light .world-title-lockup h1 span { -webkit-text-stroke-color: rgb(8 127 155 / .82); }
+.light .world-title-lockup > div { color: #5c7079; }
+
+.light .world-ground > path:nth-child(1) { fill: #e8f1f4 !important; stroke: #7aa7b3 !important; }
+.light .world-ground > path:nth-child(2) { fill: #cddde2 !important; stroke: #88aeb8 !important; }
+.light .world-ground > path:nth-child(3) { fill: #bccfd5 !important; stroke: #7ca4ae !important; }
+.light .world-grid-line { stroke: #4c7b87; opacity: .2; }
+.light .world-circuit-base { stroke: #6c929c; opacity: .62; }
+.light .world-circuit-energy { stroke: #087f9b; opacity: .55; }
+
+.light .zone-pad { fill: #e1edf0; stroke: #6595a1; }
+.light .zone[data-active='true'] .zone-pad { fill: #d4e9ed; stroke: #087f9b; }
+.light .building-top,
+.light .building-roof { fill: #d9e8ec; stroke: #527e89; }
+.light .building-side { fill: #b9cdd3; stroke: #5c838d; }
+.light .building-front { fill: #cadde2; stroke: #4f7f8b; }
+.light .roof-detail { fill: #eef8fa; stroke: #087f9b; }
+.light .screen,
+.light .creative-roof,
+.light .stage-screen { fill: #d3e8ed; stroke: #087f9b; }
+.light .screen-mark,
+.light .stage-signal,
+.light .server-slits path { stroke: #087f9b; }
+.light .robot-arm { fill: #dce9ec; stroke: #536f77; }
+.light .dish { fill: #d3e4e8; stroke: #087f9b; }
+.light .lab-tanks { fill: rgb(8 127 155 / .1); stroke: #087f9b; }
+.light .creative-prisms { fill: rgb(8 127 155 / .08); stroke: #087f9b; }
+
+.light .core-plinth-top { fill: #cfe3e8; stroke: #4f8997; }
+.light .core-plinth-side { fill: #aec6cc; stroke: #628d97; }
+.light .core-plinth-front { fill: #bfd5da; stroke: #527f89; }
+.light .core-ring { stroke: #087f9b; filter: drop-shadow(0 0 4px rgb(8 127 155 / .28)); }
+.light .core-ring-b { stroke: #075f74; }
+.light .core-column { fill: rgb(8 127 155 / .09); stroke: #087f9b; }
+.light .core-cap,
+.light .core-energy { fill: #087f9b; filter: drop-shadow(0 0 7px rgb(8 127 155 / .35)); }
+.light .core-orbit { fill: #087f9b; }
+.light .drone,
+.light .rover { fill: #f7fbfc; stroke: #087f9b; filter: drop-shadow(0 0 3px rgb(8 127 155 / .3)); }
+
+.light .world-zone-label { border-color: rgb(8 127 155 / .48); background: linear-gradient(90deg, rgb(255 255 255 / .92), transparent); color: #344c55; }
+.light .world-zone-label:hover,
+.light .world-zone-label[data-active='true'] { border-color: #087f9b; background: rgb(255 255 255 / .96); color: #17202b; }
+.light .world-zone-label small { color: #087f9b; }
+.light .world-zone-label span { color: #667e87; }
+
+.light .festival-world-hero .overclock-control { border-color: #087f9b; background: conic-gradient(#087f9b var(--charge), rgb(238 247 249 / .96) 0); color: #17202b; box-shadow: 0 0 0 4px rgb(8 127 155 / .07), 0 10px 28px rgb(47 79 89 / .14); }
+.light .festival-world-hero .overclock-control::before { background: #f7fbfc; }
+.light .festival-world-hero .overclock-control small { color: #527985; }
+
+.light .festival-world-hero .world-inspector,
+.light .festival-world-hero .core-feedback { border-color: rgb(8 127 155 / .34) !important; background: rgb(255 255 255 / .94) !important; color: #17202b !important; box-shadow: 0 18px 44px rgb(41 74 84 / .12); }
+.light .festival-world-hero .world-inspector-head { color: #6b7f86; }
+.light .festival-world-hero .world-inspector > p { color: #087f9b; }
+.light .festival-world-hero .world-inspector h2 { color: #17202b !important; }
+.light .festival-world-hero .world-inspector li { border-color: rgb(8 127 155 / .12); color: #536b73; }
+.light .festival-world-hero .world-inspector button { border-color: rgb(8 127 155 / .34); color: #075f74 !important; }
+.light .festival-world-hero .world-inspector button:hover { background: #087f9b; color: #fff !important; }
+.light .festival-world-hero .vtapp-countdown-panel { border-color: rgb(8 127 155 / .24) !important; background: rgb(255 255 255 / .92) !important; box-shadow: 0 14px 34px rgb(41 74 84 / .1) !important; }
+.light .festival-world-hero .vtapp-countdown-number { color: #087f9b !important; }
+.light .festival-world-hero .vtapp-countdown-label { color: #667e87 !important; }
+.light .world-countdown > p { color: #667e87; }
+.light .world-countdown > p span { color: #087f9b; }
+.light .festival-world-hero .mobile-merch-link { border-color: rgb(8 127 155 / .3); background: rgb(255 255 255 / .94); color: #17202b; }

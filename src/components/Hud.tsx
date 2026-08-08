@@ -58,7 +58,7 @@ export function HudViewport() {
     <div className="space-y-1 font-mono text-[10px] uppercase tracking-label text-slate-600">
       <p>VIEWPORT: {mounted ? `${size.w}×${size.h}` : '----×----'}</p>
       <p>LAT 16.5062 · LON 80.6480</p>
-      <p>BUILD: VT26</p>
+      <p>BUILD: V-TAPP 2026</p>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 const LINES = [
-  'INIT VT26 DASHBOARD',
+  'INIT V-TAPP 2026 DASHBOARD',
   'AUTHENTICATING SESSION',
   'RESOLVING CLUB PROFILE',
   'INDEXING EVENT SUBMISSIONS',
@@ -97,7 +97,7 @@ export default function Preloader() {
       ))}
 
       <span className="absolute left-6 top-1/2 hidden -translate-y-1/2 font-mono text-[10px] uppercase tracking-label text-slate-700 sm:block">
-        VT26
+        V-TAPP 2026
       </span>
       <span className="absolute right-6 top-1/2 hidden -translate-y-1/2 font-mono text-[10px] uppercase tracking-label text-slate-700 sm:block">
         DASHBOARD

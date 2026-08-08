@@ -76,6 +76,9 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+          <span className="nav-system-status" aria-label="Festival network online">
+            <i aria-hidden="true" /> SYSTEM ONLINE
+          </span>
           <ThemeToggle />
           <Link href="/tickets" className="btn-primary ml-2 !px-5 !py-3">
             Get tickets
@@ -137,8 +140,10 @@ export default function Navbar() {
             <Link href="/tickets" tabIndex={open ? 0 : -1} className="btn-primary w-full">
               Get tickets <span aria-hidden="true">→</span>
             </Link>
-            <div className="flex min-h-11 items-center justify-between border border-white/15 px-4 sm:gap-4">
-              <span className="mono-label">Theme</span>
+            <div className="mobile-theme-row">
+              <div className="mobile-system-status" aria-label="Festival network online">
+                <i aria-hidden="true" /> FESTIVAL NETWORK ONLINE
+              </div>
               <ThemeToggle />
             </div>
           </div>

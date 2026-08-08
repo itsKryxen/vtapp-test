@@ -166,7 +166,7 @@ function Waiting() {
 
       <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
         <span className="mono-label">STATUS: IN PRODUCTION</span>
-        <span className="mono-label text-brand-500">VT26 / MERCH / REV.A</span>
+        <span className="mono-label text-brand-500">V-TAPP 2026 / MERCH / REV.A</span>
       </div>
     </div>
   );

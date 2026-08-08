@@ -63,6 +63,10 @@ export function PageHeader({
 }: Omit<Props, 'action'>) {
   return (
     <header className="page-header mb-12">
+      <div className="page-header-system" aria-hidden="true">
+        <span>V-TAPP 2026 / FESTIVAL NETWORK</span>
+        <span><i /> DIRECTORY NODE ACTIVE</span>
+      </div>
       <div className="flex items-center gap-4">
         <span className="tag-index shrink-0">[{index}]</span>
         <span className="mono-label shrink-0 text-slate-400">{slug}</span>
@@ -75,6 +79,7 @@ export function PageHeader({
       {description && (
         <p className="mt-5 max-w-2xl text-sm leading-relaxed text-slate-400">{description}</p>
       )}
+      <span className="page-header-corner" aria-hidden="true" />
     </header>
   );
 }

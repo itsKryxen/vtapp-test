@@ -228,7 +228,7 @@ export default function BlueprintMark({ className = '' }: { className?: string }
           fontFamily="var(--font-mono), monospace"
           letterSpacing="3"
         >
-          VT26 / MARK / REV.A
+          V-TAPP 2026 / MARK / REV.A
         </text>
       </g>
     </svg>

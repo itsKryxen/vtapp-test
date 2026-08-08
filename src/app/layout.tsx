@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { JetBrains_Mono, Orbitron } from 'next/font/google';
 import './globals.css';
+import './theme.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Preloader from '@/components/Preloader';
@@ -52,8 +53,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#16161e' },
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#03070a' },
+    { media: '(prefers-color-scheme: light)', color: '#f4f7fa' },
   ],
   width: 'device-width',
   initialScale: 1,
@@ -71,7 +72,7 @@ const THEME_SCRIPT = `
     if (s !== 'light' && s !== 'dark') s = 'system';
     var light = s === 'light' ||
       (s === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
-    if (light) document.documentElement.classList.add('light');
+    document.documentElement.classList.toggle('light', light);
     document.documentElement.dataset.theme = s;
     var favicon = light ? '/favicon-light.svg' : '/favicon-dark.svg';
     document.querySelectorAll('link[rel~="icon"]').forEach(function(link) {

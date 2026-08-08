@@ -28,7 +28,7 @@ export default function PageLogoIntroAnimation() {
   const [exiting, setExiting] = useState(false);
   const [destination, setDestination] = useState<Destination>(CENTERED);
 
-  const excluded = pathname.startsWith('/dashboard') || pathname.startsWith('/admin');
+  const excluded = pathname === '/' || pathname.startsWith('/dashboard') || pathname.startsWith('/admin');
 
   useLayoutEffect(() => {
     if (excluded || pathname !== initialPathRef.current) {

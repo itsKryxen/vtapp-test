@@ -12,7 +12,7 @@ export default function LoginClientPage() {
         <div className="brackets">
           <div className="panel p-8 backdrop-blur-md relative overflow-hidden">
             {/* Top accent gradient rule */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-600 via-amber-500 to-brand-600" />
+            <div className="absolute top-0 left-0 right-0 h-px bg-brand-400" />
 
             <LogoLockup width={300} className="mb-6 h-auto w-[220px]" />
             <h1 className="display-md">Club login</h1>

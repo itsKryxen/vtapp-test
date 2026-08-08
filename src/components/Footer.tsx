@@ -18,6 +18,11 @@ const EXPLORE = [
 export default function Footer() {
   return (
     <footer className="relative z-10 border-t border-white/10 bg-ink-950">
+      <div className="footer-network-bar" aria-hidden="true">
+        <span><i /> FESTIVAL NETWORK ONLINE</span>
+        <span>06 DISTRICTS / 01 CORE / V-TAPP 2026</span>
+        <span>VIT-AP · AMARAVATI</span>
+      </div>
       <div className="container-x grid gap-12 py-14 md:grid-cols-[1.2fr_.8fr_.8fr] sm:py-16">
         <div>
           <LogoLockup width={300} className="h-auto w-[220px] sm:w-[260px]" />

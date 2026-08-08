@@ -19,12 +19,6 @@ const PHOTOS: PhotoItem[] = [
   { id: 'p4', src: '/demo/pitch-perfect.jpg', alt: 'Startup pitch battle' },
   { id: 'p5', src: '/demo/bio-hack.jpg', alt: 'Biotech innovation' },
   { id: 'p6', src: '/demo/cad-clash.jpg', alt: 'Design & engineering' },
-  { id: 'g1', src: '/assets/glimpses/photo-01.jpg', alt: 'V-TAPP 2024 — Glimpse 1' },
-  { id: 'g2', src: '/assets/glimpses/photo-02.jpg', alt: 'V-TAPP 2024 — Glimpse 2' },
-  { id: 'g3', src: '/assets/glimpses/photo-03.jpg', alt: 'V-TAPP 2024 — Glimpse 3' },
-  { id: 'g4', src: '/assets/glimpses/photo-04.jpg', alt: 'V-TAPP 2024 — Glimpse 4' },
-  { id: 'g5', src: '/assets/glimpses/photo-05.jpg', alt: 'V-TAPP 2024 — Glimpse 5' },
-  { id: 'g6', src: '/assets/glimpses/photo-06.jpg', alt: 'V-TAPP 2024 — Glimpse 6' },
 ];
 
 export default function PureCinematicGallery() {

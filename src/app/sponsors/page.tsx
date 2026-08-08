@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import EventCircuitField from '@/components/EventCircuitField';
 import { PageHeader } from '@/components/SectionHeader';
 import { getSponsors } from '@/lib/data';
 import { TIERS, type Sponsor } from '@/lib/sponsors';
@@ -43,26 +44,30 @@ export default async function SponsorsPage() {
                 {tier.note && <span className="text-sm text-slate-500">{tier.note}</span>}
               </div>
 
-              <div className={`grid gap-4 ${tier.grid}`}>
-                {list.map((sponsor, index) => (
-                  <SponsorCard key={sponsor.id} sponsor={sponsor} tier={tier} index={index} />
-                ))}
-              </div>
+              <EventCircuitField>
+                <div className={`grid gap-4 ${tier.grid}`}>
+                  {list.map((sponsor, index) => (
+                    <SponsorCard key={sponsor.id} sponsor={sponsor} tier={tier} index={index} />
+                  ))}
+                </div>
+              </EventCircuitField>
             </section>
           ))}
         </div>
       )}
 
-      <section className="event-frame mt-20 p-8 text-center sm:p-12">
-        <h2 className="font-display display-md sm:text-3xl">Want to sponsor V-TAPP?</h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-400">
-          Reach thousands of engineering, business and law students across two days on campus.
-          Write to us for the sponsorship deck.
-        </p>
-        <a href={`mailto:${FEST.email}?subject=V-TAPP%202026%20Sponsorship`} className="btn-primary mt-6">
-          Request the deck
-        </a>
-      </section>
+      <EventCircuitField>
+        <section className="event-frame mt-20 p-8 text-center sm:p-12">
+          <h2 className="font-display display-md sm:text-3xl">Want to sponsor V-TAPP?</h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-400">
+            Reach thousands of engineering, business and law students across two days on campus.
+            Write to us for the sponsorship deck.
+          </p>
+          <a href={`mailto:${FEST.email}?subject=V-TAPP%202026%20Sponsorship`} className="btn-primary mt-6">
+            Request the deck
+          </a>
+        </section>
+      </EventCircuitField>
     </div>
   );
 }

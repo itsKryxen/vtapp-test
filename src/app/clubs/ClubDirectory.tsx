@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
+import EventCircuitField from '@/components/EventCircuitField';
 import { schoolAccent } from '@/lib/schools';
 import type { Club } from '@/lib/types';
 
@@ -63,7 +64,8 @@ export default function ClubDirectory({ clubs }: { clubs: Club[] }) {
           <p className="mt-2 text-sm text-slate-400">Try a shorter search term.</p>
         </div>
       ) : (
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <EventCircuitField>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((club, index) => {
             const accent = schoolAccent(club.school);
             const displayIndex = String(index + 1).padStart(2, '0');
@@ -129,9 +131,9 @@ export default function ClubDirectory({ clubs }: { clubs: Club[] }) {
               </Link>
             );
           })}
-        </div>
+          </div>
+        </EventCircuitField>
       )}
     </>
   );
 }
-

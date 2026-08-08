@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import EventCircuitField from '@/components/EventCircuitField';
 import { PageHeader } from '@/components/SectionHeader';
 import { FEST, STATS } from '@/lib/fest';
 import { SCHOOLS } from '@/lib/schools';
@@ -20,20 +21,23 @@ export default function AboutPage() {
 
       <p className="mt-3 max-w-2xl text-lg leading-relaxed text-slate-300">{FEST.blurb}</p>
 
-      <div className="mt-12 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        {STATS.map((s, index) => (
-          <div key={s.label} className="event-frame px-4 py-6 text-center">
-            <span className="event-frame-index" aria-hidden="true">
-              {String(index + 1).padStart(2, '0')}
-            </span>
-            <p className="font-display display-md text-white">{s.value}</p>
-            <p className="mt-1 text-xs uppercase tracking-[0.16em] text-slate-400">{s.label}</p>
-          </div>
-        ))}
-      </div>
+      <EventCircuitField>
+        <div className="mt-12 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {STATS.map((s, index) => (
+            <div key={s.label} className="event-frame px-4 py-6 text-center">
+              <span className="event-frame-index" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <p className="font-display display-md text-white">{s.value}</p>
+              <p className="mt-1 text-xs uppercase tracking-[0.16em] text-slate-400">{s.label}</p>
+            </div>
+          ))}
+        </div>
+      </EventCircuitField>
 
-      <div className="mt-16 grid gap-10 lg:grid-cols-2">
-        <section className="event-frame p-6 sm:p-8">
+      <EventCircuitField>
+        <div className="mt-16 grid gap-10 lg:grid-cols-2">
+          <section className="event-frame p-6 sm:p-8">
           <span className="event-card-category-badge">ABOUT</span>
           <h2 className="text-2xl font-bold">What V-TAPP is</h2>
           <div className="mt-4 space-y-4 text-sm leading-relaxed text-slate-300">
@@ -49,9 +53,9 @@ export default function AboutPage() {
               is published here.
             </p>
           </div>
-        </section>
+          </section>
 
-        <section className="event-frame p-6 sm:p-8">
+          <section className="event-frame p-6 sm:p-8">
           <span className="event-card-category-badge">CAMPUS</span>
           <h2 className="text-2xl font-bold">Participating schools</h2>
           <ul className="mt-4 space-y-2.5">
@@ -67,52 +71,57 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
+          </section>
+        </div>
+      </EventCircuitField>
+
+      <EventCircuitField>
+        <section className="event-frame mt-16 p-8">
+          <span className="event-card-category-badge">CONTACT</span>
+          <h2 className="text-xl font-bold">Reach the core team</h2>
+          <div className="mt-4 flex flex-wrap gap-x-10 gap-y-4 text-sm">
+            <div>
+              <p className="text-xs text-slate-500">Email</p>
+              <a href={`mailto:${FEST.email}`} className="text-brand-400 hover:underline">
+                {FEST.email}
+              </a>
+            </div>
+            <div>
+              <p className="text-xs text-slate-500">Venue</p>
+              <p className="text-slate-200">{FEST.venue}</p>
+            </div>
+            <div>
+              <p className="text-xs text-slate-500">Instagram</p>
+              <a href={FEST.instagram} className="text-brand-400 hover:underline">
+                @vtapp.vitap
+              </a>
+            </div>
+            <div>
+              <p className="text-xs text-slate-500">Website</p>
+              <a href={FEST.website} target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">
+                vitap.ac.in
+              </a>
+            </div>
+          </div>
         </section>
-      </div>
+      </EventCircuitField>
 
-      <section className="event-frame mt-16 p-8">
-        <span className="event-card-category-badge">CONTACT</span>
-        <h2 className="text-xl font-bold">Reach the core team</h2>
-        <div className="mt-4 flex flex-wrap gap-x-10 gap-y-4 text-sm">
-          <div>
-            <p className="text-xs text-slate-500">Email</p>
-            <a href={`mailto:${FEST.email}`} className="text-brand-400 hover:underline">
-              {FEST.email}
-            </a>
+      <EventCircuitField>
+        <section className="event-frame mt-16 p-8">
+          <span className="event-card-category-badge">ARCHIVE</span>
+          <h2 className="text-xl font-bold">A Glimpse of Previous V-TAPP</h2>
+          <div className="mt-4 aspect-video w-full overflow-hidden rounded-lg">
+            <iframe
+              className="h-full w-full"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              title="A Glimpse of Previous V-TAPP"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
           </div>
-          <div>
-            <p className="text-xs text-slate-500">Venue</p>
-            <p className="text-slate-200">{FEST.venue}</p>
-          </div>
-          <div>
-            <p className="text-xs text-slate-500">Instagram</p>
-            <a href={FEST.instagram} className="text-brand-400 hover:underline">
-              @vtapp.vitap
-            </a>
-          </div>
-          <div>
-            <p className="text-xs text-slate-500">Website</p>
-            <a href={FEST.website} target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">
-              vitap.ac.in
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section className="event-frame mt-16 p-8">
-        <span className="event-card-category-badge">ARCHIVE</span>
-        <h2 className="text-xl font-bold">A Glimpse of Previous V-TAPP</h2>
-        <div className="mt-4 aspect-video w-full overflow-hidden rounded-lg">
-          <iframe
-            className="h-full w-full"
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-            title="A Glimpse of Previous V-TAPP"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          ></iframe>
-        </div>
-      </section>
+        </section>
+      </EventCircuitField>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 export const THEME_KEY = 'vtapp-theme';
 export type Theme = 'dark' | 'light';
+const THEME_EVENT = 'vtapp-theme-change';
 
 function syncFavicon(theme: Theme) {
   const href = theme === 'light' ? '/favicon-light.svg' : '/favicon-dark.svg';
@@ -30,12 +31,17 @@ export default function ThemeToggle() {
     setMounted(true);
     setTheme(initialTheme);
     syncFavicon(initialTheme);
+
+    const syncTheme = (event: Event) => setTheme((event as CustomEvent<Theme>).detail);
+    window.addEventListener(THEME_EVENT, syncTheme);
+    return () => window.removeEventListener(THEME_EVENT, syncTheme);
   }, []);
 
   function apply(next: Theme) {
     setTheme(next);
     document.documentElement.classList.toggle('light', next === 'light');
     syncFavicon(next);
+    window.dispatchEvent(new CustomEvent<Theme>(THEME_EVENT, { detail: next }));
     try {
       localStorage.setItem(THEME_KEY, next);
     } catch {
@@ -44,34 +50,21 @@ export default function ThemeToggle() {
   }
 
   if (!mounted) {
-    return <span className="h-10 w-[74px] shrink-0" aria-hidden="true" />;
+    return <span className="h-10 w-10 shrink-0" aria-hidden="true" />;
   }
 
+  const nextTheme: Theme = theme === 'dark' ? 'light' : 'dark';
+
   return (
-    <div
-      role="group"
-      aria-label="Colour theme"
-      className="flex h-10 shrink-0 items-stretch border border-white/15"
+    <button
+      type="button"
+      onClick={() => apply(nextTheme)}
+      aria-label={`Switch to ${nextTheme} mode`}
+      title={`Switch to ${nextTheme} mode`}
+      className="flex h-10 w-10 shrink-0 items-center justify-center border border-white/15 text-slate-400 transition-colors hover:border-white/40 hover:text-white"
     >
-      {(['dark', 'light'] as Theme[]).map((t) => {
-        const active = theme === t;
-        return (
-          <button
-            key={t}
-            type="button"
-            onClick={() => apply(t)}
-            aria-pressed={active}
-            title={t === 'dark' ? 'Dark mode' : 'Light mode'}
-            className={`flex w-9 items-center justify-center transition-colors ${
-              active ? 'bg-brand-600 on-brand light:bg-[color:var(--brand)]' : 'text-slate-500 hover:text-white'
-            }`}
-          >
-            {t === 'dark' ? <MoonIcon /> : <SunIcon />}
-            <span className="sr-only">{t === 'dark' ? 'Dark mode' : 'Light mode'}</span>
-          </button>
-        );
-      })}
-    </div>
+      {theme === 'dark' ? <MoonIcon /> : <SunIcon />}
+    </button>
   );
 }
 

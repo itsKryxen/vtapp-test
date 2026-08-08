@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useRef, type PointerEvent as ReactPointerEvent } from 'react';
 import BlueprintMark from '@/components/BlueprintMark';
 import Countdown from '@/components/Countdown';
@@ -101,7 +102,7 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
   return (
     <div
       ref={sectionRef}
-      className="container-x hero-cursor-field relative grid min-h-[calc(100svh-88px)] items-center gap-8 py-14 md:py-20 xl:grid-cols-[1.08fr_.92fr] xl:gap-10"
+      className="container-x hero-cursor-field relative grid min-h-[calc(100svh-88px)] items-center gap-8 pb-14 pt-3 sm:pt-8 md:py-20 xl:grid-cols-[1.08fr_.92fr] xl:gap-10"
       onPointerMove={handlePointerMove}
       onPointerLeave={reset}
     >
@@ -115,6 +116,19 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
       <div className="hero-scan-line" aria-hidden="true" />
 
       <div className="relative z-20 flex w-full flex-col pb-12 xl:min-h-[calc(100svh-12rem)] xl:justify-center xl:pb-0 xl:pr-12">
+        <nav className="mx-auto mb-7 grid w-full max-w-[560px] grid-cols-2 gap-2 md:max-xl:translate-x-10 xl:hidden" aria-label="Featured links">
+          <Link href="/events" className="home-hero-feature-link nav-feature-link !justify-center !px-2">
+            <span className="nav-feature-link-index" aria-hidden="true">01</span>
+            <span className="nav-feature-link-label">Events</span>
+            <span className="nav-feature-link-bar" aria-hidden="true" />
+          </Link>
+          <Link href="/schedule" className="home-hero-feature-link nav-feature-link !justify-center !px-2">
+            <span className="nav-feature-link-index" aria-hidden="true">02</span>
+            <span className="nav-feature-link-label">Schedule</span>
+            <span className="nav-feature-link-bar" aria-hidden="true" />
+          </Link>
+        </nav>
+
         {/* w-fit keeps the group as wide as the logo + wordmark, so the edition
          * badge below can centre on the lockup rather than on the column. */}
         <div className="mx-auto w-fit max-w-full xl:mx-0">
@@ -137,6 +151,10 @@ export default function HeroIdentity({ countdownTo }: { countdownTo: string }) {
           <div className="hero-enter-badge mt-7 flex justify-center">
             <HeroEditionBadge />
           </div>
+
+          <Link href="/tickets" className="btn-primary mx-auto mt-6 flex w-full max-w-[240px] xl:hidden">
+            Buy tickets
+          </Link>
         </div>
 
         <div className="hero-enter-countdown mt-12 w-full sm:mt-14" aria-labelledby="countdown-title">
